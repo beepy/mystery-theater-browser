@@ -1,5 +1,8 @@
 <template>
   <div class="container mx-auto">
+    <p>
+      <nuxt-link to="/">Home</nuxt-link>
+    </p>
     <h1 class="text-3xl">{{ episode.title }}</h1>
     <nuxt-content :document="episode" />
     <ul>
@@ -10,6 +13,9 @@
     <audio controls class="w-full">
       <source :src="episode.url" type="audio/mpeg" />
     </audio>
+    <p v-if="episode.id < 1399">
+      <nuxt-link :to="'/episode/' + (episode.id + 1)">Next</nuxt-link>
+    </p>
   </div>
 </template>
 <script>

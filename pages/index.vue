@@ -55,24 +55,24 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="(episode, i) in episodes.body" :key="episode.ID">
+                  <tr v-for="(episode, i) in episodes" :key="episode.slug">
                     <td class="px-6 py-4">
-                      <a :href="episode.URL" target="_blank">
-                        {{ episode.Title }}
+                      <a :href="episode.url" target="_blank">
+                        {{ episode.title }}
                       </a>
                     </td>
                     <td class="px-6 py-4">
-                      {{ episode.Description }}
+                      <nuxt-content :document="episode" />
                     </td>
                     <td class="px-6 py-4">
-                      <div v-if="activeEpisode === episode.ID">
+                      <div v-if="activeEpisode === episode.slug">
                         <a :href="links[i]" target="_blank">Download</a>
                         <audio controls>
                           <source :src="links[i]" type="audio/mpeg" />
                         </audio>
                       </div>
-                      <nuxt-link v-else :to="'/episode/' + episode.ID">
-                        {{ episode.ID }}
+                      <nuxt-link v-else :to="'/episode/' + episode.slug">
+                        {{ episode.slug }}
                       </nuxt-link>
                     </td>
                   </tr>
@@ -83,6 +83,7 @@
         </div>
       </div>
     </div>
+    <button @click="more">Get More</button>
   </div>
 </template>
 
@@ -110,10 +111,11 @@ export default {
   },
   async asyncData({ $content, store }) {
     const page = await $content('hello').fetch()
-    const episodes = await $content('episodes-all').fetch()
+    const episodes = await $content('episodes').sortBy('id').limit(10).fetch()
     return {
       page,
       episodes,
+      skip: 0,
     }
   },
   computed: {
@@ -151,6 +153,17 @@ export default {
         }
       }
       return a
+    },
+  },
+  methods: {
+    async more() {
+      this.skip = this.skip + 10
+      const episodes = await this.$content('episodes')
+        .sortBy('id')
+        .skip(this.skip)
+        .limit(10)
+        .fetch()
+      this.episodes = episodes
     },
   },
 }
