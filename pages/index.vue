@@ -7,6 +7,28 @@
         Test Link
       </a>
       <nuxt-content :document="page" />
+      <input
+        v-model="terms"
+        @change="search"
+        placeholder="Search"
+        class="
+          px-3
+          py-3
+          mb-4
+          placeholder-blueGray-300
+          text-blueGray-600
+          relative
+          bg-white
+          rounded
+          text-sm
+          border-0
+          shadow
+          outline-none
+          focus:outline-none
+          focus:ring
+          w-full
+        "
+      />
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
@@ -20,6 +42,84 @@
                 sm:rounded-lg
               "
             >
+              <div class="min-w-full divide-y divide-gray-200">
+                <div class="grid grid-cols-12 bg-gray-50">
+                  <div
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      col-span-4
+                    "
+                  >
+                    Title
+                  </div>
+                  <div
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      col-span-6
+                    "
+                  >
+                    Description
+                  </div>
+                  <div
+                    class="
+                      px-6
+                      py-3
+                      text-center text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      col-span-2
+                    "
+                  >
+                    Episode
+                  </div>
+                </div>
+                <nuxt-link
+                  v-for="episode in episodes"
+                  :key="episode.slug"
+                  :to="'/episode/' + episode.slug"
+                  class="grid grid-cols-12"
+                >
+                  <div class="col-span-4 px-6 py-4">
+                    <span class="block font-bold">
+                      {{ episode.title }}
+                    </span>
+                    <div class="leading-tight mt-2">
+                      <span
+                        v-for="(actor, i) in episode.actors"
+                        :key="actor.id"
+                        class="text-xs"
+                      >
+                        <span v-if="i > 0">,</span>
+                        <span class="whitespace-nowrap">{{ actor.name }}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-span-6 px-6 py-4">
+                    <nuxt-content :document="episode" />
+                  </div>
+                  <div class="col-span-2 px-6 py-4 text-center">
+                    <div class="text-xs text-center mb-2">
+                      {{ episode.date }}
+                    </div>
+                    <episode-number :number="episode.id" />
+                  </div>
+                </nuxt-link>
+              </div>
+              <!--
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -57,6 +157,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                   <tr v-for="(episode, i) in episodes" :key="episode.slug">
                     <td class="px-6 py-4">
+                      <div class="text-xs">{{ episode.date }}</div>
                       <a :href="episode.url" target="_blank">
                         {{ episode.title }}
                       </a>
@@ -78,6 +179,7 @@
                   </tr>
                 </tbody>
               </table>
+              -->
             </div>
           </div>
         </div>
@@ -88,6 +190,9 @@
 </template>
 
 <script>
+import EpisodeNumber from '~/components/EpisodeNumber'
+
+/*
 const slugify = function (s, separator = '-') {
   return (
     s
@@ -102,11 +207,14 @@ const slugify = function (s, separator = '-') {
       .replace(/\s+/g, separator)
   )
 }
+*/
 
 export default {
+  components: { EpisodeNumber },
   data() {
     return {
       activeEpisode: -1,
+      terms: '',
     }
   },
   async asyncData({ $content, store }) {
@@ -118,43 +226,6 @@ export default {
       skip: 0,
     }
   },
-  computed: {
-    links() {
-      const a = []
-      if (typeof this.episodes !== 'object' || this.episodes.body.length < 1) {
-        return a
-      }
-      for (let i = 1; i < 1400; i += 50) {
-        const endValue = i < 1351 ? i + 49 : 1399
-        const startString = String(i).padStart(4, '0')
-        const endString = String(endValue).padStart(4, '0')
-        const urlStart =
-          'https://archive.org/download/cbs_radio_mystery_theater/cbs_radio_mystery_theater-' +
-          startString +
-          '-' +
-          endString +
-          '.zip/cbs_radio_mystery_theater-' +
-          startString +
-          '-' +
-          endString +
-          '%2Fcbsrmt_'
-        for (let j = i; j < (i < 1351 ? i + 50 : 1400); j++) {
-          if (this.episodes.body[j - 1].Title) {
-            a.push(
-              urlStart +
-                String(j).padStart(4, '0') +
-                '_' +
-                slugify(this.episodes.body[j - 1].Title, '_') +
-                '.mp3'
-            )
-          } else {
-            a.push('missing title')
-          }
-        }
-      }
-      return a
-    },
-  },
   methods: {
     async more() {
       this.skip = this.skip + 10
@@ -164,6 +235,17 @@ export default {
         .limit(10)
         .fetch()
       this.episodes = episodes
+    },
+    search() {
+      if (this.terms.length > 2) {
+        this.$content('episodes')
+          .search(this.terms)
+          .sortBy('id')
+          .fetch()
+          .then((d) => {
+            this.episodes = d
+          })
+      }
     },
   },
 }
