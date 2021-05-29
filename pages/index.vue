@@ -1,12 +1,7 @@
 <template>
   <div class="container mx-auto">
+    <!-- https://archive.org/details/CBSRMTKf -->
     <div>
-      <a
-        href="https://archive.org/download/cbs_radio_mystery_theater/cbs_radio_mystery_theater-0701-0750.zip/cbs_radio_mystery_theater-0701-0750%2Fcbsrmt_0749_neatness_counts.mp3"
-      >
-        Test Link
-      </a>
-      <nuxt-content :document="page" />
       <input
         v-model="terms"
         @change="search"
@@ -29,6 +24,13 @@
           w-full
         "
       />
+      <paginated-episodes
+        v-if="episodes"
+        :current-page="tablePageNumber"
+        :episodes="episodes"
+        :total-page-number="140"
+      />
+      <!--
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
@@ -119,79 +121,51 @@
                   </div>
                 </nuxt-link>
               </div>
-              <!--
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      "
-                    >
-                      Title
-                    </th>
-                    <th
-                      scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      "
-                    >
-                      Description
-                    </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="(episode, i) in episodes" :key="episode.slug">
-                    <td class="px-6 py-4">
-                      <div class="text-xs">{{ episode.date }}</div>
-                      <a :href="episode.url" target="_blank">
-                        {{ episode.title }}
-                      </a>
-                    </td>
-                    <td class="px-6 py-4">
-                      <nuxt-content :document="episode" />
-                    </td>
-                    <td class="px-6 py-4">
-                      <div v-if="activeEpisode === episode.slug">
-                        <a :href="links[i]" target="_blank">Download</a>
-                        <audio controls>
-                          <source :src="links[i]" type="audio/mpeg" />
-                        </audio>
-                      </div>
-                      <nuxt-link v-else :to="'/episode/' + episode.slug">
-                        {{ episode.slug }}
-                      </nuxt-link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              -->
             </div>
           </div>
         </div>
       </div>
+      <pagination
+        :last="140"
+        :current="tablePageNumber + 1"
+        :span="13"
+        class="mt-6"
+        >
+        <template v-slot:page="{ pageNumber }">
+          <div
+            v-if="pageNumber !== -1 && pageNumber !== tablePageNumber + 1"
+            :class="{
+              'w-12 md:flex justify-center items-center hidden': true,
+              'cursor-pointer': true,
+              'leading-5 transition duration-150 ease-in': true,
+            }"
+            @click="gotoPage(pageNumber)"
+          >
+            <template v-if="pageNumber === -1">… </template>
+            <template v-else>{{ pageNumber }} </template>
+          </div>
+          <div
+            v-else
+            :class="{
+              'w-12 md:flex justify-center items-center hidden': true,
+              'text-red-500': pageNumber === tablePageNumber + 1,
+              'leading-5 transition duration-150 ease-in': true,
+            }"
+          >
+            <template v-if="pageNumber === -1">… </template>
+            <template v-else>{{ pageNumber }} </template>
+          </div>
+        </template>
+      </pagination>
+      -->
     </div>
-    <button @click="more">Get More</button>
   </div>
 </template>
 
 <script>
-import EpisodeNumber from '~/components/EpisodeNumber'
-
+// import EpisodeNumber from '~/components/EpisodeNumber'
+// import Pagination from '~/components/Pagination'
+import PaginatedEpisodes from '~/components/PaginatedEpisodes'
 /*
 const slugify = function (s, separator = '-') {
   return (
@@ -210,20 +184,24 @@ const slugify = function (s, separator = '-') {
 */
 
 export default {
-  components: { EpisodeNumber },
+  components: { PaginatedEpisodes },
   data() {
     return {
       activeEpisode: -1,
       terms: '',
+      tablePageNumber: 0,
     }
   },
   async asyncData({ $content, store }) {
     const page = await $content('hello').fetch()
     const episodes = await $content('episodes').sortBy('id').limit(10).fetch()
+    const episodeCount = (await $content('episodes').only([]).fetch()).length
+
     return {
       page,
       episodes,
       skip: 0,
+      episodeCount,
     }
   },
   methods: {
@@ -246,6 +224,17 @@ export default {
             this.episodes = d
           })
       }
+    },
+    gotoPage(page) {
+      this.tablePageNumber = page - 1
+      this.$content('episodes')
+        .sortBy('id')
+        .skip(this.tablePageNumber * 10)
+        .limit(10)
+        .fetch()
+        .then((d) => {
+          this.episodes = d
+        })
     },
   },
 }

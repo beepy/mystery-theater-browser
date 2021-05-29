@@ -36,10 +36,15 @@
           </li>
         </ul>
       </div>
+      <div class="col-span-3">
+        <audio controls class="w-full">
+          <source :src="episode.url" type="audio/mpeg" />
+        </audio>
+      </div>
+      <div>
+        <a :href="episode.url" :download="episode.title + '.mp3'">Download</a>
+      </div>
     </div>
-    <audio controls class="w-full">
-      <source :src="episode.url" type="audio/mpeg" />
-    </audio>
     <p v-if="episode.id < 1399">
       <nuxt-link :to="'/episode/' + (episode.id + 1)">Next</nuxt-link>
     </p>
