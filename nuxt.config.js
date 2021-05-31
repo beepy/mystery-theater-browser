@@ -31,6 +31,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/netlify-files',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

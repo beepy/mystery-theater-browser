@@ -1,0 +1,2 @@
+[[redirects]]
+/search/:term/:page /?search=:term&page=:page
