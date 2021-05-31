@@ -1,32 +1,11 @@
 <template>
   <div class="container mx-auto">
     <!-- https://archive.org/details/CBSRMTKf -->
+    <search />
     <div>
-      <input
-        v-model="terms"
-        @change="search"
-        placeholder="Search"
-        class="
-          px-3
-          py-3
-          mb-4
-          placeholder-blueGray-300
-          text-blueGray-600
-          relative
-          bg-white
-          rounded
-          text-sm
-          border-0
-          shadow
-          outline-none
-          focus:outline-none
-          focus:ring
-          w-full
-        "
-      />
       <paginated-episodes
         v-if="episodes"
-        :current-page="tablePageNumber"
+        :current-page-number="1"
         :episodes="episodes"
         :total-page-number="140"
       />
@@ -166,6 +145,7 @@
 // import EpisodeNumber from '~/components/EpisodeNumber'
 // import Pagination from '~/components/Pagination'
 import PaginatedEpisodes from '~/components/PaginatedEpisodes'
+import Search from '~/components/Search'
 /*
 const slugify = function (s, separator = '-') {
   return (
@@ -184,7 +164,7 @@ const slugify = function (s, separator = '-') {
 */
 
 export default {
-  components: { PaginatedEpisodes },
+  components: { PaginatedEpisodes, Search },
   data() {
     return {
       activeEpisode: -1,
@@ -213,17 +193,6 @@ export default {
         .limit(10)
         .fetch()
       this.episodes = episodes
-    },
-    search() {
-      if (this.terms.length > 2) {
-        this.$content('episodes')
-          .search(this.terms)
-          .sortBy('id')
-          .fetch()
-          .then((d) => {
-            this.episodes = d
-          })
-      }
     },
     gotoPage(page) {
       this.tablePageNumber = page - 1

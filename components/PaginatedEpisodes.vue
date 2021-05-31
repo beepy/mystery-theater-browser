@@ -2,7 +2,7 @@
   <div>
     <div class="">
       <div class="">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="py-2 align-middle inline-block min-w-full">
           <div
             class="
               shadow
@@ -12,7 +12,7 @@
             "
           >
             <div class="min-w-full divide-y divide-gray-200">
-              <div class="grid grid-cols-12 bg-gray-50">
+              <div class="hidden md:grid grid-cols-12 bg-gray-50">
                 <div
                   class="
                     px-6
@@ -62,7 +62,7 @@
                 :to="'/episode/' + episode.slug"
                 class="grid grid-cols-12"
               >
-                <div class="col-span-4 px-6 py-4">
+                <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
                   <span class="block font-bold">
                     {{ episode.title }}
                   </span>
@@ -77,10 +77,22 @@
                     </span>
                   </div>
                 </div>
-                <div class="col-span-6 px-6 py-4">
+                <div
+                  class="order-3 md:order-2 col-span-12 md:col-span-6 px-6 py-4"
+                >
                   <nuxt-content :document="episode" />
                 </div>
-                <div class="col-span-2 px-6 py-4 text-center">
+                <div
+                  class="
+                    order-2
+                    md:order-3
+                    col-span-4
+                    md:col-span-2
+                    px-6
+                    py-4
+                    text-center
+                  "
+                >
                   <div class="text-xs text-center mb-2">
                     {{ episode.date }}
                   </div>
@@ -106,7 +118,7 @@
             'cursor-pointer': true,
             'leading-5 transition duration-150 ease-in': true,
           }"
-          :to="'/page/' + pageNumber"
+          :to="linkPrefix + '/' + pageNumber"
         >
           <template v-if="pageNumber === -1">… </template>
           <template v-else>{{ pageNumber }} </template>
@@ -147,6 +159,10 @@ export default {
       default() {
         return []
       },
+    },
+    linkPrefix: {
+      type: String,
+      default: '/page',
     },
   },
 }

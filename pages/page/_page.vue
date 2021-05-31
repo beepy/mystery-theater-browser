@@ -1,22 +1,26 @@
 <template>
   <div>
-    <paginated-episodes
-      v-if="episodes"
-      :current-page-number="tablePageNumber"
-      :episodes="episodes"
-      :total-page-number="140"
-    />
+    <div class="container mx-auto">
+      <search />
+      <paginated-episodes
+        v-if="episodes"
+        :current-page-number="tablePageNumber"
+        :episodes="episodes"
+        :total-page-number="140"
+      />
+    </div>
   </div>
 </template>
 <script>
 import PaginatedEpisodes from '~/components/PaginatedEpisodes'
+import Search from '~/components/Search'
 
 export default {
-  components: { PaginatedEpisodes },
+  components: { PaginatedEpisodes, Search },
   data() {},
   async asyncData({ $content, store, params }) {
     let page = parseInt(params.page, 10)
-    if (page === 0) {
+    if (page === 0 || isNaN(page)) {
       page = 1
     }
     const episodes = await $content('episodes')
