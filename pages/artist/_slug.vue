@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto bg-white">
     <p>
       <nuxt-link to="/">Home</nuxt-link>
     </p>

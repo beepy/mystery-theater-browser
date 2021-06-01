@@ -1,34 +1,36 @@
 <template>
   <div class="flex flex-col items-center">
     <div class="flex h-12 font-medium rounded-full bg-gray-200">
-      <div
-        class="
-          h-12
-          w-12
-          mr-1
-          flex
-          justify-center
-          items-center
-          rounded-full
-          bg-gray-200
-          cursor-pointer
-        "
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%"
-          height="100%"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-chevron-left w-6 h-6"
+      <slot name="previous" v-bind:pageNumber="current > 1 ? current - 1 : -1">
+        <div
+          class="
+            h-12
+            w-12
+            mr-1
+            flex
+            justify-center
+            items-center
+            rounded-full
+            bg-gray-200
+            cursor-pointer
+          "
         >
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100%"
+            height="100%"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-chevron-left w-6 h-6"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </div>
+      </slot>
       <template v-for="(p, i) in pageArray">
         <slot name="page" v-bind:pageNumber="p">
           <div
@@ -44,83 +46,40 @@
           </div>
         </slot>
       </template>
-      <!--
-      <div
-        class="
-          w-12
-          md:flex
-          justify-center
-          items-center
-          hidden
-          cursor-pointer
-          leading-5
-          transition
-          duration-150
-          ease-in
-          rounded-full
-          bg-teal-600
-          text-white
-        "
-      >
-        {{ current }}
-      </div>
-      <div
-        v-for="p in pagesAfter"
-        :key="p"
-        class="
-          w-12
-          md:flex
-          justify-center
-          items-center
-          hidden
-          cursor-pointer
-          leading-5
-          transition
-          duration-150
-          ease-in
-          rounded-full
-        "
-      >
-        <template v-if="p === -1">… </template>
-        <template v-else>{{ p }} </template>
-      </div>
-      -->
-      <div
-        class="
-          h-12
-          w-12
-          mr-1
-          flex
-          justify-center
-          items-center
-          rounded-full
-          bg-gray-200
-          cursor-pointer
-        "
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%"
-          height="100%"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-chevron-left w-6 h-6"
+      <slot name="next" v-bind:pageNumber="current < last ? current + 1 : -1">
+        <div
+          class="
+            h-12
+            w-12
+            mr-1
+            flex
+            justify-center
+            items-center
+            rounded-full
+            bg-gray-200
+            cursor-pointer
+          "
         >
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100%"
+            height="100%"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-chevron-left w-6 h-6"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </slot>
     </div>
   </div>
 </template>
 <script>
-/*
-01 02 03 04 05 06 07
-01 .. 09 10 11 .. 99
- */
 export default {
   props: {
     first: {

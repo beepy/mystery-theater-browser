@@ -42,7 +42,7 @@ export default {
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {
-    fullTextSearchFields: ['title', 'description', 'name'],
+    fullTextSearchFields: ['title', 'description', 'name', 'searchable'],
     nestedProperties: ['actors.id', 'writers.id'],
   },
 

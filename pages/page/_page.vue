@@ -1,18 +1,11 @@
 <template>
   <div class="container mx-auto">
     <search :terms="searchTerms" />
-    <p v-if="searchTerms.length > 2">
-      Searching for ”<strong>{{ searchTerms }}</strong
-      >”. Found <strong> {{ episodeCount }}</strong> episode<span
-        v-if="episodeCount !== 1"
-        >s</span
-      >.
-    </p>
     <paginated-episodes
       v-if="episodes"
       :current-page-number="page"
       :episodes="episodes"
-      :total-page-number="Math.floor(episodeCount / 10)"
+      :total-page-number="Math.floor((episodeCount + 9) / 10)"
     />
   </div>
 </template>

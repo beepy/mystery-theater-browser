@@ -1,20 +1,13 @@
 <template>
   <div class="container mx-auto">
     <!-- https://archive.org/details/CBSRMTKf -->
-    <search :terms="searchTerms" />
-    <p v-if="searchTerms.length > 2">
-      Searching for ”<strong>{{ searchTerms }}</strong
-      >”. Found <strong> {{ episodeCount }}</strong> episode<span
-        v-if="episodeCount !== 1"
-        >s</span
-      >.
-    </p>
+    <search :terms="searchTerms" :count="episodeCount" />
     <div>
       <paginated-episodes
-        v-if="episodes"
+        v-if="episodes && episodes.length > 0"
         :current-page-number="1"
         :episodes="episodes"
-        :total-page-number="Math.floor(episodeCount / 10)"
+        :total-page-number="Math.floor((episodeCount + 9) / 10)"
       />
     </div>
   </div>
@@ -64,7 +57,7 @@ export default {
     const urlParams = new URLSearchParams(queryString)
     const terms = urlParams.get('search')
     let page = urlParams.get('page')
-    if (terms && terms != this.searchTerms) {
+    if (terms && terms !== this.searchTerms) {
       if (!page) {
         page = 1
       }

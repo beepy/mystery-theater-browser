@@ -1,8 +1,14 @@
 <template>
   <div>
-    <div class="py-2 align-middle inline-block min-w-full">
+    <div class="pb-20 align-middle inline-block min-w-full">
       <div
-        class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+        class="
+          shadow
+          overflow-hidden
+          border-b border-gray-200
+          sm:rounded-lg
+          bg-white
+        "
       >
         <div class="min-w-full divide-y divide-gray-200">
           <div class="hidden md:grid grid-cols-12 bg-gray-50">
@@ -53,7 +59,7 @@
             v-for="episode in episodes"
             :key="episode.slug"
             :to="'/episode/' + episode.slug"
-            class="grid grid-cols-12"
+            class="grid grid-cols-12 hover:bg-gray-50"
           >
             <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
               <span class="block font-bold">
@@ -93,38 +99,161 @@
         </div>
       </div>
     </div>
-    <pagination
-      :last="totalPageNumber"
-      :current="currentPageNumber"
-      :span="13"
-      class="mt-6"
-    >
-      <template v-slot:page="{ pageNumber }">
-        <nuxt-link
-          v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
-          :class="{
-            'w-12 md:flex justify-center items-center hidden': true,
-            'cursor-pointer': true,
-            'leading-5 transition duration-150 ease-in': true,
-          }"
-          :to="linkForPageNumber(pageNumber)"
-        >
-          <template v-if="pageNumber === -1">… </template>
-          <template v-else>{{ pageNumber }} </template>
-        </nuxt-link>
-        <div
-          v-else
-          :class="{
-            'w-12 md:flex justify-center items-center hidden': true,
-            'text-red-500': pageNumber === currentPageNumber,
-            'leading-5 transition duration-150 ease-in': true,
-          }"
-        >
-          <template v-if="pageNumber === -1">… </template>
-          <template v-else>{{ pageNumber }} </template>
-        </div>
-      </template>
-    </pagination>
+    <div class="fixed bottom-4 left-0 w-full">
+      <pagination
+        :last="totalPageNumber"
+        :current="currentPageNumber"
+        :span="13"
+        class="mt-6"
+      >
+        <template v-slot:previous="{ pageNumber }">
+          <nuxt-link
+            v-if="pageNumber > 0"
+            class="
+              h-12
+              w-12
+              mr-1
+              flex
+              justify-center
+              items-center
+              rounded-full
+              bg-gray-200
+              cursor-pointer
+            "
+            :to="linkForPageNumber(pageNumber)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100%"
+              height="100%"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left w-6 h-6"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </nuxt-link>
+          <div
+            v-else
+            class="
+              h-12
+              w-12
+              mr-1
+              flex
+              justify-center
+              items-center
+              rounded-full
+              bg-gray-200
+              opacity-25
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100%"
+              height="100%"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left w-6 h-6"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+        </template>
+        <template v-slot:page="{ pageNumber }">
+          <nuxt-link
+            v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
+            :class="{
+              'w-12 md:flex justify-center items-center hidden': true,
+              'cursor-pointer': true,
+              'leading-5 transition duration-150 ease-in': true,
+            }"
+            :to="linkForPageNumber(pageNumber)"
+          >
+            <template v-if="pageNumber === -1">… </template>
+            <template v-else>{{ pageNumber }} </template>
+          </nuxt-link>
+          <div
+            v-else
+            :class="{
+              'w-12 md:flex justify-center items-center hidden': true,
+              'text-red-500': pageNumber === currentPageNumber,
+              'leading-5 transition duration-150 ease-in': true,
+            }"
+          >
+            <template v-if="pageNumber === -1">… </template>
+            <template v-else>{{ pageNumber }} </template>
+          </div>
+        </template>
+        <template v-slot:next="{ pageNumber }">
+          <nuxt-link
+            v-if="pageNumber > 0"
+            class="
+              h-12
+              w-12
+              mr-1
+              flex
+              justify-center
+              items-center
+              rounded-full
+              bg-gray-200
+            "
+            :to="linkForPageNumber(pageNumber)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100%"
+              height="100%"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left w-6 h-6"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </nuxt-link>
+          <div
+            v-else
+            class="
+              h-12
+              w-12
+              mr-1
+              flex
+              justify-center
+              items-center
+              rounded-full
+              bg-gray-200
+              opacity-25
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100%"
+              height="100%"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left w-6 h-6"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </template>
+      </pagination>
+    </div>
   </div>
 </template>
 

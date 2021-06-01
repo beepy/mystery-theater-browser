@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="bg-white">
+      <nuxt-link class="mx-auto container py-2 font-bold mb-4 block" to="/">
+        MysteryTheater.org
+      </nuxt-link>
+    </div>
     <Nuxt />
   </div>
 </template>
@@ -15,6 +20,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  @apply bg-yellow-500;
 }
 
 *,
