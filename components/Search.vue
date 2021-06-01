@@ -49,8 +49,18 @@ export default {
     searchTerms(v) {
       if (v.length > 2) {
         const terms = v.replace('/', ' ')
+        // this.$router.push({
+        //   path: '/search/' + encodeURI(terms),
+        // })
         this.$router.push({
-          path: '/search/' + encodeURI(terms),
+          path: '/',
+          query: {
+            search: terms,
+          },
+        })
+      } else {
+        this.$router.push({
+          path: '/',
         })
       }
     },
