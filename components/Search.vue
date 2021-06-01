@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative px-2 md:px-0">
     <input
       v-model="newTerms"
       @change="search"

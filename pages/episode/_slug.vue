@@ -1,12 +1,12 @@
 <template>
   <div
     class="
-      container
-      mx-auto
+      md:container
+      md:mx-auto
       bg-white
       md:mt-10
       px-4
-      rounded
+      md:rounded-lg
       shadow
       overflow-hidden
     "
@@ -59,34 +59,49 @@
           >. MP3 provided by archive.org
         </em>
       </div>
-      <div class="col-span-4 md:col-span-3">
-        Preview
-        <audio controls class="w-full">
-          <source :src="episode.url" type="audio/mpeg" />
-        </audio>
-      </div>
-      <div class="col-span-4 md:col-span-1">
-        &nbsp;
-        <a
-          :href="episode.url"
-          :download="episode.title + '.mp3'"
-          class="block p-2 rounded bg-green-600 text-center text-white"
-          style="font-weight: bold"
-        >
-          Download
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            class="inline-block"
-          >
-            <path
-              d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-              fill="currentColor"
-            />
-          </svg>
-        </a>
+      <div class="col-span-4 text-xs -mb-10">Preview</div>
+      <div class="col-span-4">
+        <div class="flex items-center">
+          <div class="flex-grow pr-4">
+            <audio
+              controls
+              preload="metadata"
+              style="height: 42px"
+              class="w-full"
+            >
+              <source :src="episode.url" type="audio/mpeg" />
+            </audio>
+          </div>
+          <div>
+            <a
+              :href="episode.url"
+              :download="episode.title + '.mp3'"
+              class="
+                block
+                px-4
+                py-2
+                rounded
+                bg-green-600
+                text-center text-white
+              "
+              style="font-weight: bold"
+            >
+              Download
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                class="inline-block"
+              >
+                <path
+                  d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <!--

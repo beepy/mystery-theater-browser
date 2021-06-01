@@ -1,15 +1,13 @@
 <template>
-  <div class="container mx-auto bg-white">
-    <p>
-      <nuxt-link to="/">Home</nuxt-link>
-    </p>
+  <div class="md:container md:mx-auto px-4 py-8 bg-white md:rounded-lg">
     <h1 class="text-3xl text-center font-bold mb-6">{{ artist.name }}</h1>
     <div class="grid grid-cols-2 gap-6 mb-6">
       <div v-if="actor.length">
         <h2 class="font-bold">Appears In</h2>
         <ul>
           <li v-for="episode in actor" :key="episode.id">
-            <nuxt-link :to="'/episode/' + episode.id">
+            <nuxt-link :to="'/episode/' + episode.id" class="mb-1 block">
+              <episode-number :number="episode.id" class="mr-1" />
               {{ episode.title }}
             </nuxt-link>
           </li>

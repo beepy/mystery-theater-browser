@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="md:container md:mx-auto">
     <search :terms="searchTerms" />
     <paginated-episodes
       v-if="episodes"

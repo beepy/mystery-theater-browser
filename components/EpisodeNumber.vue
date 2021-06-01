@@ -1,5 +1,5 @@
 <template>
-  <span class="bg-yellow-400 px-2 py-1 rounded font-mono">
+  <span class="bg-yellow-400 px-2 py-1 rounded font-mono inline-block">
     {{ paddedNumber }}
   </span>
 </template>

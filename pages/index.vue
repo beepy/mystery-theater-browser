@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="md:container md:mx-auto">
     <!-- https://archive.org/details/CBSRMTKf -->
     <search :terms="searchTerms" :count="episodeCount" />
     <div>
