@@ -18,31 +18,35 @@ import Search from '~/components/Search'
 export default {
   components: { PaginatedEpisodes, Search },
   data() {},
-  async asyncData({ $content, store, params }) {
+  asyncData({ $content, store, params }) {
     let page = parseInt(params.page, 10)
     if (page === 0 || isNaN(page)) {
       page = 1
     }
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-    console.log('page asyncData ')
-    console.log(store.state.searchTerms)
     if (store.state.searchTerms && store.state.searchTerms.length > 2) {
       episodes = episodes.search(store.state.searchTerms)
       episodeCount = episodeCount.search(store.state.searchTerms)
     }
-    episodes = await episodes
-      .sortBy('id')
-      .skip((page - 1) * 10)
-      .limit(10)
-      .fetch()
-    episodeCount = (await episodeCount.fetch()).length
-
-    return {
-      page,
-      episodes,
-      episodeCount,
-    }
+    console.log('fetching page')
+    return episodeCount.fetch().then((ec) => {
+      episodeCount = ec.length
+      return episodes
+        .sortBy('id')
+        .skip((page - 1) * 10)
+        .limit(10)
+        .fetch()
+        .then((e) => {
+          episodes = e
+          store.commit('searchedTerms', store.state.searchTerms)
+          return {
+            page,
+            episodes,
+            episodeCount,
+          }
+        })
+    })
   },
   computed: {
     ...mapGetters({

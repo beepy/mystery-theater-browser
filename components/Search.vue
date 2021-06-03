@@ -40,9 +40,11 @@
       class="p-4 mb-4 rounded-lg text-center text-white"
     >
       Searching for ”<strong>{{ searchTerms }}</strong
-      >”. Found <strong> {{ count }}</strong> episode<span v-if="count !== 1"
-        >s</span
-      >.
+      >”<span v-if="searchTerms === searchedTerms"
+        >. Found <strong> {{ count }}</strong> episode<span v-if="count !== 1"
+          >s</span
+        >.</span
+      ><span v-else>…</span>
     </p>
   </div>
 </template>
@@ -68,6 +70,7 @@ export default {
   computed: {
     ...mapGetters({
       searchTerms: 'searchTerms',
+      searchedTerms: 'searchedTerms',
     }),
   },
   mounted() {

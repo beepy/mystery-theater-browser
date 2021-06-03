@@ -28,24 +28,34 @@ export default {
       tablePageNumber: 0,
     }
   },
-  async asyncData({ $content, store }) {
+  asyncData({ $content, store }) {
     // const page = await $content('hello').fetch()
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-
+    const st = store.state.searchTerms
     if (store.state.searchTerms && store.state.searchTerms.length > 2) {
-      episodes = episodes.search(store.state.searchTerms)
-      episodeCount = episodeCount.search(store.state.searchTerms)
+      episodes = episodes.search(st)
+      episodeCount = episodeCount.search(st)
     }
-    episodes = await episodes.sortBy('id').limit(10).fetch()
-    episodeCount = (await episodeCount.fetch()).length
-
-    return {
-      page: 1,
-      episodes,
-      skip: 0,
-      episodeCount,
-    }
+    console.log('fetching index')
+    return episodeCount.fetch().then((ec) => {
+      episodeCount = ec.length
+      return episodes
+        .sortBy('id')
+        .limit(10)
+        .fetch()
+        .then((e) => {
+          episodes = e
+          console.log('got episodes')
+          store.commit('searchedTerms', store.state.searchTerms)
+          return {
+            page: 1,
+            episodes,
+            skip: 0,
+            episodeCount,
+          }
+        })
+    })
   },
   computed: {
     ...mapGetters({
@@ -65,7 +75,7 @@ export default {
     }
   },
   watch: {
-    async searchTerms(v) {
+    searchTerms(v) {
       let episodes = this.$content('episodes')
       let episodeCount = this.$content('episodes').only([])
 
@@ -74,12 +84,21 @@ export default {
         episodes = episodes.search(terms)
         episodeCount = episodeCount.search(terms)
       }
-      episodes = await episodes.sortBy('id').limit(10).fetch()
-      episodeCount = (await episodeCount.fetch()).length
-      this.page = 0
-      this.skip = 10
-      this.episodes = episodes
-      this.episodeCount = episodeCount
+      episodeCount.fetch().then((ec) => {
+        episodeCount = ec.length
+        episodes
+          .sortBy('id')
+          .limit(10)
+          .fetch()
+          .then((e) => {
+            this.page = 0
+            this.skip = 10
+            this.episodes = e
+            this.episodeCount = episodeCount
+            // this.searchedTerms = v
+            this.$store.commit('searchedTerms', v)
+          })
+      })
     },
   },
 }
