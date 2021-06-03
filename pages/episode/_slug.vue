@@ -63,12 +63,8 @@
       <div class="col-span-4">
         <div class="flex items-center">
           <div class="flex-grow pr-4">
-            <audio
-              controls
-              preload="metadata"
-              style="height: 42px"
-              class="w-full"
-            >
+            <!-- height 42 -->
+            <audio controls preload="metadata" class="w-full rounded-lg">
               <source :src="episode.url" type="audio/mpeg" />
             </audio>
           </div>

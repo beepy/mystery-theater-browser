@@ -1,6 +1,6 @@
 <template>
   <div class="md:container md:mx-auto">
-    <search :terms="searchTerms" />
+    <search :terms="searchTerms" :count="episodeCount" />
     <paginated-episodes
       v-if="episodes"
       :current-page-number="page"

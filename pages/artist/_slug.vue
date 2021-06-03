@@ -17,7 +17,8 @@
         <h2 class="font-bold">Writer On</h2>
         <ul>
           <li v-for="episode in writer" :key="episode.id">
-            <nuxt-link :to="'/episode/' + episode.id">
+            <nuxt-link :to="'/episode/' + episode.id" class="mb-1 block">
+              <episode-number :number="episode.id" class="mr-1" />
               {{ episode.title }}
             </nuxt-link>
           </li>
