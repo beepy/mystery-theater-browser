@@ -21,23 +21,15 @@ import Search from '~/components/Search'
 
 export default {
   components: { PaginatedEpisodes, Search },
-  data() {
-    return {
-      activeEpisode: -1,
-      terms: '',
-      tablePageNumber: 0,
-    }
-  },
   asyncData({ $content, store }) {
     // const page = await $content('hello').fetch()
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-    const st = store.state.searchTerms
-    if (store.state.searchTerms && store.state.searchTerms.length > 2) {
-      episodes = episodes.search(st)
-      episodeCount = episodeCount.search(st)
-    }
-    console.log('fetching index')
+    // const st = store.state.searchTerms
+    // if (store.state.searchTerms && store.state.searchTerms.length > 2) {
+    //   episodes = episodes.search(st)
+    //   episodeCount = episodeCount.search(st)
+    // }
     return episodeCount.fetch().then((ec) => {
       episodeCount = ec.length
       return episodes
@@ -46,8 +38,7 @@ export default {
         .fetch()
         .then((e) => {
           episodes = e
-          console.log('got episodes')
-          store.commit('searchedTerms', store.state.searchTerms)
+          // store.commit('searchedTerms', store.state.searchTerms)
           return {
             page: 1,
             episodes,
@@ -60,22 +51,31 @@ export default {
   computed: {
     ...mapGetters({
       searchTerms: 'searchTerms',
+      searchedTerms: 'searchedTerms',
     }),
   },
   mounted() {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const terms = urlParams.get('search')
-    let page = urlParams.get('page')
-    if (terms && terms !== this.searchTerms) {
-      if (!page) {
-        page = 1
-      }
+    if (terms) {
       this.$store.commit('searchTerms', terms)
+      this.$store.commit('searchedTerms', '')
+      if (terms.length > 2) {
+        console.log('performSearch on index mount')
+        this.performSearch(terms)
+      }
     }
   },
   watch: {
     searchTerms(v) {
+      console.log('performSearch on index watch')
+      this.performSearch(v)
+      this.$store.commit('searchedTerms', '')
+    },
+  },
+  methods: {
+    performSearch(v) {
       let episodes = this.$content('episodes')
       let episodeCount = this.$content('episodes').only([])
 
@@ -91,11 +91,8 @@ export default {
           .limit(10)
           .fetch()
           .then((e) => {
-            this.page = 0
-            this.skip = 10
             this.episodes = e
             this.episodeCount = episodeCount
-            // this.searchedTerms = v
             this.$store.commit('searchedTerms', v)
           })
       })

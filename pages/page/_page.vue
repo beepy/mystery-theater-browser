@@ -17,19 +17,17 @@ import Search from '~/components/Search'
 
 export default {
   components: { PaginatedEpisodes, Search },
-  data() {},
   asyncData({ $content, store, params }) {
     let page = parseInt(params.page, 10)
-    if (page === 0 || isNaN(page)) {
+    if (page < 1 || isNaN(page)) {
       page = 1
     }
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-    if (store.state.searchTerms && store.state.searchTerms.length > 2) {
-      episodes = episodes.search(store.state.searchTerms)
-      episodeCount = episodeCount.search(store.state.searchTerms)
-    }
-    console.log('fetching page')
+    // if (store.state.searchTerms && store.state.searchTerms.length > 2) {
+    //   episodes = episodes.search(store.state.searchTerms)
+    //   episodeCount = episodeCount.search(store.state.searchTerms)
+    // }
     return episodeCount.fetch().then((ec) => {
       episodeCount = ec.length
       return episodes
@@ -39,7 +37,7 @@ export default {
         .fetch()
         .then((e) => {
           episodes = e
-          store.commit('searchedTerms', store.state.searchTerms)
+          // store.commit('searchedTerms', store.state.searchTerms)
           return {
             page,
             episodes,
@@ -54,43 +52,65 @@ export default {
     }),
   },
   watch: {
-    async searchTerms(v) {
-      let episodes = this.$content('episodes')
-      let episodeCount = this.$content('episodes').only([])
-
-      if (v.length > 2) {
-        const terms = v.replace('/', ' ')
-        episodes = episodes.search(terms)
-        episodeCount = episodeCount.search(terms)
-      }
-      episodes = await episodes.sortBy('id').limit(10).fetch()
-      episodeCount = (await episodeCount.fetch()).length
-      this.page = 0
-      this.skip = 10
-      this.episodes = episodes
-      this.episodeCount = episodeCount
+    searchTerms(v) {
+      console.log('perform search on page watch')
+      this.performSearch(v)
+      this.$store.commit('searchedTerms', '')
     },
   },
   mounted() {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const terms = urlParams.get('search')
-    let page = urlParams.get('page')
-    if (terms && terms !== this.searchTerms) {
-      if (!page) {
-        page = 1
-      }
+    if (terms) {
       this.$store.commit('searchTerms', terms)
+      this.$store.commit('searchedTerms', '')
+      if (terms.length > 2) {
+        console.log('perform search on page mount')
+        this.performSearch(terms)
+      }
     }
   },
-  middleware({ redirect, params }) {
+  middleware({ redirect, params, store }) {
     let page = parseInt(params.page, 10)
     if (page === 0) {
       page = 1
     }
     if (page === 1) {
-      return redirect('301', '/')
+      let l = '/'
+      if (store.getters.searchTerms && store.getters.searchTerms.length > 2) {
+        l = l + '?search=' + encodeURI(store.getters.searchTerms)
+      }
+      return redirect('301', l)
     }
+  },
+  methods: {
+    performSearch(v) {
+      let episodes = this.$content('episodes')
+      let episodeCount = this.$content('episodes').only([])
+      let page = this.page
+      if (page < 1 || isNaN(page)) {
+        page = 1
+      }
+      if (v.length > 2) {
+        const terms = v.replace('/', ' ')
+        episodes = episodes.search(terms)
+        episodeCount = episodeCount.search(terms)
+      }
+      episodeCount.fetch().then((ec) => {
+        episodeCount = ec.length
+        episodes
+          .sortBy('id')
+          .skip((page - 1) * 10)
+          .limit(10)
+          .fetch()
+          .then((e) => {
+            this.episodes = e
+            this.episodeCount = episodeCount
+            this.$store.commit('searchedTerms', v)
+          })
+      })
+    },
   },
 }
 </script>
