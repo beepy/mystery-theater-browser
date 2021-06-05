@@ -56,46 +56,56 @@
             target="_blank"
             class="underline"
             >Keith Flowers</a
-          >. MP3 provided by archive.org
+          >.
         </em>
       </div>
       <div class="col-span-4 text-xs -mb-10">Preview</div>
-      <div class="col-span-4">
-        <div class="flex items-center">
-          <div class="flex-grow pr-4">
-            <!-- height 42 -->
-            <audio controls preload="metadata" class="w-full rounded-lg">
-              <source :src="episode.url" type="audio/mpeg" />
-            </audio>
-          </div>
-          <div>
-            <a
-              :href="episode.url"
-              :download="episode.title + '.mp3'"
-              class="
-                block
-                px-4
-                py-2
-                rounded
-                bg-green-600
-                text-center text-white
-              "
-              style="font-weight: bold"
-            >
-              Download
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                class="inline-block"
-              >
-                <path
-                  d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                  fill="currentColor"
-                />
-              </svg>
+      <div class="col-span-4" v-for="url in links" :key="url.url">
+        <div class="grid grid-cols-4 gap-6 mb-6">
+          <div class="col-span-4">
+            <a v-if="url.sourceLink" :href="url.sourceLink" target="_blank">
+              {{ url.source }}
             </a>
+            <span v-else>{{ url.source }}</span>
+          </div>
+          <div class="col-span-4">
+            <div class="flex items-center">
+              <div v-if="url.sourceTag !== 'kl-vinyl'" class="flex-grow pr-4">
+                <!-- height 42 -->
+                <audio controls preload="metadata" class="w-full rounded-lg">
+                  <source :src="url.url" type="audio/mpeg" />
+                </audio>
+              </div>
+              <div>
+                <a
+                  :href="url.url"
+                  :download="episode.title + '.mp3'"
+                  class="
+                    block
+                    px-4
+                    py-2
+                    rounded
+                    bg-green-600
+                    text-center text-white
+                  "
+                  style="font-weight: bold"
+                >
+                  Download
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    class="inline-block"
+                  >
+                    <path
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,6 +130,45 @@ export default {
       } else {
         return []
       }
+    },
+    links() {
+      const quality = ['kl-vinyl', 'kf-archive', 'archive-org']
+      const source = [
+        'High quality vinyl transfer provided by Ken Long',
+        'High quality reel-to-reel transfer provided by Keith Flowers via archive.org',
+        'MP3 provided by archive.org',
+        'Source unknown',
+      ]
+      const sourceLink = [
+        'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
+        'https://archive.org/details/CBSRMTKf',
+        null,
+        null,
+      ]
+      // first we map them
+      const urls = this.episode.urls.map((u) => {
+        let i = quality.indexOf(u.source)
+        if (i < 0) {
+          i = 3
+        }
+        return {
+          url: u.url,
+          quality: i,
+          sourceTag: u.source,
+          source: source[i],
+          sourceLink: sourceLink[i],
+        }
+      })
+      // then we sort them
+      return urls.sort((a, b) => {
+        if (a.quality < b.quality) {
+          return -1
+        } else if (a.quality > b.quality) {
+          return 1
+        } else {
+          return 0
+        }
+      })
     },
   },
   async asyncData({ $content, store, params }) {
