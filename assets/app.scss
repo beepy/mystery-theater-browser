@@ -1,0 +1,24 @@
+.markdown-content {
+  h1 {
+    @apply text-2xl;
+    @apply md:text-4xl mb-2;
+  }
+  h2 {
+    @apply text-xl;
+    @apply md:text-3xl mb-2;
+  }
+  h3 {
+    @apply text-lg;
+    @apply md:text-2xl mb-2;
+  }
+  p, ul, ol, blockquote {
+    @apply mb-2;
+  }
+  ul {
+    @apply list-disc;
+    @apply pl-4;
+  }
+  a {
+    @apply underline;
+  }
+}

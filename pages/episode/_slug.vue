@@ -132,24 +132,105 @@ export default {
       }
     },
     links() {
-      const quality = ['kl-vinyl', 'kf-archive', 'archive-org']
+      const quality = [
+        'kl-vinyl',
+        'kf-archive',
+        'kl-kf',
+        'archive-org',
+        'kl-extra',
+        'kl-rwm',
+        'kl-jl',
+        'kl-DH',
+        'kl-dlg',
+        'kl-ed',
+        'kl-jc',
+        'kl-pp',
+        'kl-tc',
+        'kl-ws',
+        'kl-pp',
+        'kl-cinci',
+        'kl-rw',
+        'kl-kixi',
+        'kl-rb',
+        'kl-misc',
+        'kl-post-2013distro',
+        'kl-br',
+      ]
+
       const source = [
         'High quality vinyl transfer provided by Ken Long',
         'High quality reel-to-reel transfer provided by Keith Flowers via archive.org',
+        'Ken Long Collection: KF',
         'MP3 provided by archive.org',
+        'Ken Long collection',
+        'Ken Long Collection: RWM',
+        'Ken Long Collection: JL',
+        'Ken Long Collection: DH',
+        'Ken Long Collection: DLG',
+        'Ken Long Collection: ED',
+        'Ken Long Collection: JC',
+        'Ken Long Collection: PP',
+        'Ken Long Collection: TC',
+        'Ken Long Collection: WS',
+        'Ken Long Collection: PP',
+        'Ken Long Collection: CINCI',
+        'Ken Long Collection: RW',
+        'Ken Long Collection: KIXI',
+        'Ken Long Collection: RB',
+        'Ken Long Collection: MISC',
+        'Ken Long Collection: POST-2013',
+        'Ken Long Collection: BR',
         'Source unknown',
       ]
       const sourceLink = [
         'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
+        'http://cbsrmt.thelongtrek.com/kf/kf.html',
         'https://archive.org/details/CBSRMTKf',
         null,
+        'http://cbsrmt.thelongtrek.com',
+        'http://cbsrmt.thelongtrek.com/rwm/index.htm',
+        'http://cbsrmt.thelongtrek.com/jl/jl.html',
+        'http://cbsrmt.thelongtrek.com/DH/dh.html',
+        'http://cbsrmt.thelongtrek.com/dlg/dlg.html',
+        'http://cbsrmt.thelongtrek.com/ed/ed.html',
+        'http://cbsrmt.thelongtrek.com/jc/jc.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_1-16.html',
+        'http://cbsrmt.thelongtrek.com/tc/tc.html',
+        'http://cbsrmt.thelongtrek.com/ws/ws.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_17.html',
+        /*
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_18.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_19.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_20.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_21.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_22.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_23.html',
+        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_24.html',
+        */
+        'http://cbsrmt.thelongtrek.com/cinci/cinci.html',
+        'http://cbsrmt.thelongtrek.com/rw/rw.htm',
+        'http://cbsrmt.thelongtrek.com/kixi/kixi.html',
+        'http://cbsrmt.thelongtrek.com/rb/RB-WLNH.htm',
+        /*
+        'http://cbsrmt.thelongtrek.com/rb/RB-WUWM.htm',
+        'http://cbsrmt.thelongtrek.com/rb/RB-WBBM.htm',
+        'http://cbsrmt.thelongtrek.com/rb/rb-wjw/rb-wjw.html',
+        */
+        'http://cbsrmt.thelongtrek.com/misc/misc.html',
+        'http://cbsrmt.thelongtrek.com/post-2013distro/post-distro-2013-upgrades.htm',
+        'http://cbsrmt.thelongtrek.com/br/br.htm',
+        /*
+        'http://cbsrmt.thelongtrek.com/br/br2.htm',
+        'http://cbsrmt.thelongtrek.com/br/br3.htm',
+        'http://cbsrmt.thelongtrek.com/br/br4.htm',
+        */
         null,
       ]
       // first we map them
       const urls = this.episode.urls.map((u) => {
         let i = quality.indexOf(u.source)
         if (i < 0) {
-          i = 3
+          i = 4
         }
         return {
           url: u.url,

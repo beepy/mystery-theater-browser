@@ -27,3 +27,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 * https://en.wikipedia.org/wiki/CBS_Radio_Mystery_Theater#Notable_performers
 * https://archive.org/search.php?query=creator%3A%22Himan+Brown%22
 * revival - original recordings or just scripts? https://archive.org/details/HimanBrownsMysteryTheaterrevival/1998-08-31-Cbsrmt271-1975-05-09-TheVoicesOfDeath.mp3
+* https://www.radioechoes.com/?page=series&genre=OTR-Mystery&series=CBS%20Radio%20Mystery%20Theater

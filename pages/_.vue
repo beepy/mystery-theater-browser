@@ -5,13 +5,13 @@
       md:mx-auto
       bg-white
       md:mt-10
-      px-4
+      p-8
       md:rounded-lg
       shadow
       overflow-hidden
     "
   >
-    <nuxt-content :document="page" />
+    <nuxt-content :document="page" class="markdown-content" />
   </div>
 </template>
 <script>
