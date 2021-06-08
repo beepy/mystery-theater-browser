@@ -9,15 +9,37 @@
       md:rounded-lg
       shadow
       overflow-hidden
+      transitionable
     "
   >
-    <div class="grid grid-cols-4 gap-6 mb-6 px-4 py-6 bg-gray-200 -mx-4">
-      <div class="col-span-3">
-        <h1 class="text-3xl font-bold">{{ episode.title }}</h1>
+    <div class="grid grid-cols-4 mb-6 px-4 py-6 bg-gray-200 -mx-4">
+      <div class="col-span-3 pr-6">
+        <h1 class="text-3xl font-bold mb-6">{{ episode.title }}</h1>
       </div>
-      <div>
+      <div class="pr-0 md:pr-6 text-right">
         <p class="text-xs mb-2">{{ episode.date }}</p>
         <episode-number :number="episode.id" />
+      </div>
+      <div class="flex col-span-4">
+        <n-link
+          :to="'/episode/' + (parseInt(episode.id) - 1)"
+          :index="parseInt(episode.id) - 1"
+          nav-tag="episode"
+          :depth="2"
+          class="flex-shrink"
+        >
+          <previous-icon class="text-black w-8" />
+        </n-link>
+        <div class="flex-grow" />
+        <n-link
+          :to="'/episode/' + (parseInt(episode.id) + 1)"
+          :index="parseInt(episode.id) + 1"
+          nav-tag="episode"
+          :depth="2"
+          class="text-right flex-shrink"
+        >
+          <next-icon class="text-black w-8" />
+        </n-link>
       </div>
     </div>
     <div class="grid grid-cols-4 gap-6 mb-6">
@@ -60,7 +82,7 @@
         </em>
       </div>
       <div class="col-span-4 text-xs -mb-10">Preview</div>
-      <div class="col-span-4" v-for="url in links" :key="url.url">
+      <div v-for="url in links" :key="url.url" class="col-span-4">
         <div class="grid grid-cols-4 gap-6 mb-6">
           <div class="col-span-4">
             <a v-if="url.sourceLink" :href="url.sourceLink" target="_blank">
@@ -119,8 +141,22 @@
 </template>
 <script>
 import EpisodeNumber from '~/components/EpisodeNumber'
+import RelativeTransitions from '~/mixins/relativeTransitions'
+import NLink from '~/components/NLink'
+import NextIcon from '~/components/NextIcon'
+import PreviousIcon from '~/components/PreviousIcon'
+
 export default {
-  components: { EpisodeNumber },
+  components: { EpisodeNumber, NextIcon, NLink, PreviousIcon },
+  mixins: [RelativeTransitions],
+  async asyncData({ $content, store, params }) {
+    const episode = await $content('episodes/' + params.slug).fetch()
+    // const artists = await $content('artists').fetch()
+    return {
+      episode,
+      // artists,
+    }
+  },
   computed: {
     actors() {
       if (this.episode && this.episode.actors && this.artists) {
@@ -251,14 +287,6 @@ export default {
         }
       })
     },
-  },
-  async asyncData({ $content, store, params }) {
-    const episode = await $content('episodes/' + params.slug).fetch()
-    // const artists = await $content('artists').fetch()
-    return {
-      episode,
-      // artists,
-    }
   },
 }
 </script>

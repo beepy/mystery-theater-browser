@@ -2,7 +2,6 @@
   <div class="relative px-2 md:px-0">
     <input
       v-model="newTerms"
-      @change="search"
       placeholder="Search"
       class="
         px-3
@@ -21,6 +20,7 @@
         focus:ring
         w-full
       "
+      @change="search"
     />
     <svg
       v-if="searchTerms.length > 2"
@@ -73,9 +73,6 @@ export default {
       searchedTerms: 'searchedTerms',
     }),
   },
-  mounted() {
-    this.newTerms = this.terms
-  },
   watch: {
     searchTerms(v) {
       if (this.newTerms !== v) {
@@ -98,6 +95,9 @@ export default {
         })
       }
     },
+  },
+  mounted() {
+    this.newTerms = this.terms
   },
   methods: {
     search() {

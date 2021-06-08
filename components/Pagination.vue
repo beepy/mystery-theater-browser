@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center">
     <div class="flex h-12 font-medium rounded-full bg-gray-200">
-      <slot name="previous" v-bind:pageNumber="current > 1 ? current - 1 : -1">
+      <slot name="previous" :pageNumber="current > 1 ? current - 1 : -1">
         <div
           class="
             h-12
@@ -32,21 +32,21 @@
         </div>
       </slot>
       <template v-for="(p, i) in pageArray">
-        <slot name="page" v-bind:pageNumber="p">
+        <slot name="page" :pageNumber="p">
           <div
+            :key="i"
             :class="{
               'w-12 md:flex justify-center items-center hidden': true,
               'cursor-pointer': p !== current && p !== -1,
               'leading-5 transition duration-150 ease-in': true,
             }"
-            :key="i"
           >
             <template v-if="p === -1">… </template>
             <template v-else>{{ p }} </template>
           </div>
         </slot>
       </template>
-      <slot name="next" v-bind:pageNumber="current < last ? current + 1 : -1">
+      <slot name="next" :pageNumber="current < last ? current + 1 : -1">
         <div
           class="
             h-12

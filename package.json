@@ -17,6 +17,7 @@
     "core-js": "^3.9.1",
     "node-sass": "^6.0.0",
     "nuxt": "^2.15.3",
+    "nuxt-route-meta": "^2.0.5",
     "sass-loader": "^10.1.1"
   },
   "devDependencies": {

@@ -8,6 +8,7 @@
           border-b border-gray-200
           md:rounded-lg
           bg-white
+          transitionable
         "
       >
         <div class="min-w-full divide-y divide-gray-200">
@@ -55,11 +56,14 @@
               Episode
             </div>
           </div>
-          <nuxt-link
+          <n-link
             v-for="episode in episodes"
             :key="episode.slug"
             :to="'/episode/' + episode.slug"
-            class="grid grid-cols-12 hover:bg-gray-50"
+            class="grid grid-cols-12 hover:bg-gray-50 row"
+            :depth="2"
+            nav-tag="episode"
+            :index="episode.slug"
           >
             <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
               <span class="block font-bold">
@@ -95,7 +99,7 @@
               </div>
               <episode-number :number="episode.id" />
             </div>
-          </nuxt-link>
+          </n-link>
         </div>
       </div>
     </div>
@@ -106,8 +110,8 @@
         :span="13"
         class="mt-6"
       >
-        <template v-slot:previous="{ pageNumber }">
-          <nuxt-link
+        <template #previous="{ pageNumber }">
+          <n-link
             v-if="pageNumber > 0"
             class="
               h-12
@@ -121,6 +125,9 @@
               cursor-pointer
             "
             :to="linkForPageNumber(pageNumber)"
+            :depth="navDepth"
+            :nav-tag="navTag"
+            :index="pageNumber"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +143,7 @@
             >
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
-          </nuxt-link>
+          </n-link>
           <div
             v-else
             class="
@@ -167,8 +174,8 @@
             </svg>
           </div>
         </template>
-        <template v-slot:page="{ pageNumber }">
-          <nuxt-link
+        <template #page="{ pageNumber }">
+          <n-link
             v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
             :class="{
               'w-12 md:flex justify-center items-center hidden': true,
@@ -176,10 +183,13 @@
               'leading-5 transition duration-150 ease-in': true,
             }"
             :to="linkForPageNumber(pageNumber)"
+            :depth="navDepth"
+            :nav-tag="navTag"
+            :index="pageNumber"
           >
             <template v-if="pageNumber === -1">… </template>
             <template v-else>{{ pageNumber }} </template>
-          </nuxt-link>
+          </n-link>
           <div
             v-else
             :class="{
@@ -192,8 +202,8 @@
             <template v-else>{{ pageNumber }} </template>
           </div>
         </template>
-        <template v-slot:next="{ pageNumber }">
-          <nuxt-link
+        <template #next="{ pageNumber }">
+          <n-link
             v-if="pageNumber > 0"
             class="
               h-12
@@ -206,6 +216,9 @@
               bg-gray-200
             "
             :to="linkForPageNumber(pageNumber)"
+            :depth="navDepth"
+            :nav-tag="navTag"
+            :index="pageNumber"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +234,7 @@
             >
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
-          </nuxt-link>
+          </n-link>
           <div
             v-else
             class="
@@ -262,9 +275,10 @@ import { mapGetters } from 'vuex'
 
 import EpisodeNumber from '~/components/EpisodeNumber'
 import Pagination from '~/components/Pagination'
+import NLink from '~/components/NLink'
 
 export default {
-  components: { EpisodeNumber, Pagination },
+  components: { EpisodeNumber, Pagination, NLink },
   props: {
     currentPageNumber: {
       type: Number,
@@ -283,6 +297,14 @@ export default {
     linkPrefix: {
       type: String,
       default: '/page',
+    },
+    navTag: {
+      type: String,
+      default: 'episodes',
+    },
+    navDepth: {
+      type: Number,
+      default: 1,
     },
   },
   computed: {

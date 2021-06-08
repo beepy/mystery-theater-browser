@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="bg-white mb-4">
+    <div class="bg-white mb-4 px-2">
       <div class="container mx-auto flex">
-        <nuxt-link class="px-2 md:px-0 py-2 font-bold block flex-grow" to="/">
+        <nuxt-link class="py-2 font-bold block flex-grow" to="/">
           MysteryTheater.org
         </nuxt-link>
-        <nuxt-link class="px-2 md:px-0 py-2 block flex-shrink" to="/about">
+        <nuxt-link class="py-2 block flex-shrink" to="/about">
           About
         </nuxt-link>
       </div>

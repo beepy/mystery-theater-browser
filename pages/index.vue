@@ -19,8 +19,11 @@ import { mapGetters } from 'vuex'
 import PaginatedEpisodes from '~/components/PaginatedEpisodes'
 import Search from '~/components/Search'
 
+import RelativeTransitions from '~/mixins/relativeTransitions'
+
 export default {
   components: { PaginatedEpisodes, Search },
+  mixins: [RelativeTransitions],
   asyncData({ $content, store }) {
     // const page = await $content('hello').fetch()
     let episodes = $content('episodes')
@@ -54,6 +57,16 @@ export default {
       searchedTerms: 'searchedTerms',
     }),
   },
+  watch: {
+    searchTerms(v) {
+      console.log('performSearch on index watch')
+      this.performSearch(v)
+      this.$store.commit('searchedTerms', '')
+    },
+  },
+  beforeMount() {
+    this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: 1 })
+  },
   mounted() {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
@@ -66,13 +79,6 @@ export default {
         this.performSearch(terms)
       }
     }
-  },
-  watch: {
-    searchTerms(v) {
-      console.log('performSearch on index watch')
-      this.performSearch(v)
-      this.$store.commit('searchedTerms', '')
-    },
   },
   methods: {
     performSearch(v) {

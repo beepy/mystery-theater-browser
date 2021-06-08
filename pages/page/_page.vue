@@ -11,12 +11,16 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+// import { store } from '~/store/index'
 
 import PaginatedEpisodes from '~/components/PaginatedEpisodes'
 import Search from '~/components/Search'
 
+import RelativeTransitions from '~/mixins/relativeTransitions'
+
 export default {
   components: { PaginatedEpisodes, Search },
+  mixins: [RelativeTransitions],
   asyncData({ $content, store, params }) {
     let page = parseInt(params.page, 10)
     if (page < 1 || isNaN(page)) {
@@ -46,10 +50,18 @@ export default {
         })
     })
   },
+  data() {
+    return {
+      d1: 'hello world',
+    }
+  },
   computed: {
     ...mapGetters({
       searchTerms: 'searchTerms',
     }),
+    someIndex() {
+      return 123
+    },
   },
   watch: {
     searchTerms(v) {
@@ -57,6 +69,10 @@ export default {
       this.performSearch(v)
       this.$store.commit('searchedTerms', '')
     },
+  },
+  beforeCreate() {
+    console.log('page before mount ' + this.page)
+    // this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: this.page })
   },
   mounted() {
     const queryString = window.location.search
@@ -70,6 +86,11 @@ export default {
         this.performSearch(terms)
       }
     }
+    // this.$store.commit('navFrom', {
+    //   tag: 'episodes',
+    //   depth: 1,
+    //   index: this.page,
+    // })
   },
   middleware({ redirect, params, store }) {
     let page = parseInt(params.page, 10)
@@ -111,6 +132,36 @@ export default {
           })
       })
     },
+    performTest() {
+      return 'bizbaz'
+    },
   },
+  // meta() {
+  //   return {
+  //     nav: {
+  //       tag: 'episodes',
+  //       depth: 1,
+  //       index: this.page,
+  //     },
+  //   }
+  // },
+  meta: {
+    baz: 'boz',
+    foo() {
+      return 'bar '
+    },
+  },
+  route: {
+    props: {
+      bar: 'foo',
+    },
+  },
+  // transition(x, y, z) {
+  //   console.log('transition')
+  //   console.log(z)
+  //   console.log(y)
+  //   console.log(x)
+  //   return 'slide-right'
+  // },
 }
 </script>
