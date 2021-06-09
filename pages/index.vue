@@ -78,6 +78,8 @@ export default {
         console.log('performSearch on index mount')
         this.performSearch(terms)
       }
+    } else {
+      this.$store.commit('searchTerms', '')
     }
   },
   methods: {

@@ -5,7 +5,7 @@ import { mapGetters } from 'vuex'
 export default {
   transition(to, from) {
     let name = 'page'
-    let mode = ''
+    let mode = 'out-in'
     if (
       window &&
       window.$nuxt &&
@@ -29,8 +29,10 @@ export default {
           name = 'page'
         } else if (navFrom.index < navTo.index) {
           name = 'slide-right'
+          mode = ''
         } else {
           name = 'slide-left'
+          mode = ''
         }
       } else if (navFrom.depth === navTo.depth) {
         name = 'page'
