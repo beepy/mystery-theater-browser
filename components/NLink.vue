@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="to" custom v-slot="{ navigate, href, route }">
+  <nuxt-link v-slot="{ navigate, href, route }" :to="to" custom>
     <a :href="href" @click.prevent="beforeClick(navigate, route)">
       <slot />
     </a>

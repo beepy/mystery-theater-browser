@@ -1,8 +1,8 @@
 <template>
-  <div class="md:container md:mx-auto">
-    <!-- https://archive.org/details/CBSRMTKf -->
-    <search :terms="searchTerms" :count="episodeCount" />
-    <div>
+  <div class="absolute-on-leave">
+    <div class="md:container md:mx-auto">
+      <!-- https://archive.org/details/CBSRMTKf -->
+      <search :terms="searchTerms" :count="episodeCount" />
       <paginated-episodes
         v-if="episodes && episodes.length > 0"
         :current-page-number="1"

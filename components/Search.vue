@@ -37,7 +37,7 @@
     </svg>
     <p
       v-if="searchTerms.length > 2"
-      class="p-4 mb-4 rounded-lg text-center text-white"
+      class="p-4 mb-4 rounded-lg text-center text-white hide-on-leave"
     >
       Searching for ”<strong>{{ searchTerms }}</strong
       >”<span v-if="searchTerms === searchedTerms"

@@ -4,6 +4,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   transition(to, from) {
+    let name = 'page'
     if (
       window &&
       window.$nuxt &&
@@ -24,21 +25,25 @@ export default {
       ])
       if (navFrom.tag === navTo.tag) {
         if (navFrom.index === navTo.index) {
-          return 'page'
+          name = 'page'
         } else if (navFrom.index < navTo.index) {
-          return 'slide-right'
+          name = 'slide-right'
         } else {
-          return 'slide-left'
+          name = 'slide-left'
         }
       } else if (navFrom.depth === navTo.depth) {
-        return 'page'
+        name = 'page'
       } else if (navFrom.depth < navTo.depth) {
-        return 'slide-top'
+        name = 'slide-top'
       } else {
-        return 'slide-bottom'
+        name = 'slide-bottom'
       }
     }
-    return 'page'
+    // options for mode are 'out-in', 'in-out', or '' for simultaneous
+    return {
+      name,
+      mode: '',
+    }
   },
   computed: {
     ...mapGetters({

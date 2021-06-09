@@ -67,20 +67,27 @@
   transform: translate3d(0, -15px, 0);
 }
 
-$lrt1: 0.04s;
-$lrt2: 0.08s;
-$lrw: 1vw;
+$lrt1: 0.15s;
+$lrt2: 0.33s;
+$lrw: 10vw;
 
 .slide-left-enter-active  {
   transition: opacity $lrt2 ease-out, transform $lrt1 ease-out;
-  &.transitionable, .transitionable {
+  &.transitionable, .transitionable, .overlayable {
     transition: opacity $lrt1 ease-out, transform $lrt2 ease-out;
   }
 }
 
 .slide-left-leave-active {
   transition: opacity $lrt2 ease-in, transform $lrt1 ease-in;
-  &.transitionable, .transitionable {
+  &.absolute-on-leave, .absolute-on-leave {
+    width: 100%;
+    position: absolute;
+  }
+  .hide-on-leave {
+    opacity: 0;
+  }
+  &.transitionable, .transitionable, .overlayable {
     transition: opacity $lrt1 ease-in, transform $lrt2 ease-in;
   }
 }
@@ -88,7 +95,7 @@ $lrw: 1vw;
 .slide-left-enter,
 .slide-left-leave-to {
   opacity: 0.80;
-  &.transitionable, .transitionable {
+  &.transitionable, .transitionable, .overlayable {
     opacity: 0;
   }
 }
@@ -105,14 +112,21 @@ $lrw: 1vw;
 }
 .slide-right-enter-active  {
   transition: opacity $lrt2 ease-out, transform $lrt1 ease-out;
-  &.transitionable, .transitionable {
+  &.transitionable, .transitionable, .overlayable {
     transition: opacity $lrt1 ease-out, transform $lrt2 ease-out;
   }
 }
 
 .slide-right-leave-active {
   transition: opacity $lrt2 ease-in, transform $lrt1 ease-in;
-  &.transitionable, .transitionable {
+  &.absolute-on-leave, .absolute-on-leave {
+    width: 100%;
+    position: absolute;
+  }
+  .hide-on-leave {
+    opacity: 0;
+  }
+  &.transitionable, .transitionable, .overlayable {
     transition: opacity $lrt1 ease-in, transform $lrt2 ease-in;
   }
 }
@@ -120,7 +134,7 @@ $lrw: 1vw;
 .slide-right-enter,
 .slide-right-leave-to {
   opacity: 0.80;
-  &.transitionable, .transitionable {
+  &.transitionable, .transitionable, .overlayable {
     opacity: 0;
   }
 }

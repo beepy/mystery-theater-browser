@@ -1,12 +1,14 @@
 <template>
-  <div class="md:container md:mx-auto">
-    <search :terms="searchTerms" :count="episodeCount" />
-    <paginated-episodes
-      v-if="episodes"
-      :current-page-number="page"
-      :episodes="episodes"
-      :total-page-number="Math.floor((episodeCount + 9) / 10)"
-    />
+  <div class="absolute-on-leave">
+    <div class="md:container md:mx-auto">
+      <search :terms="searchTerms" :count="episodeCount" />
+      <paginated-episodes
+        v-if="episodes"
+        :current-page-number="page"
+        :episodes="episodes"
+        :total-page-number="Math.floor((episodeCount + 9) / 10)"
+      />
+    </div>
   </div>
 </template>
 <script>
