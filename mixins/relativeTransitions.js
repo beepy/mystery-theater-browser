@@ -5,6 +5,7 @@ import { mapGetters } from 'vuex'
 export default {
   transition(to, from) {
     let name = 'page'
+    let mode = ''
     if (
       window &&
       window.$nuxt &&
@@ -38,11 +39,14 @@ export default {
       } else {
         name = 'slide-bottom'
       }
+      if (navFrom.tag.includes('*') || navTo.tag.includes('*')) {
+        mode = 'out-in'
+      }
     }
     // options for mode are 'out-in', 'in-out', or '' for simultaneous
     return {
       name,
-      mode: '',
+      mode,
     }
   },
   computed: {

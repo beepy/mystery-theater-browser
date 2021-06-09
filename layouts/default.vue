@@ -2,18 +2,36 @@
   <div>
     <div class="bg-white mb-4 px-2">
       <div class="container mx-auto flex">
-        <nuxt-link class="py-2 font-bold block flex-grow" to="/">
+        <n-link
+          class="py-2 font-bold block flex-grow"
+          to="/"
+          :depth="1"
+          nav-tag="episodes"
+          :index="1"
+        >
           MysteryTheater.org
-        </nuxt-link>
-        <nuxt-link class="py-2 block flex-shrink" to="/about">
+        </n-link>
+        <n-link
+          class="py-2 block flex-shrink"
+          to="/about"
+          :depth="1"
+          nav-tag="page*"
+          :index="1"
+        >
           About
-        </nuxt-link>
+        </n-link>
       </div>
     </div>
     <Nuxt />
   </div>
 </template>
+<script>
+import NLink from '~/components/NLink.vue'
 
+export default {
+  components: { NLink },
+}
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -27,41 +45,5 @@ html {
   box-sizing: border-box;
   /*@apply bg-yellow-500;*/
   @apply bg-gray-800;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
 }
 </style>
