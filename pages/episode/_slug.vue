@@ -99,7 +99,7 @@
                   <span v-else>{{ url.source }}</span>
                 </div>
                 <div class="col-span-4">
-                  <div class="flex items-center">
+                  <div class="flex items-top">
                     <div
                       v-if="url.sourceTag !== 'kl-vinyl'"
                       class="flex-grow pr-4"
@@ -113,7 +113,30 @@
                         <source :src="url.url" type="audio/mpeg" />
                       </audio>
                     </div>
-                    <div>
+                    <div style="width: 15%; min-width: 12rem">
+                      <client-download
+                        :href="url.url"
+                        :download="url.filename"
+                        class="
+                          block
+                          px-4
+                          py-2
+                          rounded
+                          bg-green-600
+                          text-center text-white
+                          font-bold
+                        "
+                      >
+                        Download <download-icon />
+                      </client-download>
+                      <a
+                        :href="url.url"
+                        :download="episode.title + '.mp3'"
+                        class="block py-2 text-center underline text-xs"
+                      >
+                        Direct Link
+                      </a>
+                      <!--
                       <a
                         :href="url.url"
                         :download="episode.title + '.mp3'"
@@ -128,19 +151,8 @@
                         style="font-weight: bold"
                       >
                         Download
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          class="inline-block"
-                        >
-                          <path
-                            d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
-                            fill="currentColor"
-                          />
-                        </svg>
                       </a>
+                      -->
                     </div>
                   </div>
                 </div>
@@ -158,14 +170,23 @@
   </div>
 </template>
 <script>
+import ClientDownload from '~/components/ClientDownload'
 import EpisodeNumber from '~/components/EpisodeNumber'
 import RelativeTransitions from '~/mixins/relativeTransitions'
 import NLink from '~/components/NLink'
 import NextIcon from '~/components/NextIcon'
 import PreviousIcon from '~/components/PreviousIcon'
+import DownloadIcon from '~/components/DownloadIcon'
 
 export default {
-  components: { EpisodeNumber, NextIcon, NLink, PreviousIcon },
+  components: {
+    ClientDownload,
+    DownloadIcon,
+    EpisodeNumber,
+    NextIcon,
+    NLink,
+    PreviousIcon,
+  },
   mixins: [RelativeTransitions],
   async asyncData({ $content, store, params }) {
     const episode = await $content('episodes/' + params.slug).fetch()
@@ -283,6 +304,10 @@ export default {
       // first we map them
       const urls = this.episode.urls.map((u) => {
         let i = quality.indexOf(u.source)
+        let cleanUrlFile = u.url.substring(u.url.lastIndexOf('/') + 1)
+
+        cleanUrlFile = decodeURIComponent(cleanUrlFile)
+
         if (i < 0) {
           i = 4
         }
@@ -292,6 +317,13 @@ export default {
           sourceTag: u.source,
           source: source[i],
           sourceLink: sourceLink[i],
+          filename:
+            String(this.episode.id).padStart(4, '0') +
+            ' ' +
+            this.episode.title +
+            ' (' +
+            cleanUrlFile +
+            ').mp3',
         }
       })
       // then we sort them
@@ -304,6 +336,11 @@ export default {
           return 0
         }
       })
+    },
+  },
+  methods: {
+    altDownload(url) {
+      this.$store.commit('appendToDownloadQueue', { url })
     },
   },
 }

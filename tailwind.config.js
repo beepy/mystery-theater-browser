@@ -8,6 +8,13 @@ module.exports = {
       ringColor: ['focus-visible'],
       ringOffsetWidth: ['focus-visible'],
       ringOffsetColor: ['focus-visible'],
-    }
+    },
   },
+  theme: {
+    extend: {
+      transitionProperty: {
+          'width': 'width',
+      },
+    }
+  }
 }

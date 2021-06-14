@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="bg-white mb-4 px-2">
-      <div class="container mx-auto flex">
+      <div class="container mx-auto flex items-center">
         <n-link
-          class="py-2 font-bold block flex-grow"
+          class="py-2 font-bold block flex-shrink"
           to="/"
           :depth="1"
           nav-tag="episodes"
@@ -11,6 +11,9 @@
         >
           MysteryTheater.org
         </n-link>
+        <div class="flex-grow px-4 justify-items-end grid">
+          <download-progress />
+        </div>
         <n-link
           class="py-2 block flex-shrink"
           to="/about"
@@ -27,9 +30,10 @@
 </template>
 <script>
 import NLink from '~/components/NLink.vue'
+import DownloadProgress from '~/components/DownloadProgress'
 
 export default {
-  components: { NLink },
+  components: { DownloadProgress, NLink },
 }
 </script>
 <style>

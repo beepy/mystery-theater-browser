@@ -15,7 +15,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
-     { src: '/scripts/focus-visible.min.js', async: true, defer: true },
+      { src: '/scripts/focus-visible.min.js', async: true, defer: true },
     ],
   },
 
@@ -50,10 +50,10 @@ export default {
     nestedProperties: ['actors.id', 'writers.id'],
   },
 
-  postcss:{
-    plugins:{
-      'postcss-focus-visible': {}
-    }
+  postcss: {
+    plugins: {
+      'postcss-focus-visible': {},
+    },
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

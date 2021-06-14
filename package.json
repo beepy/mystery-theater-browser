@@ -17,6 +17,7 @@
     "@tailwindcss/postcss7-compat": "^2.1.4",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.9.1",
+    "filesize": "^6.3.0",
     "focus-visible": "^5.2.0",
     "node-sass": "^6.0.0",
     "nuxt": "^2.15.3",
