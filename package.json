@@ -20,6 +20,7 @@
     "filesize": "^6.3.0",
     "focus-visible": "^5.2.0",
     "node-sass": "^6.0.0",
+    "nosleep.js": "^0.12.0",
     "nuxt": "^2.15.3",
     "nuxt-route-meta": "^2.0.5",
     "postcss-focus-visible": "^5.0.0",

@@ -34,6 +34,7 @@ export default {
   computed: {
     ...mapGetters({
       headOfDownloadQueue: 'headOfDownloadQueue',
+      noSleep: 'noSleep',
     }),
   },
   watch: {
@@ -49,6 +50,10 @@ export default {
         }
       } else {
         this.inProgress = false
+        if (this.noSleep) {
+          this.$noSleep.disable()
+          this.$store.commit('noSleep', false)
+        }
       }
     },
   },

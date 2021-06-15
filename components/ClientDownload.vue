@@ -27,6 +27,16 @@
 import { mapGetters } from 'vuex'
 import filesize from 'filesize'
 
+/*
+NRL NOTE: We need to begin in an indeterminate state, with a "starting download"
+message. For whatever reason, it can take a long time from the initial request
+to traffic actually starting; probably archive.org puts content to "sleep" or
+in "cold storage" and needs to have services woken up? Otherwise, status stays
+in "Downloading 0%" for a long time. Needs to be mirrored in global
+downloadprogress.
+
+Also, might as well use "longtrek" http error to test handling of errors.
+ */
 export default {
   props: {
     href: {
@@ -49,6 +59,7 @@ export default {
   computed: {
     ...mapGetters({
       headOfDownloadQueue: 'headOfDownloadQueue',
+      noSleep: 'noSleep',
     }),
     downloadedSize() {
       if (this.state > 0 && this.headOfDownloadQueue.loaded) {
@@ -84,6 +95,10 @@ export default {
           download: this.download,
         })
         this.state = 1
+        if (!this.noSleep) {
+          this.$noSleep.enable()
+          this.$store.commit('noSleep', true)
+        }
       }
     },
   },

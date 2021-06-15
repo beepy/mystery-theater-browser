@@ -85,107 +85,58 @@
                 >.
               </em>
             </div>
-            <div class="col-span-4 text-xs -mb-10">Preview</div>
-            <div v-for="url in links" :key="url.url" class="col-span-4">
-              <div class="grid grid-cols-4 gap-6 mb-6">
-                <div class="col-span-4">
-                  <a
-                    v-if="url.sourceLink"
-                    :href="url.sourceLink"
-                    target="_blank"
-                  >
-                    {{ url.source }}
-                  </a>
-                  <span v-else>{{ url.source }}</span>
-                </div>
-                <div class="col-span-4">
-                  <div class="flex items-top">
-                    <div
-                      v-if="url.sourceTag !== 'kl-vinyl'"
-                      class="flex-grow pr-4"
-                    >
-                      <!-- height 42 -->
-                      <audio
-                        controls
-                        preload="metadata"
-                        class="w-full rounded-lg"
-                      >
-                        <source :src="url.url" type="audio/mpeg" />
-                      </audio>
-                    </div>
-                    <div style="width: 15%; min-width: 12rem">
-                      <client-download
-                        :href="url.url"
-                        :download="url.filename"
-                        class="
-                          block
-                          px-4
-                          py-2
-                          rounded
-                          bg-green-600
-                          text-center text-white
-                          font-bold
-                        "
-                      >
-                        Download <download-icon />
-                      </client-download>
-                      <a
-                        :href="url.url"
-                        :download="episode.title + '.mp3'"
-                        class="block py-2 text-center underline text-xs"
-                      >
-                        Direct Link
-                      </a>
-                      <!--
-                      <a
-                        :href="url.url"
-                        :download="episode.title + '.mp3'"
-                        class="
-                          block
-                          px-4
-                          py-2
-                          rounded
-                          bg-green-600
-                          text-center text-white
-                        "
-                        style="font-weight: bold"
-                      >
-                        Download
-                      </a>
-                      -->
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <download-options
+              v-if="!showAllDownloads"
+              :url="links[0]"
+              :key="links[0].url"
+              :episode="episode"
+            />
+            <download-options
+              v-else
+              v-for="url in links"
+              :key="url.url"
+              :url="url"
+              :episode="episode"
+            />
+            <div v-if="links.length > 1" class="col-span-4 text-xs">
+              <button
+                v-if="showAllDownloads"
+                @click="toggleShowAllDownloads(false)"
+                class="rounded p-2 bg-gray-200"
+              >
+                Hide additional downloads
+              </button>
+              <button
+                v-else
+                @click="toggleShowAllDownloads(true)"
+                class="rounded p-2 bg-gray-200"
+              >
+                Show additional downloads
+              </button>
             </div>
           </div>
-          <!--
-          <p v-if="episode.id < 1399">
-            <nuxt-link :to="'/episode/' + (episode.id + 1)">Next</nuxt-link>
-          </p>
-          -->
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ClientDownload from '~/components/ClientDownload'
+import { mapGetters } from 'vuex'
+
 import EpisodeNumber from '~/components/EpisodeNumber'
 import RelativeTransitions from '~/mixins/relativeTransitions'
 import NLink from '~/components/NLink'
 import NextIcon from '~/components/NextIcon'
 import PreviousIcon from '~/components/PreviousIcon'
-import DownloadIcon from '~/components/DownloadIcon'
+import DownloadOptions from '~/components/DownloadOptions'
 
 export default {
   components: {
-    ClientDownload,
-    DownloadIcon,
     EpisodeNumber,
     NextIcon,
     NLink,
     PreviousIcon,
+    DownloadOptions,
   },
   mixins: [RelativeTransitions],
   async asyncData({ $content, store, params }) {
@@ -197,6 +148,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      showAllDownloads: 'showAllDownloads',
+    }),
     actors() {
       if (this.episode && this.episode.actors && this.artists) {
         return this.artists.body.filter((a) => {
@@ -341,6 +295,9 @@ export default {
   methods: {
     altDownload(url) {
       this.$store.commit('appendToDownloadQueue', { url })
+    },
+    toggleShowAllDownloads(v) {
+      this.$store.commit('showAllDownloads', v)
     },
   },
 }

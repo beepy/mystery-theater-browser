@@ -17,9 +17,17 @@ export const navTo = (state, v) => {
   state.navTo = Object.assign({}, v)
 }
 
+export const showAllDownloads = (state, v) => {
+  state.showAllDownloads = v
+}
+
 export const appendToDownloadQueue = (state, v) => {
   state.downloadQueue.push(Object.assign({ id: downloadQueueItemId }, v))
   downloadQueueItemId = downloadQueueItemId + 1
+}
+
+export const noSleep = (state, v) => {
+  state.noSleep = v
 }
 
 export const updateHeadOfDownloadQueue = (state, v) => {
