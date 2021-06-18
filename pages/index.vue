@@ -64,6 +64,11 @@ export default {
       this.$store.commit('searchedTerms', '')
     },
   },
+  head() {
+    return {
+      title: 'Mystery Theater Browser | MysteryTheater.org ',
+    }
+  },
   beforeMount() {
     this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: 1 })
   },

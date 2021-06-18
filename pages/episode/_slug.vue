@@ -1,6 +1,6 @@
 <template>
   <div class="absolute-on-leave">
-    <div class="md:container md:mx-auto">
+    <div class="max-w-4xl md:mx-auto">
       <div class="md:pt-5">
         <!-- <div class="bg-white p-12 text-black absolute">Hello world</div> -->
         <div
@@ -145,6 +145,11 @@ export default {
     return {
       episode,
       // artists,
+    }
+  },
+  head() {
+    return {
+      title: this.episode.title + ' | MysteryTheater.org ',
     }
   },
   computed: {

@@ -37,6 +37,11 @@ import RelativeTransitions from '~/mixins/relativeTransitions'
 
 export default {
   mixins: [RelativeTransitions],
+  head() {
+    return {
+      title: this.artist.name + ' | MysteryTheater.org ',
+    }
+  },
   async asyncData({ $content, store, params }) {
     const artist = await $content('artists/' + params.slug).fetch()
     /*

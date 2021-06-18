@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-white mb-4 px-2">
-      <div class="container mx-auto flex items-center">
+      <div class="max-w-4xl mx-auto flex items-center">
         <n-link
           class="py-2 font-bold block flex-shrink"
           to="/"

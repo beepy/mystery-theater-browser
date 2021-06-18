@@ -1,7 +1,8 @@
 <template>
+  <!-- md:container -->
   <div
     class="
-      md:container
+      max-w-4xl
       md:mx-auto
       bg-white
       md:mt-10
@@ -23,6 +24,11 @@ export default {
       return {
         page,
       }
+    }
+  },
+  head() {
+    return {
+      title: this.page.title + ' | MysteryTheater.org ',
     }
   },
 }

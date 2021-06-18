@@ -52,6 +52,11 @@ export default {
         })
     })
   },
+  head() {
+    return {
+      title: 'Mystery Theater Browser | MysteryTheater.org ',
+    }
+  },
   data() {
     return {
       d1: 'hello world',
