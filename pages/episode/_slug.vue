@@ -1,11 +1,10 @@
 <template>
   <div class="absolute-on-leave">
-    <div class="max-w-4xl mx-auto">
+    <div class="md:container lg:max-w-4xl mx-auto">
       <div class="md:pt-5">
         <!-- <div class="bg-white p-12 text-black absolute">Hello world</div> -->
         <div
           class="
-            md:container
             bg-white
             px-4
             md:rounded-lg
