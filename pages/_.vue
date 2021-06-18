@@ -3,7 +3,7 @@
   <div
     class="
       max-w-4xl
-      md:mx-auto
+      mx-auto
       bg-white
       md:mt-10
       p-8

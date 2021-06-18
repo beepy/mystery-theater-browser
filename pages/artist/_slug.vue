@@ -1,5 +1,5 @@
 <template>
-  <div class="md:container md:mx-auto px-4 py-8 bg-white md:rounded-lg">
+  <div class="max-w-4xl mx-auto px-4 py-8 bg-white md:rounded-lg">
     <h1 class="text-3xl text-center font-bold mb-6">{{ artist.name }}</h1>
     <div
       :class="{
