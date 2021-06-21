@@ -49,5 +49,9 @@ html {
   box-sizing: border-box;
   /*@apply bg-yellow-500;*/
   @apply bg-gray-800;
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
 }
 </style>

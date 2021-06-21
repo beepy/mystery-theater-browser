@@ -1,8 +1,34 @@
 <template>
   <div class="absolute-on-leave">
+    <div class="align-middle inline-block min-w-full">
+      <div class="fixed bottom-1 left-0 w-full px-2 z-10">
+        <div class="flex max-w-4xl mx-auto">
+          <n-link
+            v-if="episode.id !== 1"
+            :to="'/episode/' + (parseInt(episode.id) - 1)"
+            :index="parseInt(episode.id) - 1"
+            nav-tag="episode"
+            :depth="2"
+            class="flex-shrink p-1 bg-gray-200 rounded-full shadow"
+          >
+            <previous-icon class="text-black w-8" />
+          </n-link>
+          <div class="flex-grow" />
+          <n-link
+            v-if="episode.id !== 1399"
+            :to="'/episode/' + (parseInt(episode.id) + 1)"
+            :index="parseInt(episode.id) + 1"
+            nav-tag="episode"
+            :depth="2"
+            class="flex-shrink p-1 bg-gray-200 rounded-full shadow"
+          >
+            <next-icon class="text-black w-8" />
+          </n-link>
+        </div>
+      </div>
+    </div>
     <div class="md:container lg:max-w-4xl mx-auto">
-      <div class="md:pt-5">
-        <!-- <div class="bg-white p-12 text-black absolute">Hello world</div> -->
+      <div>
         <div
           class="
             bg-white
@@ -11,38 +37,19 @@
             shadow
             overflow-hidden
             transitionable
+            pb-8
+            md:pb-0
           "
         >
-          <div class="grid grid-cols-4 mb-6 px-4 py-6 bg-gray-200 -mx-4">
-            <div class="col-span-3 pr-6">
-              <h1 class="text-3xl font-bold mb-6">{{ episode.title }}</h1>
+          <div class="grid grid-cols-4 mb-6 px-0 pt-6 bg-gray-200 -mx-4">
+            <div class="col-span-3 pl-4 pr-6">
+              <h1 class="text-2xl md:text-3xl font-bold mb-6">
+                {{ episode.title }}
+              </h1>
             </div>
-            <div class="pr-0 md:pr-6 text-right">
+            <div class="pr-0 pr-4 pb-4 text-right">
               <p class="text-xs mb-2">{{ episode.date }}</p>
               <episode-number :number="episode.id" />
-            </div>
-            <div class="flex col-span-4">
-              <n-link
-                v-if="episode.id !== 1"
-                :to="'/episode/' + (parseInt(episode.id) - 1)"
-                :index="parseInt(episode.id) - 1"
-                nav-tag="episode"
-                :depth="2"
-                class="flex-shrink"
-              >
-                <previous-icon class="text-black w-8" />
-              </n-link>
-              <div class="flex-grow" />
-              <n-link
-                v-if="episode.id !== 1399"
-                :to="'/episode/' + (parseInt(episode.id) + 1)"
-                :index="parseInt(episode.id) + 1"
-                nav-tag="episode"
-                :depth="2"
-                class="text-right flex-shrink"
-              >
-                <next-icon class="text-black w-8" />
-              </n-link>
             </div>
           </div>
           <div class="grid grid-cols-4 gap-6 mb-6">
