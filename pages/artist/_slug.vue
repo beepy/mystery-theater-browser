@@ -11,10 +11,16 @@
         <h2 class="font-bold">Featured In</h2>
         <ul :class="{ 'columns-2': writer.length < 1 }">
           <li v-for="episode in actor" :key="episode.id">
-            <nuxt-link :to="'/episode/' + episode.id" class="mb-1 block">
+            <n-link
+              :to="'/episode/' + episode.id"
+              nav-tag="episode"
+              :index="episode.id"
+              :depth="2"
+              class="mb-1 block"
+            >
               <episode-number :number="episode.id" class="mr-1" />
               {{ episode.title }}
-            </nuxt-link>
+            </n-link>
           </li>
         </ul>
       </div>
@@ -22,10 +28,16 @@
         <h2 class="font-bold">Writer On</h2>
         <ul :class="{ 'columns-2': actor.length < 1 }">
           <li v-for="episode in writer" :key="episode.id">
-            <nuxt-link :to="'/episode/' + episode.id" class="mb-1 block">
+            <n-link
+              :to="'/episode/' + episode.id"
+              nav-tag="episode"
+              :index="episode.id"
+              :depth="2"
+              class="mb-1 block"
+            >
               <episode-number :number="episode.id" class="mr-1" />
               {{ episode.title }}
-            </nuxt-link>
+            </n-link>
           </li>
         </ul>
       </div>
@@ -34,8 +46,10 @@
 </template>
 <script>
 import RelativeTransitions from '~/mixins/relativeTransitions'
+import NLink from '~/components/NLink'
 
 export default {
+  components: { NLink },
   mixins: [RelativeTransitions],
   head() {
     return {
@@ -67,5 +81,8 @@ export default {
       writer,
     }
   },
+  // beforeMount() {
+  //   this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: 1 })
+  // },
 }
 </script>

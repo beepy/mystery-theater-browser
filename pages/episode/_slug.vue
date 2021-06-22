@@ -60,9 +60,13 @@
               <h2 class="font-bold">Written by</h2>
               <ul>
                 <li v-for="artist in episode.writers" :key="artist.id">
-                  <nuxt-link :to="'/artist/' + artist.id">
+                  <n-link
+                    :to="'/artist/' + artist.id"
+                    nav-tag="artist"
+                    :depth="3"
+                  >
                     {{ artist.name }}
-                  </nuxt-link>
+                  </n-link>
                 </li>
               </ul>
             </div>
@@ -70,9 +74,13 @@
               <h2 class="font-bold">Featured Cast</h2>
               <ul>
                 <li v-for="artist in episode.actors" :key="artist.id">
-                  <nuxt-link :to="'/artist/' + artist.id">
+                  <n-link
+                    :to="'/artist/' + artist.id"
+                    nav-tag="artist"
+                    :depth="3"
+                  >
                     {{ artist.name }}
-                  </nuxt-link>
+                  </n-link>
                 </li>
               </ul>
             </div>

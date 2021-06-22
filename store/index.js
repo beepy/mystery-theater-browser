@@ -6,4 +6,5 @@ export const state = () => ({
   downloadQueue: [],
   showAllDownloads: false,
   noSleep: false,
+  historyNav: false,
 })

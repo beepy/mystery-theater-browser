@@ -9,10 +9,14 @@ export const searchedTerms = (state, v) => {
 }
 
 export const navFrom = (state, v) => {
+  console.log('navFrom')
+  console.log(v)
   state.navFrom = Object.assign({}, v)
 }
 
 export const navTo = (state, v) => {
+  console.log('navTo')
+  console.log(v)
   state.navFrom = Object.assign({}, state.navTo)
   state.navTo = Object.assign({}, v)
 }
@@ -44,4 +48,8 @@ export const popHeadOfDownloadQueue = (state) => {
   if (state.downloadQueue.length > 0) {
     state.downloadQueue.splice(0, 1)
   }
+}
+
+export const historyNav = (state, v) => {
+  state.historyNav = v
 }
