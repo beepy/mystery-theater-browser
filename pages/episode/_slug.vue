@@ -84,7 +84,10 @@
                 </li>
               </ul>
             </div>
-            <div class="col-span-4 text-xs">
+            <div
+              v-if="episode.descriptionSource === 'kf'"
+              class="col-span-4 text-xs"
+            >
               <em class="text-gray-500">
                 Description provided by
                 <a

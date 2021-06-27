@@ -7,3 +7,4 @@ export const noSleep = (state) => state.noSleep
 export const headOfDownloadQueue = (state) =>
   state.downloadQueue.length > 0 ? state.downloadQueue[0] : {}
 export const historyNav = (state) => state.historyNav
+export const tags = (state) => state.tags

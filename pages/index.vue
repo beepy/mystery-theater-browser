@@ -59,7 +59,6 @@ export default {
   },
   watch: {
     searchTerms(v) {
-      console.log('performSearch on index watch')
       this.performSearch(v)
       this.$store.commit('searchedTerms', '')
     },

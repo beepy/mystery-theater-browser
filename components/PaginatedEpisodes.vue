@@ -82,6 +82,7 @@
             </div>
             <div class="order-3 md:order-2 col-span-12 md:col-span-6 px-6 py-4">
               <nuxt-content :document="episode" />
+              <episode-tags v-if="episode.tags" :episode-tags="episode.tags" />
             </div>
             <div
               class="
@@ -276,9 +277,9 @@ import { mapGetters } from 'vuex'
 import EpisodeNumber from '~/components/EpisodeNumber'
 import Pagination from '~/components/Pagination'
 import NLink from '~/components/NLink'
-
+import EpisodeTags from '~/components/EpisodeTags'
 export default {
-  components: { EpisodeNumber, Pagination, NLink },
+  components: { EpisodeNumber, EpisodeTags, Pagination, NLink },
   props: {
     currentPageNumber: {
       type: Number,

@@ -72,13 +72,13 @@ export default {
   },
   watch: {
     searchTerms(v) {
-      console.log('perform search on page watch')
+      // console.log('perform search on page watch')
       this.performSearch(v)
       this.$store.commit('searchedTerms', '')
     },
   },
   beforeCreate() {
-    console.log('page before mount ' + this.page)
+    // console.log('page before mount ' + this.page)
     // this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: this.page })
   },
   mounted() {
@@ -89,7 +89,7 @@ export default {
       this.$store.commit('searchTerms', terms)
       this.$store.commit('searchedTerms', '')
       if (terms.length > 2) {
-        console.log('perform search on page mount')
+        // console.log('perform search on page mount')
         this.performSearch(terms)
       }
     }
