@@ -40,7 +40,7 @@ Unfortunately, archive.org doesn't serve MP3s in a way that allows them to be do
 
 To make downloading the episodes more convenient, so that you don't need to specify that you wish to download an MP3 every single time, this site does some fancy stuff[^2] so that one-click downloading works. The download progress will be shown on the download button, and in the site’s menu bar, but not in your browser’s normal download interface. When the MP3 has been fetched, it will then be added to your system and appear in your browser’s download interface.
 
-You shouldn't navigate away from the site when you’re downloading, because the download will stop and you will lose progress. You can, navigate off the episode you are downloading to any other page on the site. You can also queue as many episodes as you like for downloading.
+You shouldn't navigate away from the site when you’re downloading, because the download will stop and you will lose progress. You can, however, navigate away from the episode you are downloading to any other page on the site. You can also queue as many episodes as you like for downloading.
 
 If for any reason you have trouble downloading, you can use the **Direct Link** link underneath the download button. Right-clicking, or control-clicking, or long-pressing will bring up a contextual menu where you will be able to download the MP3 using your browser’s normal interface.
 
