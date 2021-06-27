@@ -26,6 +26,16 @@
       </div>
     </div>
     <Nuxt />
+    <div v-if="alwaysFalse">
+      <div class="text-blue-700" />
+      <div class="text-yellow-600" />
+      <div class="text-red-700" />
+      <div class="text-indigo-700" />
+      <div class="text-pink-700" />
+      <div class="text-purple-700" />
+      <div class="text-pink-700" />
+      <div class="text-indigo-700" />
+    </div>
   </div>
 </template>
 <script>
@@ -34,6 +44,11 @@ import DownloadProgress from '~/components/DownloadProgress'
 
 export default {
   components: { DownloadProgress, NLink },
+  data() {
+    return {
+      alwaysFalse: false,
+    }
+  },
 }
 </script>
 <style>
