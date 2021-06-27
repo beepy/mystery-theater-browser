@@ -5,7 +5,7 @@
       :key="tag.tag"
       :class="[
         'rounded',
-        'text-' + tag.meta.color,
+        tag.meta.color,
         'px-2 py-1 text-xs mr-2 uppercase font-bold bg-gray-100',
       ]"
     >

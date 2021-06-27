@@ -10,35 +10,35 @@ export const state = () => ({
   tags: {
     crime: {
       title: 'Crime',
-      color: 'blue-700',
+      color: 'text-blue-700',
     },
     drama: {
       title: 'Drama',
-      color: 'yellow-600',
+      color: 'text-yellow-600',
     },
     murder: {
       title: 'Murder',
-      color: 'red-700',
+      color: 'text-red-700',
     },
     mystery: {
       title: 'Mystery',
-      color: 'indigo-700',
+      color: 'text-indigo-700',
     },
     paranormal: {
       title: 'Paranormal',
-      color: 'pink-700',
+      color: 'text-pink-700',
     },
     psychological: {
       title: 'Psychological',
-      color: 'purple-700',
+      color: 'text-purple-700',
     },
     supernatural: {
       title: 'Supernatural',
-      color: 'pink-700',
+      color: 'text-pink-700',
     },
     whodunnit: {
       title: 'Whodunnit',
-      color: 'indigo-700',
+      color: 'text-indigo-700',
     },
   },
 })
