@@ -87,6 +87,9 @@
                     {{ artist.name }}
                   </n-link>
                 </li>
+                <li v-if="episode.notes" class="text-xs text-gray-500 italic">
+                  {{ episode.notes }}
+                </li>
               </ul>
               <episode-tags
                 v-if="episode.tags"

@@ -36,6 +36,10 @@ export const state = () => ({
       title: 'Paranormal',
       color: 'pink-700',
     },
+    'poor-audio': {
+      title: 'Poor Audio',
+      color: 'red-400',
+    },
     psychological: {
       title: 'Psychological',
       color: 'purple-700',
