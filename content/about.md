@@ -21,6 +21,10 @@ The wonderful Internet Archive does not provide a wonderful way to discover cont
 
 There is [a complete collection of all episodes, without descriptions, on the Internet Archive](https://archive.org/details/cbs_radio_mystery_theater), but the fidelity of the recordings varies. I wanted a way to provide superior recordings, which exist for many episodes, when they were available.
 
+### Progress
+
+Each episode is being manually reviewed to ensure the best recording is offered. At the same time, new descriptions are being written and episodes are receiving thematic tags (e.g., whoddunit, sci-fi, paranormal). Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
+
 ## Sources
 
 I have no connection with these individuals; they have generously provided these resources for this public domain work on the web which I have used to compile the data for this site:

@@ -19,7 +19,6 @@
 export default {
   async asyncData({ $content, params }) {
     const page = await $content(params.pathMatch).fetch()
-    console.log(params)
     if (page) {
       return {
         page,

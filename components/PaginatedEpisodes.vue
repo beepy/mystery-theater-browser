@@ -37,6 +37,7 @@
                 uppercase
                 tracking-wider
                 col-span-6
+                xl:col-span-7
               "
             >
               Description
@@ -51,6 +52,7 @@
                 uppercase
                 tracking-wider
                 col-span-2
+                xl:col-span-1
               "
             >
               Episode
@@ -80,9 +82,23 @@
                 </span>
               </div>
             </div>
-            <div class="order-3 md:order-2 col-span-12 md:col-span-6 px-6 py-4">
+            <div
+              class="
+                order-3
+                md:order-2
+                col-span-12
+                md:col-span-6
+                xl:col-span-7
+                px-6
+                py-4
+              "
+            >
               <nuxt-content :document="episode" />
-              <episode-tags v-if="episode.tags" :episode-tags="episode.tags" />
+              <episode-tags
+                v-if="episode.tags"
+                :episode-tags="episode.tags"
+                class="block text-right"
+              />
             </div>
             <div
               class="
@@ -90,6 +106,7 @@
                 md:order-3
                 col-span-4
                 md:col-span-2
+                xl:col-span-1
                 px-6
                 py-4
                 text-center

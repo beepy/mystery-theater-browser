@@ -8,6 +8,10 @@ export const state = () => ({
   noSleep: false,
   historyNav: false,
   tags: {
+    adaptation: {
+      title: 'Adaptation',
+      color: 'gray-700',
+    },
     crime: {
       title: 'Crime',
       color: 'blue-700',
@@ -19,6 +23,10 @@ export const state = () => ({
     murder: {
       title: 'Murder',
       color: 'red-700',
+    },
+    multipart: {
+      title: 'Multipart',
+      color: 'gray-700',
     },
     mystery: {
       title: 'Mystery',

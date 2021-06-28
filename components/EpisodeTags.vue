@@ -1,10 +1,10 @@
 <template>
-  <p class="text-right">
+  <p>
     <span
       v-for="tag in titledTags"
       :key="tag.tag"
       :class="[
-        'rounded',
+        'rounded inline-block mt-2',
         'text-' + tag.meta.color,
         'px-2 py-1 text-xs mr-2 uppercase font-bold bg-gray-100',
       ]"
@@ -32,8 +32,8 @@ export default {
     titledTags() {
       return this.episodeTags.map((t) => {
         return {
-          tag: t.tag,
-          meta: this.tags[t.tag],
+          tag: t,
+          meta: this.tags[t],
         }
       })
     },

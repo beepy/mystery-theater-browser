@@ -55,20 +55,11 @@
           <div class="grid grid-cols-4 gap-6 mb-6">
             <div class="col-span-4 md:col-span-2">
               <nuxt-content :document="episode" />
-            </div>
-            <div class="col-span-2 md:col-span-1">
-              <h2 class="font-bold">Written by</h2>
-              <ul>
-                <li v-for="artist in episode.writers" :key="artist.id">
-                  <n-link
-                    :to="'/artist/' + artist.id"
-                    nav-tag="artist"
-                    :depth="3"
-                  >
-                    {{ artist.name }}
-                  </n-link>
-                </li>
-              </ul>
+              <episode-tags
+                v-if="episode.tags"
+                :episode-tags="episode.tags"
+                class="block md:hidden text-right"
+              />
             </div>
             <div class="col-span-2 md:col-span-1">
               <h2 class="font-bold">Featured Cast</h2>
@@ -83,6 +74,25 @@
                   </n-link>
                 </li>
               </ul>
+            </div>
+            <div class="col-span-2 md:col-span-1">
+              <h2 class="font-bold">Written by</h2>
+              <ul>
+                <li v-for="artist in episode.writers" :key="artist.id">
+                  <n-link
+                    :to="'/artist/' + artist.id"
+                    nav-tag="artist"
+                    :depth="3"
+                  >
+                    {{ artist.name }}
+                  </n-link>
+                </li>
+              </ul>
+              <episode-tags
+                v-if="episode.tags"
+                :episode-tags="episode.tags"
+                class="hidden md:block mt-4"
+              />
             </div>
             <div
               v-if="episode.descriptionSource === 'kf'"
@@ -146,10 +156,12 @@ import NLink from '~/components/NLink'
 import NextIcon from '~/components/NextIcon'
 import PreviousIcon from '~/components/PreviousIcon'
 import DownloadOptions from '~/components/DownloadOptions'
+import EpisodeTags from '~/components/EpisodeTags'
 
 export default {
   components: {
     EpisodeNumber,
+    EpisodeTags,
     NextIcon,
     NLink,
     PreviousIcon,
