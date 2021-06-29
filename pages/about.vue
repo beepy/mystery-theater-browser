@@ -13,7 +13,6 @@
     "
   >
     <nuxt-content :document="page" class="markdown-content" />
-    <pre>{{ page.body }}</pre>
   </div>
 </template>
 <script>
