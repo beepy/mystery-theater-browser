@@ -43,7 +43,7 @@
         >
           <div class="grid grid-cols-4 mb-6 px-0 pt-6 bg-gray-200 -mx-4">
             <div class="col-span-3 pl-4 pr-6">
-              <h1 class="text-2xl md:text-3xl font-bold mb-6">
+              <h1 class="text-2xl md:text-3xl font-bold mb-6 font-fancy">
                 {{ episode.title }}
               </h1>
             </div>
