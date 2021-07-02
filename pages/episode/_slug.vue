@@ -1,7 +1,7 @@
 <template>
   <div class="absolute-on-leave">
     <div class="align-middle inline-block min-w-full">
-      <div class="fixed bottom-1 left-0 w-full px-2 z-10">
+      <div class="fixed bottom-4 lg:bottom-8 left-0 w-full px-2 z-10">
         <div class="flex max-w-4xl mx-auto">
           <n-link
             v-if="episode.id !== 1"
@@ -41,18 +41,21 @@
             md:pb-0
           "
         >
-          <div class="grid grid-cols-4 mb-6 px-0 pt-6 bg-gray-200 -mx-4">
+          <!-- bg-gray-200 -->
+          <div
+            class="grid grid-cols-4 px-0 py-6 -mx-4 items-center gradient-gray"
+          >
             <div class="col-span-3 pl-4 pr-6">
-              <h1 class="text-2xl md:text-3xl font-bold mb-6 font-fancy">
+              <h1 class="text-2xl md:text-3xl font-bold font-fancy">
                 {{ episode.title }}
               </h1>
             </div>
-            <div class="pr-0 pr-4 pb-4 text-right">
+            <div class="pr-0 pr-4 text-right">
               <p class="text-xs mb-2">{{ episode.date }}</p>
               <episode-number :number="episode.id" />
             </div>
           </div>
-          <div class="grid grid-cols-4 gap-6 mb-6">
+          <div class="grid grid-cols-4 gap-6 my-6">
             <div class="col-span-4 md:col-span-2">
               <nuxt-content :document="episode" />
               <episode-tags

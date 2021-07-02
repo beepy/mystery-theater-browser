@@ -254,6 +254,13 @@ a {
   100% { margin-left: 100%; margin-right: 0; }
 }
 
+.gradient-gray {
+  background: linear-gradient(
+    135deg,
+    rgba(223, 225, 230, 1) 0%,
+    rgba(229, 231, 235, 1) 100%
+  );
+}
 // .font-fancy {
 //   font-family: 'IM Fell Great Primer', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 // }
