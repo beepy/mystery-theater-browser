@@ -4,12 +4,13 @@
     <div
       :class="{
         'mb-6': true,
-        'grid grid-cols-2 gap-6': writer.length > 0 && actor.length > 0,
+        'md:grid md:grid-cols-2 md:gap-6':
+          writer.length > 0 && actor.length > 0,
       }"
     >
       <div v-if="actor.length">
         <h2 class="font-bold">Featured In</h2>
-        <ul :class="{ 'columns-2': writer.length < 1 }">
+        <ul :class="{ 'md:columns-2': writer.length < 1 }">
           <li v-for="episode in actor" :key="episode.id">
             <n-link
               :to="'/episode/' + episode.id"
@@ -24,9 +25,9 @@
           </li>
         </ul>
       </div>
-      <div v-if="writer.length">
+      <div v-if="writer.length" :class="{ 'mt-4 md:mt-0': actor.length >= 1 }">
         <h2 class="font-bold">Writer On</h2>
-        <ul :class="{ 'columns-2': actor.length < 1 }">
+        <ul :class="{ 'md:columns-2': actor.length < 1 }">
           <li v-for="episode in writer" :key="episode.id">
             <n-link
               :to="'/episode/' + episode.id"
