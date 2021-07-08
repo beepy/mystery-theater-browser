@@ -20,6 +20,10 @@ export const state = () => ({
       title: 'Drama',
       color: 'yellow-600',
     },
+    'good-audio': {
+      title: 'Good Audio',
+      color: 'green-400'
+    },
     murder: {
       title: 'Murder',
       color: 'red-700',

@@ -203,6 +203,7 @@ export default {
     links() {
       const quality = [
         'kl-vinyl',
+        'dummy-manual',
         'kf-archive',
         'kl-kf',
         'archive-org',
@@ -228,6 +229,7 @@ export default {
 
       const source = [
         'High quality vinyl transfer provided by Ken Long',
+        'Manual',
         'High quality reel-to-reel transfer provided by Keith Flowers via archive.org',
         'Ken Long Collection: KF',
         'MP3 provided by archive.org',
@@ -253,6 +255,7 @@ export default {
       ]
       const sourceLink = [
         'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
+        null,
         'http://cbsrmt.thelongtrek.com/kf/kf.html',
         'https://archive.org/details/CBSRMTKf',
         null,
@@ -298,16 +301,21 @@ export default {
       // first we map them
       const urls = this.episode.urls.map((u) => {
         let i = quality.indexOf(u.source)
+        let q = i
         let cleanUrlFile = u.url.substring(u.url.lastIndexOf('/') + 1)
 
-        cleanUrlFile = decodeURIComponent(cleanUrlFile)
+        cleanUrlFile = decodeURIComponent(cleanUrlFile).replace('.mp3', '')
 
         if (i < 0) {
           i = 4
+          q = 3
+        }
+        if (u.quality && parseInt(u.quality, 10) > 0) {
+          q = 2
         }
         return {
           url: u.url,
-          quality: i,
+          quality: q,
           sourceTag: u.source,
           source: source[i],
           sourceLink: sourceLink[i],
