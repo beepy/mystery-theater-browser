@@ -1,15 +1,24 @@
 <template>
   <div class="absolute-on-leave">
-    <div class="align-middle inline-block min-w-full">
-      <div class="fixed bottom-4 lg:bottom-8 left-0 w-full px-2 z-10">
-        <div class="flex max-w-4xl mx-auto">
+    <div class="align-middle inline-block min-w-full pointer-events-none">
+      <div
+        class="fixed bottom-4 lg:bottom-auto lg:top-28 left-0 w-full px-2 z-10"
+      >
+        <div class="flex max-w-5xl mx-auto">
           <n-link
             v-if="episode.id !== 1"
             :to="'/episode/' + (parseInt(episode.id) - 1)"
             :index="parseInt(episode.id) - 1"
             nav-tag="episode"
             :depth="2"
-            class="flex-shrink p-1 bg-gray-200 rounded-full shadow"
+            class="
+              flex-shrink
+              p-1
+              bg-gray-200
+              rounded-full
+              shadow
+              pointer-events-auto
+            "
           >
             <previous-icon class="text-black w-8" />
           </n-link>
@@ -20,7 +29,14 @@
             :index="parseInt(episode.id) + 1"
             nav-tag="episode"
             :depth="2"
-            class="flex-shrink p-1 bg-gray-200 rounded-full shadow"
+            class="
+              flex-shrink
+              p-1
+              bg-gray-200
+              rounded-full
+              shadow
+              pointer-events-auto
+            "
           >
             <next-icon class="text-black w-8" />
           </n-link>
@@ -120,13 +136,13 @@
             </div>
             <download-options
               v-if="!showAllDownloads"
-              :url="links[0]"
               :key="links[0].url"
+              :url="links[0]"
               :episode="episode"
             />
             <download-options
-              v-else
               v-for="url in links"
+              v-else
               :key="url.url"
               :url="url"
               :episode="episode"
@@ -134,15 +150,15 @@
             <div v-if="links.length > 1" class="col-span-4 text-xs">
               <button
                 v-if="showAllDownloads"
-                @click="toggleShowAllDownloads(false)"
                 class="rounded p-2 bg-gray-200"
+                @click="toggleShowAllDownloads(false)"
               >
                 Hide additional downloads
               </button>
               <button
                 v-else
-                @click="toggleShowAllDownloads(true)"
                 class="rounded p-2 bg-gray-200"
+                @click="toggleShowAllDownloads(true)"
               >
                 Show additional downloads
               </button>

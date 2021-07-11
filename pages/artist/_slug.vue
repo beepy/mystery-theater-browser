@@ -52,11 +52,6 @@ import NLink from '~/components/NLink'
 export default {
   components: { NLink },
   mixins: [RelativeTransitions],
-  head() {
-    return {
-      title: this.artist.name + ' | MysteryTheater.org ',
-    }
-  },
   async asyncData({ $content, store, params }) {
     const artist = await $content('artists/' + params.slug).fetch()
     /*
@@ -80,6 +75,11 @@ export default {
       artist,
       actor,
       writer,
+    }
+  },
+  head() {
+    return {
+      title: this.artist.name + ' | MysteryTheater.org ',
     }
   },
   // beforeMount() {

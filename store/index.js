@@ -22,7 +22,7 @@ export const state = () => ({
     },
     'good-audio': {
       title: 'Good Audio',
-      color: 'green-400'
+      color: 'green-400',
     },
     murder: {
       title: 'Murder',
