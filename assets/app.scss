@@ -73,6 +73,12 @@ body {
   }
 }
 
+.has-fixed-may-transform {
+  // this has strange side-effects; required for indivudal episodes, but breaks
+  // pager on paginated episode pages
+  // transform: translate3d(0, 0, 0);
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.17s;
@@ -94,21 +100,32 @@ body {
 .slide-bottom-enter-active,
 .slide-bottom-leave-active {
   transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  .transitionable, &.transitionable {
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  }
+
 }
 .slide-bottom-enter,
 .slide-bottom-leave-to {
   opacity: 0;
-  transform: translate3d(0, 15px, 0);
+  .transitionable, &.transitionable {
+    transform: translate3d(0, 15px, 0);
+  }
 }
 
 .slide-top-enter-active,
 .slide-top-leave-active {
   transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  .transitionable, &.transitionable {
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  }
 }
 .slide-top-enter,
 .slide-top-leave-to {
   opacity: 0;
-  transform: translate3d(0, -15px, 0);
+  .transitionable, &.transitionable {
+    transform: translate3d(0, -15px, 0);
+  }
 }
 
 $lrt1: 0.15s;

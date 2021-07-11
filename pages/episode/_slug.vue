@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="md:container lg:max-w-4xl mx-auto">
+    <div class="md:container lg:max-w-4xl mx-auto transitionable">
       <div>
         <div
           class="

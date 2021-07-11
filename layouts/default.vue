@@ -26,7 +26,7 @@
         </n-link>
       </div>
     </div>
-    <Nuxt />
+    <nuxt />
     <div v-if="alwaysFalse">
       <div class="text-blue-700" />
       <div class="text-yellow-600" />
