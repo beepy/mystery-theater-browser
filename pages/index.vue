@@ -79,7 +79,7 @@ export default {
       this.$store.commit('searchTerms', terms)
       this.$store.commit('searchedTerms', '')
       if (terms.length > 2) {
-        console.log('performSearch on index mount')
+        // console.log('performSearch on index mount')
         this.performSearch(terms)
       }
     } else {

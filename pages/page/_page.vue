@@ -92,6 +92,8 @@ export default {
         // console.log('perform search on page mount')
         this.performSearch(terms)
       }
+    } else if (this.page) {
+      localStorage.page = this.page
     }
     // this.$store.commit('navFrom', {
     //   tag: 'episodes',

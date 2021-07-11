@@ -9,14 +9,14 @@ export const searchedTerms = (state, v) => {
 }
 
 export const navFrom = (state, v) => {
-  console.log('navFrom')
-  console.log(v)
+  // console.log('navFrom')
+  // console.log(v)
   state.navFrom = Object.assign({}, v)
 }
 
 export const navTo = (state, v) => {
-  console.log('navTo')
-  console.log(v)
+  // console.log('navTo')
+  // console.log(v)
   state.navFrom = Object.assign({}, state.navTo)
   state.navTo = Object.assign({}, v)
 }

@@ -25,7 +25,7 @@
                 col-span-4
               "
             >
-              Title
+              Title/Cast
             </div>
             <div
               class="

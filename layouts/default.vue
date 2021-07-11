@@ -50,5 +50,10 @@ export default {
       alwaysFalse: false,
     }
   },
+  mounted() {
+    if (localStorage && localStorage.page && !this.$route.params.page) {
+      this.$router.push('/page/' + localStorage.page)
+    }
+  },
 }
 </script>
