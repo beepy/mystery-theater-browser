@@ -38,8 +38,10 @@ export default {
         name = 'page'
       } else if (navFrom.depth < navTo.depth) {
         name = 'slide-top'
+        mode = ''
       } else {
         name = 'slide-bottom'
+        mode = ''
       }
       if (navFrom.tag.includes('*') || navTo.tag.includes('*')) {
         mode = 'out-in'

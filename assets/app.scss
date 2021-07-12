@@ -97,11 +97,20 @@ body {
   opacity: 0;
 }
 
+$slvt: 0.33s;
+
+.slide-bottom-leave-active, .slide-top-leave-active {
+  &.absolute-on-leave, .absolute-on-leave {
+    width: 100%;
+    position: absolute;
+  }
+}
+
 .slide-bottom-enter-active,
 .slide-bottom-leave-active {
-  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  transition: opacity $slvt ease-in-out, transform $slvt ease-in-out;
   .transitionable, &.transitionable {
-    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+    transition: opacity $slvt ease-in-out, transform $slvt ease-in-out;
   }
 
 }
@@ -115,9 +124,9 @@ body {
 
 .slide-top-enter-active,
 .slide-top-leave-active {
-  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+  transition: opacity $slvt ease-in-out, transform $slvt ease-in-out;
   .transitionable, &.transitionable {
-    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+    transition: opacity $slvt ease-in-out, transform $slvt ease-in-out;
   }
 }
 .slide-top-enter,

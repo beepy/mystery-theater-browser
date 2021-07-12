@@ -11,7 +11,7 @@ This site was created to provide a user-friendly way to browse and discover epis
 
 Mystery Theater was an hour-long radio program that ran from 1974 through 1982, thirty years after radio drama’s hayday. There were 1,399 original episodes. It was a revival of sorts for its creator, the prolific Himan Brown, who had created the similar ”Inner Sactum” radio program in 1941. Many of the same actors and writers from the 40s joined the production.
 
-Thematically, it is similar to the television programs ”Alfred Hitchcock Presents” and ”The Twilight Zone,” with the occasional addition of westerns, historical drama, and adaptations of classic literature.
+Thematically, it is similar to the television programs ”Alfred Hitchcock Presents” and ”The Twilight Zone,” with the occasional addition of other genres such as spy thrillers, westerns, historical drama, or adaptations of classic literature.
 
 Interest in Mystery Theater has resurfaced here and there, with rebroadcasts by CBS radio in the late 1990s and by Public Radio in the early 2000’s. Many collectors have assembled recordings and catalogs of the episodes and many of these collections have been uploaded to the Internet Archive.
 

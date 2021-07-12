@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    if (localStorage && localStorage.page && !this.$route.params.page) {
+    if (localStorage && localStorage.page && this.$route.path === '/') {
       this.$router.push('/page/' + localStorage.page)
     }
   },
