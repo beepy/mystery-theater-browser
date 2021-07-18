@@ -86,16 +86,16 @@ var outFile = CommandLine.arguments[2]
 if (outFile == "-auto") {
   outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
 }
-print(CommandLine.arguments[3...])
 
 var timeStamps:[String]
 if (CommandLine.arguments[3] == "00:00:00") {
+  // if we're removing from time 0, just skip to the end
   timeStamps = Array(CommandLine.arguments[4...])
 } else {
+  // otherwise, start at time 0
   timeStamps = Array(CommandLine.arguments[3...])
   timeStamps.insert("00:00:00", at: 0)
 }
-print(timeStamps)
 
 var outFiles:[String] = []
 
