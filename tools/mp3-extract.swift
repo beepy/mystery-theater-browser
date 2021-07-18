@@ -1,6 +1,6 @@
 #!/usr/bin/swift
 print("""
-Usage: ./mp3-extract.swift <in.mp3> <out.mp3 or -auto> <hh:mm:ss.tt> <hh:mm:ss.tt> ...
+Usage: ./mp3-extract.swift <in.mp3> <out.mp3|-auto|episode #> <hh:mm:ss.tt> <hh:mm:ss.tt> ...
 This tool takes an mp3 input file and a series of time values indicating
 portions you wish to EXCLUDE from the final recording, such as ads. Using
 ffmepg, it extracts the time periods specified without re-encoding them, and
@@ -8,6 +8,17 @@ concats them into a single new file.
 """)
 
 import Foundation
+
+extension String {
+  func padLeft(_ totalWidth: Int, with byString:String) -> String {
+    let toPad = totalWidth - self.count
+    if toPad < 1 {
+        return self
+    }
+
+    return "".padding(toLength: toPad, withPad: byString, startingAt: 0) + self
+  }
+}
 
 func shell1(launchPath: String, arguments: [String]) -> String
 {
@@ -85,6 +96,13 @@ var outFile = CommandLine.arguments[2]
 
 if (outFile == "-auto") {
   outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
+} else if (CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: outFile))) {
+  // let episode = String(format: "%04d", Int(outFile))
+  let episode = outFile.padLeft(4, with: "0")
+  outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
+  var components = outFile.components(separatedBy:"/")
+  components[components.count - 1] = episode + " " + components[components.count - 1]
+  outFile = components.joined(separator: "/")
 }
 
 var timeStamps:[String]
@@ -119,3 +137,4 @@ shell1(launchPath: "/usr/bin/env", arguments: arguments)
 for removeFile in outFiles {
   shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
 }
+print("Wrote " + outFile)
