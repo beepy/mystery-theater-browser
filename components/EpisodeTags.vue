@@ -33,7 +33,7 @@ export default {
       return this.episodeTags.map((t) => {
         return {
           tag: t,
-          meta: this.tags[t],
+          meta: Object.assign({ color: 'red' }, this.tags[t]),
         }
       })
     },

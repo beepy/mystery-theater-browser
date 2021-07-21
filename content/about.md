@@ -23,7 +23,11 @@ There is [a complete collection of all episodes, without descriptions, on the In
 
 ### Progress
 
-Each episode is being manually reviewed to ensure the best recording is offered. At the same time, new descriptions are being written and episodes are receiving thematic tags (e.g., whoddunit, sci-fi, paranormal). Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
+Each episode is being manually reviewed to ensure the best recording is offered. At the same time, new descriptions are being written and episodes are receiving thematic tags (e.g., whoddunit, sci-fi, paranormal).
+
+When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new recording with those segments removed. While the audio format, MP3, is lossy, meaning the encoded processes loses some quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality.
+
+Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
 
 ## Sources
 
