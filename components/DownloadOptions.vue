@@ -14,7 +14,7 @@
       </div>
       <div class="col-span-4">
         <div class="flex items-top">
-          <div v-if="url.sourceTag !== 'kl-vinyl'" class="flex-grow pr-4">
+          <div v-if="!directLinkOnly" class="flex-grow pr-4">
             <!-- height 42 -->
             <audio
               controls
@@ -28,6 +28,7 @@
           </div>
           <div style="width: 15%; min-width: 12rem">
             <client-download
+              v-if="!directLinkOnly"
               :href="url.url"
               :download="url.filename"
               class="
@@ -73,6 +74,15 @@ export default {
     episode: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    directLinkOnly() {
+      if (this.url.url && this.url.url.startsWith('https://')) {
+        return false
+      } else {
+        return true
+      }
     },
   },
 }

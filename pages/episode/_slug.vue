@@ -134,6 +134,12 @@
                 >.
               </em>
             </div>
+            <div
+              v-if="episode.descriptionSource !== 'nrl'"
+              class="col-span-4 text-xs"
+            >
+              This episode has not been reviewed for recording quality.
+            </div>
             <download-options
               v-if="!showAllDownloads"
               :key="links[0].url"
@@ -246,7 +252,7 @@ export default {
       const source = [
         'High quality vinyl transfer provided by Ken Long',
         'Manual',
-        'High quality reel-to-reel transfer provided by Keith Flowers via archive.org',
+        'Keith Flowers via archive.org',
         'Ken Long Collection: KF',
         'MP3 provided by archive.org',
         'Ken Long collection',
