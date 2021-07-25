@@ -48,6 +48,10 @@ export const state = () => ({
       title: 'Psychological',
       color: 'purple-700',
     },
+    'sci-fi': {
+      title: 'Sci-fi',
+      color: 'green-400',
+    },
     supernatural: {
       title: 'Supernatural',
       color: 'pink-700',
