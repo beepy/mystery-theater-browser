@@ -125,11 +125,11 @@ for i in stride(from: 0, to: timeStamps.count, by: 2) {
     let to = timeStamps[i + 1]
 
     arguments = arguments + ["-to", to]
+    arguments.append(tFile)
+    let command = "/usr/bin/env " + arguments.joined(separator:" ")
+    let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
+    outFiles.append(tFile)
   }
-  arguments.append(tFile)
-  let command = "/usr/bin/env " + arguments.joined(separator:" ")
-  let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
-  outFiles.append(tFile)
 }
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
