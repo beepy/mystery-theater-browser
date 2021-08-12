@@ -1,18 +1,10 @@
 #!/usr/bin/swift
 print("""
-Usage: ./mp3-extract.swift <in.mp3> <out.mp3|-auto|episode #> <times.txt>
-This tool takes an mp3 input file and a file defining a series of time values
-indicating the portions you wish to EXCLUDE from the final recording, such as
-ads. Using `ffmepg`, it extracts the time periods specified without re-encoding
-them, and concats them into a single new file.
-
-The file defining the times must be tab-delimited with start and end times in
-the first and second columns, as seconds values. For example:
-```
-0.000000  3.419055
-98.975589 219.278310
-1020.535875 1144.540577
-```
+Usage: ./mp3-extract.swift <in.mp3> <out.mp3|-auto|episode #> <hh:mm:ss.tt> <hh:mm:ss.tt> ...
+This tool takes an mp3 input file and a series of time values indicating
+portions you wish to EXCLUDE from the final recording, such as ads. Using
+ffmepg, it extracts the time periods specified without re-encoding them, and
+concats them into a single new file.
 """)
 
 import Foundation
@@ -99,40 +91,9 @@ func shell2(_ command: String) -> String {
 // ./ffmpeg -i "CBSRMT 740213 0037 Dig Me Deadly_wbbm_rb.mp3" -vn -acodec copy -ss 00:01:23.775 -to 00:03:27.531 p1.mp3
 // ./ffmpeg -i "concat:p1.mp3|p2.mp3|p4.mp3|p5.mp3" -acodec copy p-all.mp3
 
-func secondsToHms(_ seconds: Float) -> String {
-  var s = seconds
-  let hours = floor(s / 3600)
-
-  s = s - hours * 3600
-  let minutes = floor(s / 60)
-  s = s - minutes * 60
-  return(String(format: "%02d:%02d:%09.6f", Int(hours), Int(minutes), s))
-}
-
 let sourceFile = CommandLine.arguments[1]
 var outFile = CommandLine.arguments[2]
-let timesFilePath = CommandLine.arguments[3]
-var timeStamps:[String] = []
 
-do {
-  let timesFileContents = try String(contentsOfFile: timesFilePath)
-  let timesRows = timesFileContents.split(whereSeparator: \.isNewline)
-
-  for row in timesRows {
-    let c = row.components(separatedBy: "\t")
-    if (c.count > 1) {
-      if let start = Float(c[0]), let end = Float(c[1]) {
-        if (start > 0) {
-          timeStamps.append(secondsToHms(start))
-        }
-        timeStamps.append(secondsToHms(end))
-      }
-    }
-  }
-} catch let err as NSError {
-  print(err)
-}
-print(timeStamps)
 if (outFile == "-auto") {
   outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
 } else if (CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: outFile))) {
@@ -144,15 +105,15 @@ if (outFile == "-auto") {
   outFile = components.joined(separator: "/")
 }
 
-// var timeStamps:[String]
-// if (CommandLine.arguments[3] == "00:00:00") {
-//   // if we're removing from time 0, just skip to the end
-//   timeStamps = Array(CommandLine.arguments[4...])
-// } else {
-//   // otherwise, start at time 0
-//   timeStamps = Array(CommandLine.arguments[3...])
-//   timeStamps.insert("00:00:00", at: 0)
-// }
+var timeStamps:[String]
+if (CommandLine.arguments[3] == "00:00:00") {
+  // if we're removing from time 0, just skip to the end
+  timeStamps = Array(CommandLine.arguments[4...])
+} else {
+  // otherwise, start at time 0
+  timeStamps = Array(CommandLine.arguments[3...])
+  timeStamps.insert("00:00:00", at: 0)
+}
 
 var outFiles:[String] = []
 
