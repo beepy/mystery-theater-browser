@@ -109,36 +109,66 @@ func secondsToHms(_ seconds: Float) -> String {
   return(String(format: "%02d:%02d:%09.6f", Int(hours), Int(minutes), s))
 }
 
-let sourceFile = CommandLine.arguments[1]
-var outFile = CommandLine.arguments[2]
-let timesFilePath = CommandLine.arguments[3]
-var timeStamps:[String] = []
+var outFile = CommandLine.arguments[1]
+var outFiles:[String] = []
 
-do {
-  let timesFileContents = try String(contentsOfFile: timesFilePath)
-  let timesRows = timesFileContents.split(whereSeparator: \.isNewline)
+let sourceAndTimeFiles = Array(CommandLine.arguments[2...])
+for i in stride(from: 0, to: sourceAndTimeFiles.count, by: 2) {
+  let sourceFile = sourceAndTimeFiles[i]
+  let timesFilePath = sourceAndTimeFiles[i + 1]
+  var timeStamps:[String] = []
 
-  for row in timesRows {
-    let c = row.components(separatedBy: "\t")
-    if (c.count > 1) {
-      if let start = Float(c[0]), let end = Float(c[1]) {
-        if (start > 0) {
-          timeStamps.append(secondsToHms(start))
+  do {
+    let timesFileContents = try String(contentsOfFile: timesFilePath)
+    let timesRows = timesFileContents.split(whereSeparator: \.isNewline)
+    var startedAtZero = false
+
+    for row in timesRows {
+      let c = row.components(separatedBy: "\t")
+      if (c.count > 1) {
+        if let start = Float(c[0]), let end = Float(c[1]) {
+          if (start > 0) {
+            if (!startedAtZero) {
+              timeStamps.append("00:00:00")
+            }
+            timeStamps.append(secondsToHms(start))
+          }
+          startedAtZero = true
+          timeStamps.append(secondsToHms(end))
         }
-        timeStamps.append(secondsToHms(end))
       }
     }
+  } catch let err as NSError {
+    print(err)
   }
-} catch let err as NSError {
-  print(err)
+  // print(timeStamps)
+  if (timeStamps.count % 2 != 0) {
+    timeStamps.append("<end>")
+  }
+  for i in stride(from: 0, to: timeStamps.count, by: 2) {
+    let tFile = "/tmp/mtb-temp\(i).mp3"
+    let from = timeStamps[i]
+    var arguments = ["./ffmpeg", "-i", sourceFile, "-vn", "-acodec", "copy", "-ss", from, "-y", "-nostdin"]
+    if (i < timeStamps.count - 1) {
+      let to = timeStamps[i + 1]
+      if (to != "<end>") {
+        arguments = arguments + ["-to", to]
+      }
+      arguments.append(tFile)
+      let command = "/usr/bin/env " + arguments.joined(separator:" ")
+      // print(arguments)
+      let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
+      outFiles.append(tFile)
+    }
+  }
+
 }
-print(timeStamps)
 if (outFile == "-auto") {
-  outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
+  outFile = sourceAndTimeFiles[0].replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
 } else if (CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: outFile))) {
   // let episode = String(format: "%04d", Int(outFile))
   let episode = outFile.padLeft(4, with: "0")
-  outFile = sourceFile.replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
+  outFile = sourceAndTimeFiles[0].replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
   var components = outFile.components(separatedBy:"/")
   components[components.count - 1] = episode + " " + components[components.count - 1]
   outFile = components.joined(separator: "/")
@@ -154,22 +184,7 @@ if (outFile == "-auto") {
 //   timeStamps.insert("00:00:00", at: 0)
 // }
 
-var outFiles:[String] = []
 
-for i in stride(from: 0, to: timeStamps.count, by: 2) {
-  let tFile = "/tmp/mtb-temp\(i).mp3"
-  let from = timeStamps[i]
-  var arguments = ["./ffmpeg", "-i", sourceFile, "-vn", "-acodec", "copy", "-ss", from, "-y", "-nostdin"]
-  if (i < timeStamps.count - 1) {
-    let to = timeStamps[i + 1]
-
-    arguments = arguments + ["-to", to]
-    arguments.append(tFile)
-    let command = "/usr/bin/env " + arguments.joined(separator:" ")
-    let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
-    outFiles.append(tFile)
-  }
-}
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
 shell1(launchPath: "/usr/bin/env", arguments: arguments)
