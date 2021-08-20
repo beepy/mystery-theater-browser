@@ -80,9 +80,6 @@ export default {
       }
       if (v.length > 2) {
         const terms = v.replace('/', ' ')
-        // this.$router.push({
-        //   path: '/search/' + encodeURI(terms),
-        // })
         this.$router.push({
           path: '/',
           query: {

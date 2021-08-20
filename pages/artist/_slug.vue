@@ -59,11 +59,6 @@ export default {
   mixins: [RelativeTransitions],
   async asyncData({ $content, store, params }) {
     const artist = await $content('artists/' + params.slug).fetch()
-    /*
-    const products = await this.$content('products').where({ 'categories.slug': { $contains: 'top' } }).fetch()
-
-    const products = await this.$content('products').where({ 'categories.slug': { $contains: ['top', 'woman'] } }).fetch()
-     */
     const actor = await $content('episodes')
       .where({
         'actors.id': { $contains: artist.id },
@@ -87,8 +82,5 @@ export default {
       title: this.artist.name + ' | MysteryTheater.org ',
     }
   },
-  // beforeMount() {
-  //   this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: 1 })
-  // },
 }
 </script>

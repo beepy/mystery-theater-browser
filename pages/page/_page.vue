@@ -13,7 +13,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-// import { store } from '~/store/index'
 
 import PaginatedEpisodes from '~/components/PaginatedEpisodes'
 import Search from '~/components/Search'
@@ -30,10 +29,6 @@ export default {
     }
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-    // if (store.state.searchTerms && store.state.searchTerms.length > 2) {
-    //   episodes = episodes.search(store.state.searchTerms)
-    //   episodeCount = episodeCount.search(store.state.searchTerms)
-    // }
     return episodeCount.fetch().then((ec) => {
       episodeCount = ec.length
       return episodes
@@ -43,7 +38,6 @@ export default {
         .fetch()
         .then((e) => {
           episodes = e
-          // store.commit('searchedTerms', store.state.searchTerms)
           return {
             page,
             episodes,
@@ -51,11 +45,6 @@ export default {
           }
         })
     })
-  },
-  data() {
-    return {
-      d1: 'hello world',
-    }
   },
   head() {
     return {
@@ -72,14 +61,9 @@ export default {
   },
   watch: {
     searchTerms(v) {
-      // console.log('perform search on page watch')
       this.performSearch(v)
       this.$store.commit('searchedTerms', '')
     },
-  },
-  beforeCreate() {
-    // console.log('page before mount ' + this.page)
-    // this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: this.page })
   },
   mounted() {
     const queryString = window.location.search
@@ -89,17 +73,11 @@ export default {
       this.$store.commit('searchTerms', terms)
       this.$store.commit('searchedTerms', '')
       if (terms.length > 2) {
-        // console.log('perform search on page mount')
         this.performSearch(terms)
       }
     } else if (this.page) {
       localStorage.page = this.page
     }
-    // this.$store.commit('navFrom', {
-    //   tag: 'episodes',
-    //   depth: 1,
-    //   index: this.page,
-    // })
   },
   middleware({ redirect, params, store }) {
     let page = parseInt(params.page, 10)
@@ -141,36 +119,6 @@ export default {
           })
       })
     },
-    performTest() {
-      return 'bizbaz'
-    },
   },
-  // meta() {
-  //   return {
-  //     nav: {
-  //       tag: 'episodes',
-  //       depth: 1,
-  //       index: this.page,
-  //     },
-  //   }
-  // },
-  meta: {
-    baz: 'boz',
-    foo() {
-      return 'bar '
-    },
-  },
-  route: {
-    props: {
-      bar: 'foo',
-    },
-  },
-  // transition(x, y, z) {
-  //   console.log('transition')
-  //   console.log(z)
-  //   console.log(y)
-  //   console.log(x)
-  //   return 'slide-right'
-  // },
 }
 </script>

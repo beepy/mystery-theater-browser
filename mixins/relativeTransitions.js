@@ -1,6 +1,4 @@
 import { mapGetters } from 'vuex'
-// import Vue from 'vue'
-// import state from '~/store/index'
 
 export default {
   transition(to, from) {
@@ -16,14 +14,6 @@ export default {
       const navTo = window.$nuxt.$store.state.navTo
       const navFrom = window.$nuxt.$store.state.navFrom
 
-      // console.log([
-      //   navFrom.tag,
-      //   navFrom.depth,
-      //   navFrom.index,
-      //   navTo.tag,
-      //   navTo.depth,
-      //   navTo.index,
-      // ])
       if (navFrom.tag === navTo.tag) {
         if (navFrom.index === navTo.index) {
           name = 'page'

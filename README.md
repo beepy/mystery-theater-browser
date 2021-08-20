@@ -1,5 +1,7 @@
 # mystery-theater-browser
 
+Source code for [mysterytheater.org](https://www.mysterytheater.org). Please see [mysterytheater.org/about](https://www.mysterytheater.org/about) for details about this project.
+
 ## Build Setup
 
 ```bash

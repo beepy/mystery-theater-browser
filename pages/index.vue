@@ -1,7 +1,6 @@
 <template>
   <div class="absolute-on-leave">
     <div class="md:container md:mx-auto">
-      <!-- https://archive.org/details/CBSRMTKf -->
       <search :terms="searchTerms" :count="episodeCount" />
       <paginated-episodes
         v-if="episodes && episodes.length > 0"
@@ -25,14 +24,8 @@ export default {
   components: { PaginatedEpisodes, Search },
   mixins: [RelativeTransitions],
   asyncData({ $content, store }) {
-    // const page = await $content('hello').fetch()
     let episodes = $content('episodes')
     let episodeCount = $content('episodes').only([])
-    // const st = store.state.searchTerms
-    // if (store.state.searchTerms && store.state.searchTerms.length > 2) {
-    //   episodes = episodes.search(st)
-    //   episodeCount = episodeCount.search(st)
-    // }
     return episodeCount.fetch().then((ec) => {
       episodeCount = ec.length
       return episodes
@@ -41,7 +34,6 @@ export default {
         .fetch()
         .then((e) => {
           episodes = e
-          // store.commit('searchedTerms', store.state.searchTerms)
           return {
             page: 1,
             episodes,
@@ -79,7 +71,6 @@ export default {
       this.$store.commit('searchTerms', terms)
       this.$store.commit('searchedTerms', '')
       if (terms.length > 2) {
-        // console.log('performSearch on index mount')
         this.performSearch(terms)
       }
     } else {

@@ -57,7 +57,6 @@
             md:pb-0
           "
         >
-          <!-- bg-gray-200 -->
           <div
             class="grid grid-cols-4 px-0 py-6 -mx-4 items-center gradient-gray"
           >
@@ -198,10 +197,8 @@ export default {
   mixins: [RelativeTransitions],
   async asyncData({ $content, store, params }) {
     const episode = await $content('episodes/' + params.slug).fetch()
-    // const artists = await $content('artists').fetch()
     return {
       episode,
-      // artists,
     }
   },
   head() {
@@ -223,6 +220,12 @@ export default {
       }
     },
     links() {
+      // this work really belongs in the content generator
+      // but since the manual processing of the content may take
+      // years, we are making the client guess which might be the
+      // best version
+
+      // the source tags in order of quality
       const quality = [
         'kl-vinyl',
         'dummy-manual',
@@ -249,6 +252,7 @@ export default {
         'kl-br',
       ]
 
+      // human readable version of sources
       const source = [
         'High quality vinyl transfer provided by Ken Long',
         'Manual',
@@ -275,6 +279,8 @@ export default {
         'Ken Long Collection: BR',
         'Source unknown',
       ]
+
+      // reference link for sources
       const sourceLink = [
         'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
         null,
