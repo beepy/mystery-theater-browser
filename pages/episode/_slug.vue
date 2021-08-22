@@ -250,6 +250,7 @@ export default {
         'kl-misc',
         'kl-post-2013distro',
         'kl-br',
+        'cbsrmt-com',
       ]
 
       // human readable version of sources
@@ -277,6 +278,7 @@ export default {
         'Ken Long Collection: MISC',
         'Ken Long Collection: POST-2013',
         'Ken Long Collection: BR',
+        'CBSRMT NRL Ad-free Collection',
         'Source unknown',
       ]
 
@@ -324,6 +326,7 @@ export default {
         'http://cbsrmt.thelongtrek.com/br/br3.htm',
         'http://cbsrmt.thelongtrek.com/br/br4.htm',
         */
+        'https://www.cbsrmt.com',
         null,
       ]
       // first we map them
