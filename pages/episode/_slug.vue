@@ -231,6 +231,7 @@ export default {
         'dummy-manual',
         'kf-archive',
         'kl-kf',
+        'kl-davidoboa',
         'archive-org',
         'kl-extra',
         'kl-rwm',
@@ -259,6 +260,7 @@ export default {
         'Manual',
         'Keith Flowers via archive.org',
         'Ken Long Collection: KF',
+        'Ken Long Collection: David Oxford’s ”Best of Available”',
         'MP3 provided by archive.org',
         'Ken Long collection',
         'Ken Long Collection: RWM',
@@ -284,10 +286,11 @@ export default {
 
       // reference link for sources
       const sourceLink = [
-        'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
-        null,
-        'http://cbsrmt.thelongtrek.com/kf/kf.html',
-        'https://archive.org/details/CBSRMTKf',
+        'http://cbsrmt.thelongtrek.com/vinyl/index.htm', // vinyl
+        null, // manual
+        'https://archive.org/details/CBSRMTKf', // keith flowers archive.org
+        'http://cbsrmt.thelongtrek.com/kf/kf.html', // keith flowers ken long
+        'http://cbsrmt.thelongtrek.com', // ken long david oxford best of
         null,
         'http://cbsrmt.thelongtrek.com',
         'http://cbsrmt.thelongtrek.com/rwm/index.htm',
