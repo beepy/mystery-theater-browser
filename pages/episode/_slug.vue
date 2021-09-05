@@ -176,6 +176,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import allSources from '~/data/sources'
 
 import EpisodeNumber from '~/components/EpisodeNumber'
 import RelativeTransitions from '~/mixins/relativeTransitions'
@@ -199,6 +200,11 @@ export default {
     const episode = await $content('episodes/' + params.slug).fetch()
     return {
       episode,
+    }
+  },
+  data() {
+    return {
+      allSources,
     }
   },
   head() {
@@ -225,113 +231,14 @@ export default {
       // years, we are making the client guess which might be the
       // best version
 
-      // the source tags in order of quality
-      const quality = [
-        'kl-vinyl',
-        'dummy-manual',
-        'kf-archive',
-        'kl-kf',
-        'kl-davidoboa',
-        'archive-org',
-        'kl-extra',
-        'kl-rwm',
-        'kl-jl',
-        'kl-DH',
-        'kl-dlg',
-        'kl-ed',
-        'kl-jc',
-        'kl-pp',
-        'kl-tc',
-        'kl-ws',
-        'kl-pp',
-        'kl-cinci',
-        'kl-rw',
-        'kl-kixi',
-        'kl-rb',
-        'kl-misc',
-        'kl-post-2013distro',
-        'kl-br',
-        'cbsrmt-com',
-      ]
+      const quality = this.allSources.map((s) => s.slug)
 
       // human readable version of sources
-      const source = [
-        'High quality vinyl transfer provided by Ken Long',
-        'Manual',
-        'Keith Flowers via archive.org',
-        'Ken Long Collection: KF',
-        'Ken Long Collection: David Oxford’s ”Best of Available”',
-        'MP3 provided by archive.org',
-        'Ken Long collection',
-        'Ken Long Collection: RWM',
-        'Ken Long Collection: JL',
-        'Ken Long Collection: DH',
-        'Ken Long Collection: DLG',
-        'Ken Long Collection: ED',
-        'Ken Long Collection: JC',
-        'Ken Long Collection: PP',
-        'Ken Long Collection: TC',
-        'Ken Long Collection: WS',
-        'Ken Long Collection: PP',
-        'Ken Long Collection: CINCI',
-        'Ken Long Collection: RW',
-        'Ken Long Collection: KIXI',
-        'Ken Long Collection: RB',
-        'Ken Long Collection: MISC',
-        'Ken Long Collection: POST-2013',
-        'Ken Long Collection: BR',
-        'CBSRMT NRL Ad-free Collection',
-        'Source unknown',
-      ]
+      const source = this.allSources.map((s) => s.title)
 
       // reference link for sources
-      const sourceLink = [
-        'http://cbsrmt.thelongtrek.com/vinyl/index.htm', // vinyl
-        null, // manual
-        'https://archive.org/details/CBSRMTKf', // keith flowers archive.org
-        'http://cbsrmt.thelongtrek.com/kf/kf.html', // keith flowers ken long
-        'http://cbsrmt.thelongtrek.com', // ken long david oxford best of
-        null,
-        'http://cbsrmt.thelongtrek.com',
-        'http://cbsrmt.thelongtrek.com/rwm/index.htm',
-        'http://cbsrmt.thelongtrek.com/jl/jl.html',
-        'http://cbsrmt.thelongtrek.com/DH/dh.html',
-        'http://cbsrmt.thelongtrek.com/dlg/dlg.html',
-        'http://cbsrmt.thelongtrek.com/ed/ed.html',
-        'http://cbsrmt.thelongtrek.com/jc/jc.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_1-16.html',
-        'http://cbsrmt.thelongtrek.com/tc/tc.html',
-        'http://cbsrmt.thelongtrek.com/ws/ws.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_17.html',
-        /*
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_18.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_19.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_20.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_21.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_22.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_23.html',
-        'http://cbsrmt.thelongtrek.com/pp/PP_Disk_24.html',
-        */
-        'http://cbsrmt.thelongtrek.com/cinci/cinci.html',
-        'http://cbsrmt.thelongtrek.com/rw/rw.htm',
-        'http://cbsrmt.thelongtrek.com/kixi/kixi.html',
-        'http://cbsrmt.thelongtrek.com/rb/RB-WLNH.htm',
-        /*
-        'http://cbsrmt.thelongtrek.com/rb/RB-WUWM.htm',
-        'http://cbsrmt.thelongtrek.com/rb/RB-WBBM.htm',
-        'http://cbsrmt.thelongtrek.com/rb/rb-wjw/rb-wjw.html',
-        */
-        'http://cbsrmt.thelongtrek.com/misc/misc.html',
-        'http://cbsrmt.thelongtrek.com/post-2013distro/post-distro-2013-upgrades.htm',
-        'http://cbsrmt.thelongtrek.com/br/br.htm',
-        /*
-        'http://cbsrmt.thelongtrek.com/br/br2.htm',
-        'http://cbsrmt.thelongtrek.com/br/br3.htm',
-        'http://cbsrmt.thelongtrek.com/br/br4.htm',
-        */
-        'https://www.cbsrmt.com',
-        null,
-      ]
+      const sourceLink = this.allSources.map((s) => s.url)
+
       // first we map them
       const urls = this.episode.urls.map((u) => {
         let i = quality.indexOf(u.source)
@@ -341,7 +248,7 @@ export default {
         cleanUrlFile = decodeURIComponent(cleanUrlFile).replace('.mp3', '')
 
         if (i < 0) {
-          i = 4
+          i = 10
           q = 3
         }
         if (u.quality && parseInt(u.quality, 10) > 0) {
