@@ -1,6 +1,6 @@
 #!/usr/bin/swift
 print("""
-Usage: ./mp3-extract.swift <in.mp3> <out.mp3|-auto|episode #> <times.txt>
+Usage: ./mp3-extract.swift <out.mp3|-auto|episode #> <in1.mp3> <times1.txt> [<in2.mp3> <times2.txt>, …]
 This tool takes an mp3 input file and a file defining a series of time values
 indicating the portions you wish to EXCLUDE from the final recording, such as
 ads. Using `ffmepg`, it extracts the time periods specified without re-encoding
@@ -188,7 +188,7 @@ if (outFile == "-auto") {
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
 shell1(launchPath: "/usr/bin/env", arguments: arguments)
-for removeFile in outFiles {
-  shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
-}
+// for removeFile in outFiles {
+//   shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
+// }
 print("Wrote " + outFile)
