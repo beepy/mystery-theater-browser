@@ -32,6 +32,11 @@ export default [
     url: 'http://cbsrmt.thelongtrek.com',
   }, // ken long david oxford best of
   {
+    slug: 'kl-rb-nrl',
+    title: 'Ken Long Collection: RB (ads removed)',
+    url: 'http://cbsrmt.thelongtrek.com/',
+  },
+  {
     slug: 'cbsrmt-com-nrl',
     title: 'cbsmrt.com (ads removed)',
     url: 'https://www.cbsrmt.com',

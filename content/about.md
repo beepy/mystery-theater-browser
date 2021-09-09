@@ -25,7 +25,7 @@ There is [a complete collection of all episodes, without descriptions, on the In
 
 Each episode is being manually reviewed to ensure the best recording is offered. At the same time, new descriptions are being written and episodes are receiving thematic tags (e.g., whoddunit, sci-fi, paranormal).
 
-When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new recording with those segments removed. While the audio format, MP3, is lossy, meaning the encoded processes loses some quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality.
+When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new recording with those segments removed. While the audio format, MP3, is lossy, meaning the encoding processes dregrades the quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality. However, this method means that the accuracy of the edits is limited by the "frame size" of the source MP3s, which varies but can be around a quarter of a second. Therefore, you may hear a "blip" — a fraction of a second of commercial audio — at the beginning or end of these edits.
 
 Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
 
@@ -34,7 +34,7 @@ Currently {{complete}} episodes have been processed ({{percent}}%). Estimated co
 I have no connection with these individuals; they have generously provided these resources for this public domain work on the web which I have used to compile the data for this site:
 
 * Keith Flowers: [his website](http://www.nettally.com/keith.flowers/main.htm) and [his digitized high-fidelity reel-to-reel recordings](https://archive.org/details/CBSRMTKf)
-* Ken Long: [his website](http://cbsrmt.thelongtrek.com/) and [the vinyl transfers he’s collected](http://cbsrmt.thelongtrek.com/vinyl/index.htm )
+* Ken Long: [his website](http://cbsrmt.thelongtrek.com/) and his many invaluable collections
 * https://www.cbsrmt.com/
 * https://www.radioechoes.com/?page=series&genre=OTR-Mystery&series=CBS%20Radio%20Mystery%20Theater
 

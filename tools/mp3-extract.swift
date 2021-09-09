@@ -188,7 +188,7 @@ if (outFile == "-auto") {
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
 shell1(launchPath: "/usr/bin/env", arguments: arguments)
-// for removeFile in outFiles {
-//   shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
-// }
+for removeFile in outFiles {
+  shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
+}
 print("Wrote " + outFile)
