@@ -46,7 +46,7 @@ This site links directly to MP3s hosted on archive.org. Most visitors will prefe
 
 Unfortunately, archive.org doesn't serve MP3s in a way that allows them to be dowloaded without additional interaction:[^1] most browsers require links to these MP3s to be right-clicked, or control-clicked, or long-pressed to download them. Otherwise, most browsers will attempt to play the MP3 directly.
 
-To make downloading the episodes more convenient, so that you don't need to specify that you wish to download an MP3 every single time, this site does some fancy stuff[^2] so that one-click downloading works. The download progress will be shown on the download button, and in the site’s menu bar, but not in your browser’s normal download interface. When the MP3 has been fetched, it will then be added to your system and appear in your browser’s download interface.
+To make downloading the episodes more convenient, so that you don't need to specify that you wish to download and not immediately listen to an MP3 every single time, this site does some fancy stuff[^2] so that one-click downloading works. The download progress will be shown on the download button, and in the site’s menu bar, but not in your browser’s normal download interface. When the MP3 has been fetched, it will then be added to your system and appear in your browser’s download interface.
 
 You shouldn't navigate away from the site when you’re downloading, because the download will stop and you will lose progress. You can, however, navigate away from the episode you are downloading to any other page on the site. You can also queue as many episodes as you like for downloading.
 
