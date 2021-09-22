@@ -1,7 +1,7 @@
 export default [
   {
-    slug: 'kl-vinyl',
-    title: 'High quality vinyl transfer provided by Ken Long',
+    slug: 'kl-vinyl-nrl',
+    title: 'Vinyl transfer provided by Ken Long (ads removed)',
     url: 'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
   }, // vinyl
   { slug: 'dummy-manual', title: 'Manual', url: null }, // manual
@@ -41,6 +41,11 @@ export default [
     title: 'cbsmrt.com (ads removed)',
     url: 'https://www.cbsrmt.com',
   },
+  {
+    slug: 'kl-vinyl',
+    title: 'Vinyl transfer provided by Ken Long',
+    url: 'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
+  }, // vinyl
   {
     slug: 'kf-archive',
     title: 'Keith Flowers via archive.org',
