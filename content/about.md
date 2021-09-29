@@ -17,9 +17,12 @@ Interest in Mystery Theater has resurfaced here and there, with rebroadcasts by 
 
 ## Why This Site?
 
-The wonderful Internet Archive does not provide a wonderful way to discover content. I wanted an ad-free, mobile-friendly way to browse the episodes, with descriptions and links directly to the audio.
+There are currently two complete collections of Mystery Theater available on the wonderful Internet Archive, but the archive does not provide a wonderful way to discover content. This site seeks to privde an ad-free, mobile-friendly way to browse the episodes, with descriptions and links directly to the audio.
 
-There is [a complete collection of all episodes, without descriptions, on the Internet Archive](https://archive.org/details/cbs_radio_mystery_theater), but the fidelity of the recordings varies. I wanted a way to provide superior recordings, which exist for many episodes, when they were available.
+The two complete collections are:
+
+1. [A complete collection of unknown origin](https://archive.org/details/cbs_radio_mystery_theater); many of the recordings are low fidelity.
+2. [David Oxford’s "Best of Available” collection via Ken Long](http://cbsrmt.thelongtrek.com/); with permission I uploaded this collection (and others) to the Internet Archive; generally the fidelity is indeed the best available, but many episodes contain commercial breaks.
 
 ### Progress
 
