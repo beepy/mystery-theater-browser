@@ -52,15 +52,15 @@ export default [
     url: 'https://archive.org/details/CBSRMTKf',
   }, // keith flowers archive.org
   {
-    slug: 'kl-kf',
-    title: 'Ken Long Collection: KF',
-    url: 'http://cbsrmt.thelongtrek.com/kf/kf.html',
-  }, // keith flowers ken long
-  {
     slug: 'kl-davidoboa',
     title: 'Ken Long Collection: David Oxford’s ”Best of Available”',
     url: 'http://cbsrmt.thelongtrek.com',
   }, // ken long david oxford best of
+  {
+    slug: 'kl-kf',
+    title: 'Ken Long Collection: KF',
+    url: 'http://cbsrmt.thelongtrek.com/kf/kf.html',
+  }, // keith flowers ken long
   { slug: 'archive-org', title: 'MP3 provided by archive.org', url: null },
   {
     slug: 'kl-extra',
