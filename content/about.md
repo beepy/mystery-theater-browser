@@ -17,7 +17,7 @@ Interest in Mystery Theater has resurfaced here and there, with rebroadcasts by 
 
 ## Why This Site?
 
-There are currently two complete collections of Mystery Theater available on the wonderful Internet Archive, but the archive does not provide a wonderful way to discover content. This site seeks to privde an ad-free, mobile-friendly way to browse the episodes, with descriptions and links directly to the audio.
+There are currently two complete collections of Mystery Theater available on the wonderful Internet Archive, but the archive does not provide a wonderful way to discover content. This site seeks to privde an ad-free, mobile-friendly way to browse the episodes, with accurate, spoiler-free descriptions and links directly to the audio.
 
 The two complete collections are:
 
@@ -28,7 +28,7 @@ The two complete collections are:
 
 Each episode is being manually reviewed to ensure the best recording is offered. At the same time, new descriptions are being written and episodes are receiving thematic tags (e.g., whoddunit, sci-fi, paranormal).
 
-When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new recording with those segments removed. While the audio format, MP3, is lossy, meaning the encoding processes dregrades the quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality. However, this method means that the accuracy of the edits is limited by the "frame size" of the source MP3s, which varies but can be around a quarter of a second. Therefore, you may hear a "blip" — a fraction of a second of commercial audio — at the beginning or end of these edits.
+When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new audio file with those segments removed. While the audio format, MP3, is lossy, meaning the encoding processes dregrades the quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality. However, this method means that the accuracy of the edits is limited by the "frame size" of the source MP3s, which varies but can be around a quarter of a second. Therefore, you may hear a "blip" — a fraction of a second of commercial audio — at the beginning or end of these edits.
 
 Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
 
