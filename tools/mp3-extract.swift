@@ -111,6 +111,7 @@ func secondsToHms(_ seconds: Float) -> String {
 
 var outFile = CommandLine.arguments[1]
 var outFiles:[String] = []
+var outFileCount = 1
 
 let sourceAndTimeFiles = Array(CommandLine.arguments[2...])
 for i in stride(from: 0, to: sourceAndTimeFiles.count, by: 2) {
@@ -146,7 +147,7 @@ for i in stride(from: 0, to: sourceAndTimeFiles.count, by: 2) {
     timeStamps.append("<end>")
   }
   for i in stride(from: 0, to: timeStamps.count, by: 2) {
-    let tFile = "/tmp/mtb-temp\(i).mp3"
+    let tFile = "/tmp/mtb-temp-\(outFileCount)-\(i).mp3"
     let from = timeStamps[i]
     var arguments = ["./ffmpeg", "-i", sourceFile, "-vn", "-acodec", "copy", "-ss", from, "-y", "-nostdin"]
     if (i < timeStamps.count - 1) {
@@ -158,10 +159,9 @@ for i in stride(from: 0, to: sourceAndTimeFiles.count, by: 2) {
       let command = "/usr/bin/env " + arguments.joined(separator:" ")
       // print(arguments)
       let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
-      outFiles.append(tFile)
     }
   }
-
+  outFileCount = outFileCount + 1
 }
 if (outFile == "-auto") {
   outFile = sourceAndTimeFiles[0].replacingOccurrences(of: ".mp3", with: " (no ads).mp3")
@@ -188,7 +188,11 @@ if (outFile == "-auto") {
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
 shell1(launchPath: "/usr/bin/env", arguments: arguments)
-for removeFile in outFiles {
-  shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
-}
+// for removeFile in outFiles {
+//   shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
+// }
 print("Wrote " + outFile)
+
+/*
+./mp3-extract.swift 163 /Volumes/Time\ Machine/mystery-theater/cbsmrt-ken-long-collection/boa/CBSRMT-741021-0163-Mind-over-Matthew-\(32-22\)-\[2007\]-\{BoA\}.mp3 /Volumes/Time\ Machine/mystery-theater/cbsmrt-ken-long-collection/boa/CBSRMT-741021-0163-Mind-over-Matthew-\(32-22\)-\[2007\]-\{BoA\}.txt /Volumes/Time\ Machine/mystery-theater/cbsmrt-ken-long-collection/jc/CBSRMT\ -\ 741021\ 0163\ Mind\ Over\ Matthew\ vbr\ bm2_jc.mp3 /Volumes/Time\ Machine/mystery-theater/cbsmrt-ken-long-collection/jc/CBSRMT\ -\ 741021\ 0163\ Mind\ Over\ Matthew\ vbr\ bm2_jc.txt
+ */
