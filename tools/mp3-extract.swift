@@ -159,6 +159,7 @@ for i in stride(from: 0, to: sourceAndTimeFiles.count, by: 2) {
       let command = "/usr/bin/env " + arguments.joined(separator:" ")
       // print(arguments)
       let o1 = shell1(launchPath: "/usr/bin/env", arguments: arguments)
+      outFiles.append(tFile)
     }
   }
   outFileCount = outFileCount + 1
@@ -188,9 +189,9 @@ if (outFile == "-auto") {
 let arguments = ["./ffmpeg", "-y", "-nostdin", "-i", "concat:" + outFiles.joined(separator:"|"), "-acodec", "copy", outFile]
 let command = "/usr/bin/env " + arguments.joined(separator:" ")
 shell1(launchPath: "/usr/bin/env", arguments: arguments)
-// for removeFile in outFiles {
-//   shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
-// }
+for removeFile in outFiles {
+  shell1(launchPath: "/usr/bin/env", arguments: ["rm", removeFile])
+}
 print("Wrote " + outFile)
 
 /*
