@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     boundSpan() {
-      return this.span > this.last ? this.last : this.span
+      return Math.min(this.last, this.span)
     },
     middleIndex() {
       // 0-based index, so for 7 this will be 3
