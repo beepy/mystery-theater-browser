@@ -67,16 +67,12 @@ export default {
         xhr.responseType = 'blob'
         xhr.onprogress = (event) => {
           if (event.lengthComputable) {
-            // total = event.total
-            // this.progress = event.loaded / event.total
-            // console.log(Math.floor((event.loaded / event.total) * 100) + '%')
             this.$store.commit('updateHeadOfDownloadQueue', {
               total: event.total,
               loaded: event.loaded,
             })
           } else {
-            // console.log('progress unknown')
-            // this.progress = -1
+            // progress unknown
             this.$store.commit('updateHeadOfDownloadQueue', {
               total: -1,
               loaded: event.loaded,
@@ -84,14 +80,13 @@ export default {
           }
         }
         xhr.onreadystatechange = () => {
+          // 4 == done
           if (xhr.readyState !== 4) {
             return
           }
 
           if (xhr.status === 200) {
-            // window.navigator.msSaveBlob(xhr.response, fileName)
             const blobUrl = URL.createObjectURL(xhr.response)
-            // window.location.replace(blobUrl)
             const link = document.createElement('a') // Or maybe get it from the current document
             link.href = blobUrl
             link.download = this.headOfDownloadQueue.download
@@ -102,13 +97,13 @@ export default {
           } else {
             this.progress = 0
             this.inProgressId = 0
-            console.error('download test:', xhr.status, xhr.statusText)
           }
         }
         xhr.send()
       } else {
+        // simulate progress for debugging
         const factor = 10000
-        const t = -1 // 1000
+        const t = -1
         let l = 0
         for (let i = 0; i < 30; i++) {
           if (i < 29) {
