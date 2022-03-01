@@ -57,9 +57,14 @@ label.iftal > span:first-child {
   top: 2px;
   font-size: calc(var(--label-font-size) * 1em);
   line-height: 1;
-  padding: calc(calc(var(--input-padding) / var(--label-font-size)) - 2px)
+  /*  padding: calc(calc(var(--input-padding) / var(--label-font-size)) - 2px)
     calc(calc(var(--input-padding) / var(--label-font-size)) - 2px);
+*/
   z-index: 1;
+  /* postcss fails in build with nested calcs */
+  --c1: calc(var(--input-padding) / var(--label-font-size));
+  --c2: calc(var(--c1) - 2px);
+  padding: var(--c2);
 }
 
 label.iftal > input,
