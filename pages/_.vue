@@ -1,16 +1,7 @@
 <template>
   <!-- md:container -->
   <div
-    class="
-      max-w-4xl
-      mx-auto
-      bg-white
-      md:mt-10
-      p-8
-      md:rounded-lg
-      shadow
-      overflow-hidden
-    "
+    class="max-w-4xl mx-auto bg-white md:mt-10 p-8 md:rounded-lg shadow overflow-hidden"
   >
     <nuxt-content :document="page" class="markdown-content" />
   </div>

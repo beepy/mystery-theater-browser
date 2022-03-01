@@ -3,23 +3,7 @@
     <input
       v-model="newTerms"
       placeholder="Search"
-      class="
-        px-3
-        py-3
-        mb-4
-        placeholder-blueGray-300
-        text-blueGray-600
-        relative
-        bg-white
-        rounded-lg
-        text-sm
-        border-0
-        shadow
-        outline-none
-        focus:outline-none
-        focus:ring
-        w-full
-      "
+      class="px-3 py-3 mb-4 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded-lg text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
       @change="search"
     />
     <svg

@@ -279,3 +279,27 @@ a {
 // .font-fancy {
 //   font-family: 'IM Fell Great Primer', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 // }
+
+input.bot {
+  display: none;
+}
+
+label.iftal.contact {
+  width: 100%;
+  --label-font-size: 0.9;
+  & > span {
+    font-weight: bold;
+  }
+  & > input {
+    @apply bg-gray-100;
+  }
+}
+
+label.iftal.contact.textarea {
+  & > textarea {
+    @apply bg-gray-100;
+  }
+  & > span:first-child {
+    @apply bg-gray-100;
+  }
+}

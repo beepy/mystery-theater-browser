@@ -11,14 +11,7 @@
             :index="parseInt(episode.id) - 1"
             nav-tag="episode"
             :depth="2"
-            class="
-              flex-shrink
-              p-1
-              bg-gray-200
-              rounded-full
-              shadow
-              pointer-events-auto
-            "
+            class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
           >
             <previous-icon class="text-black w-8" />
           </n-link>
@@ -29,14 +22,7 @@
             :index="parseInt(episode.id) + 1"
             nav-tag="episode"
             :depth="2"
-            class="
-              flex-shrink
-              p-1
-              bg-gray-200
-              rounded-full
-              shadow
-              pointer-events-auto
-            "
+            class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
           >
             <next-icon class="text-black w-8" />
           </n-link>
@@ -46,16 +32,7 @@
     <div class="md:container lg:max-w-4xl mx-auto transitionable">
       <div>
         <div
-          class="
-            bg-white
-            px-4
-            md:rounded-lg
-            shadow
-            overflow-hidden
-            transitionable
-            pb-8
-            md:pb-0
-          "
+          class="bg-white px-4 md:rounded-lg shadow overflow-hidden transitionable pb-8 md:pb-0"
         >
           <div
             class="grid grid-cols-4 px-0 py-6 -mx-4 items-center gradient-gray"

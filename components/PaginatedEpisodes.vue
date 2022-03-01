@@ -2,58 +2,22 @@
   <div>
     <div class="pb-20 align-middle inline-block min-w-full">
       <div
-        class="
-          shadow
-          overflow-hidden
-          border-b border-gray-200
-          md:rounded-lg
-          bg-white
-          transitionable
-        "
+        class="shadow overflow-hidden border-b border-gray-200 md:rounded-lg bg-white transitionable"
       >
         <div class="min-w-full divide-y divide-gray-200">
           <div class="hidden md:grid grid-cols-12 bg-gray-50">
             <div
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-                col-span-4
-              "
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-4"
             >
               Title/Cast
             </div>
             <div
-              class="
-                px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-                col-span-6
-                xl:col-span-7
-              "
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-6 xl:col-span-7"
             >
               Description
             </div>
             <div
-              class="
-                px-6
-                py-3
-                text-center text-xs
-                font-medium
-                text-gray-500
-                uppercase
-                tracking-wider
-                col-span-2
-                xl:col-span-1
-              "
+              class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2 xl:col-span-1"
             >
               Episode
             </div>
@@ -83,15 +47,7 @@
               </div>
             </div>
             <div
-              class="
-                order-3
-                md:order-2
-                col-span-12
-                md:col-span-6
-                xl:col-span-7
-                px-6
-                py-4
-              "
+              class="order-3 md:order-2 col-span-12 md:col-span-6 xl:col-span-7 px-6 py-4"
             >
               <nuxt-content :document="episode" />
               <episode-tags
@@ -101,16 +57,7 @@
               />
             </div>
             <div
-              class="
-                order-2
-                md:order-3
-                col-span-4
-                md:col-span-2
-                xl:col-span-1
-                px-6
-                py-4
-                text-center
-              "
+              class="order-2 md:order-3 col-span-4 md:col-span-2 xl:col-span-1 px-6 py-4 text-center"
             >
               <div class="text-xs text-center mb-2">
                 {{ episode.date }}
@@ -131,17 +78,7 @@
         <template #previous="{ pageNumber }">
           <n-link
             v-if="pageNumber > 0"
-            class="
-              h-12
-              w-12
-              mr-1
-              flex
-              justify-center
-              items-center
-              rounded-full
-              bg-gray-200
-              cursor-pointer
-            "
+            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
             :to="linkForPageNumber(pageNumber)"
             :depth="navDepth"
             :nav-tag="navTag"
@@ -164,17 +101,7 @@
           </n-link>
           <div
             v-else
-            class="
-              h-12
-              w-12
-              mr-1
-              flex
-              justify-center
-              items-center
-              rounded-full
-              bg-gray-200
-              opacity-25
-            "
+            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -223,16 +150,7 @@
         <template #next="{ pageNumber }">
           <n-link
             v-if="pageNumber > 0"
-            class="
-              h-12
-              w-12
-              mr-1
-              flex
-              justify-center
-              items-center
-              rounded-full
-              bg-gray-200
-            "
+            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200"
             :to="linkForPageNumber(pageNumber)"
             :depth="navDepth"
             :nav-tag="navTag"
@@ -255,17 +173,7 @@
           </n-link>
           <div
             v-else
-            class="
-              h-12
-              w-12
-              mr-1
-              flex
-              justify-center
-              items-center
-              rounded-full
-              bg-gray-200
-              opacity-25
-            "
+            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

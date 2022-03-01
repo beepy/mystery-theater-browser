@@ -3,17 +3,7 @@
     <div class="flex h-12 font-medium rounded-full bg-gray-200">
       <slot name="previous" :pageNumber="current > 1 ? current - 1 : -1">
         <div
-          class="
-            h-12
-            w-12
-            mr-1
-            flex
-            justify-center
-            items-center
-            rounded-full
-            bg-gray-200
-            cursor-pointer
-          "
+          class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,17 +38,7 @@
       </template>
       <slot name="next" :pageNumber="current < last ? current + 1 : -1">
         <div
-          class="
-            h-12
-            w-12
-            mr-1
-            flex
-            justify-center
-            items-center
-            rounded-full
-            bg-gray-200
-            cursor-pointer
-          "
+          class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
