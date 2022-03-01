@@ -16,6 +16,15 @@
           <download-progress />
         </div>
         <n-link
+          class="py-2 mr-4 block flex-shrink"
+          to="/contact"
+          :depth="1"
+          nav-tag="page*"
+          :index="1"
+        >
+          Contact
+        </n-link>
+        <n-link
           class="py-2 block flex-shrink"
           to="/about"
           :depth="1"
