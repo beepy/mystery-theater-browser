@@ -37,6 +37,11 @@ export default [
     url: 'http://cbsrmt.thelongtrek.com/',
   },
   {
+    slug: 'kl-dlg-nrl',
+    title: 'Ken Long Collection: DLG (ads removed)',
+    url: 'http://cbsrmt.thelongtrek.com/',
+  },
+  {
     slug: 'cbsrmt-com-nrl',
     title: 'cbsmrt.com (ads removed)',
     url: 'https://www.cbsrmt.com',
