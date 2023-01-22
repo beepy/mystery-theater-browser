@@ -11,7 +11,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const slug = route.params.slug
-let nextSlug: number | undefined = parseInt(slug, 10)
+let nextSlug: number | undefined = typeof(slug) === 'string' ? parseInt(slug, 10) : undefined
 
 const data = ref(await useAsyncData(`episode-${route.params.slug}`, () => {
   return queryContent(`episodes/${route.params.slug}`).findOne()
