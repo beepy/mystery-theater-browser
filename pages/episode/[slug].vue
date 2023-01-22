@@ -20,7 +20,7 @@ const data = ref(
   })
 );
 
-if (!isNaN(nextSlug)) {
+if (nextSlug !== undefined && !isNaN(nextSlug)) {
   nextSlug = nextSlug + 1;
 } else {
   nextSlug = undefined;
