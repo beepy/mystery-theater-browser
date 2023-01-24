@@ -13,31 +13,22 @@
     </span>
   </p>
 </template>
-<script>
-// import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { storeToRefs } from 'pinia';
+import { useTagStore } from '~/stores/TagStore';
 
-export default defineComponent({
-  props: {
-    episodeTags: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-  },
-  computed: {
-    // ...mapGetters({
-    //   tags: 'tags',
-    // }),
-    titledTags() {
-      return [];
-      // return this.episodeTags.map((t) => {
-      //   return {
-      //     tag: t,
-      //     meta: Object.assign({ color: 'red' }, this.tags[t]),
-      //   }
-      // })
-    },
-  },
+const store = useTagStore();
+const { tags } = storeToRefs(store);
+const props = defineProps<{
+  episodeTags: string[];
+}>();
+
+const titledTags = computed(() => {
+  return props.episodeTags.map((t) => {
+    return {
+      tag: t,
+      meta: { ...tags.value[t] },
+    };
+  });
 });
 </script>

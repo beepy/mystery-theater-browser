@@ -25,7 +25,10 @@
     "typescript": "^4.9.4"
   },
   "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}":
-      "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix"
+    "*.{js,jsx,vue,ts,tsx}": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.6",
+    "pinia": "^2.0.29"
   }
 }
