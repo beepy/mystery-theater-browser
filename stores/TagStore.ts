@@ -5,8 +5,12 @@ export type TagType = {
   color: string;
 };
 
+interface State {
+  tagSource: Record<string, TagType>;
+}
+
 export const useTagStore = defineStore('TagStore', {
-  state: () => ({
+  state: (): State => ({
     tagSource: {
       adaptation: {
         title: 'Adaptation',
@@ -69,4 +73,5 @@ export const useTagStore = defineStore('TagStore', {
   getters: {
     tags: (state) => state.tagSource,
   },
+  // note there are not setters; use store.$patch({})
 });
