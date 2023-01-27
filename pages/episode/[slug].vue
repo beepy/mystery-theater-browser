@@ -13,10 +13,10 @@
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
           >
-            <!-- <previous-icon class="text-black w-8" /> -->
+            <PreviousIcon class="text-black w-8" />
           </TranLink>
           <div class="flex-grow" />
-          <!--           <TranLink
+          <TranLink
             v-if="episode.id !== 1399"
             :to="'/episode/' + (parseInt(episode.id) + 1)"
             :index="parseInt(episode.id) + 1"
@@ -24,9 +24,8 @@
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
           >
-            <next-icon class="text-black w-8" />
+            <NextIcon class="text-black w-8" />
           </TranLink>
- -->
         </div>
       </div>
     </div>
@@ -155,6 +154,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import EpisodeNumber from '@/components/EpisodeNumber.vue';
+import NextIcon from '@/assets/svg/nextIcon.svg';
+import PreviousIcon from '@/assets/svg/previousIcon.svg';
+
 const route = useRoute();
 const slug = route.params.slug;
 

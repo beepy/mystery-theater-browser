@@ -1,19 +1,24 @@
 <template>
-  <div
-    class="max-w-4xl mx-auto bg-white md:mt-10 p-8 md:rounded-lg shadow overflow-hidden"
-  >
-    <p>Hello World</p>
-    <pre v-if="data">{{ data.data }}</pre>
-    <p v-else><em>Not found</em></p>
+  <div class="absolute-on-leave">
+    <div class="md:container md:mx-auto">
+      <p>len: {{ episodeCount }}</p>
+      <PaginatedEpisodes
+        v-if="episodes && episodes.length > 0"
+        :current-page-number="1"
+        :episodes="episodes"
+        :total-page-number="Math.floor((episodeCount + 9) / 10)"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const data = ref(
-  useAsyncData('home', async () => {
-    const d = await queryContent('episodes').only(['id']).find();
-    return d.length;
-  })
+const { data: episodeIds } = await useAsyncData(() =>
+  queryContent('episodes').only(['id']).find()
 );
-console.log(data);
+const episodeCount = episodeIds.value?.length ?? 0;
+
+const { data: episodes } = await useAsyncData(() =>
+  queryContent('episodes').sort({ id: 1, $numeric: true }).limit(10).find()
+);
 </script>

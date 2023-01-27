@@ -1,10 +1,7 @@
 <template>
   <NuxtLink v-slot="{ navigate, href, route }" :to="to" custom>
-    <a
-      :href="href"
-      v-bind="$attrs"
-      @click.prevent="beforeClick(navigate, route)"
-    >
+    <a :href="href" v-bind="$attrs" :foo="navigate" :bar="route">
+      <!-- @click.prevent="beforeClick(navigate, route)" -->
       <slot />
     </a>
   </NuxtLink>
