@@ -33,7 +33,7 @@
           >
             <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
               <span class="block font-bold">
-                {{ episode.title }} {{ typeof episode.id }}
+                {{ episode.title }}
               </span>
               <div class="leading-tight mt-2">
                 <span
@@ -50,7 +50,7 @@
               class="order-3 md:order-2 col-span-12 md:col-span-6 xl:col-span-7 px-6 py-4"
             >
               <ContentRenderer :value="episode" />
-              <EpisodeTag
+              <EpisodeTags
                 v-if="episode.tags"
                 :episode-tags="episode.tags"
                 class="block text-right"

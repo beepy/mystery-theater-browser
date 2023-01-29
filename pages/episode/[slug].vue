@@ -168,4 +168,15 @@ const data = ref(
 );
 
 const episode = data.value.data;
+
+useHead({
+  title: episode?.title || 'Untitled',
+  meta: [{ name: 'episode description', content: 'My amazing episodes.' }],
+});
+
+// this is a macro, so we can't set anything dynamically
+// definePageMeta({
+//   title: 'Some Page',
+//   foo: route.params.slug
+// })
 </script>
