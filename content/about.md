@@ -57,7 +57,7 @@ If for any reason you have trouble downloading, you can use the **Direct Link** 
 
 ### About the Site
 
-This site uses [nuxt](https://nuxtjs.org/) and is hosted on [netlify](https://www.netlify.com/).
+This site uses [nuxt 3](https://nuxt.org/) and is hosted on [netlify](https://www.netlify.com/).
 
 [^1]: Actually, episodes in the [complete collection (of varying quality)](https://archive.org/download/cbs_radio_mystery_theater/) — *are* served correctly, possibly because they are part of large single zip file. Other MP3s are not — they do not have the correct headers returned by the server, specifically `Content-Disposition: attachment`
 [^2]: The browser will fetch the file’s contents (in memory) then represent these contents as a ”blob” of data, which then gets ”downloaded” by the browser like a normal file.

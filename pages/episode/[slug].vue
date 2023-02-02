@@ -161,7 +161,7 @@ import NextIcon from '@/assets/svg/nextIcon.svg';
 import PreviousIcon from '@/assets/svg/previousIcon.svg';
 
 const route = useRoute();
-// const navStore = useNavStore();
+const navStore = useNavStore();
 const slug = typeof route.params.slug === 'string' ? route.params.slug : '0';
 const slugIndex = parseInt(slug) || 0;
 
@@ -193,5 +193,8 @@ useHead({
 onMounted(() => {
   // this is really for first load, or history navigation?
   // navStore.$patch({ navTo: { tag: 'episode', depth: 2, index: slugIndex }})
+  useNavStore().$patch({
+    navTo: { tag: 'episode', depth: 2, index: slugIndex, path: route.path },
+  });
 });
 </script>

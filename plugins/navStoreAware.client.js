@@ -1,6 +1,6 @@
 // import { useNavStore } from '~/stores/NavStore';
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((/* nuxtApp */) => {
   // const store = useNavStore();
   // const router = useRouter();
   // const methods = ['push', 'replace', 'go', 'back', 'forward'];
