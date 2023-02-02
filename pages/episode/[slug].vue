@@ -154,12 +154,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useNavStore } from '~/stores/NavStore';
+
 import EpisodeNumber from '@/components/EpisodeNumber.vue';
 import NextIcon from '@/assets/svg/nextIcon.svg';
 import PreviousIcon from '@/assets/svg/previousIcon.svg';
 
 const route = useRoute();
-const slug = route.params.slug;
+// const navStore = useNavStore();
+const slug = typeof route.params.slug === 'string' ? route.params.slug : '0';
+const slugIndex = parseInt(slug) || 0;
 
 const data = ref(
   await useAsyncData(`episode-${route.params.slug}`, () => {
@@ -174,9 +178,20 @@ useHead({
   meta: [{ name: 'episode description', content: 'My amazing episodes.' }],
 });
 
+// definePageMeta({
+//   middleware (to, from) {
+//     console.log("to mw")
+//     console.log(to)
+//   }
+// })
 // this is a macro, so we can't set anything dynamically
 // definePageMeta({
 //   title: 'Some Page',
 //   foo: route.params.slug
 // })
+
+onMounted(() => {
+  // this is really for first load, or history navigation?
+  // navStore.$patch({ navTo: { tag: 'episode', depth: 2, index: slugIndex }})
+});
 </script>

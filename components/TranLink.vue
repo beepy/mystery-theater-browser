@@ -9,36 +9,39 @@
     </a>
   </NuxtLink>
 </template>
-<script>
-export default defineComponent({
-  inheritAttrs: false,
-  props: {
-    to: {
-      type: [Object, String],
-      required: true,
+<script setup lang="ts">
+import { RouteLocationNormalized } from 'vue-router';
+import { storeToRefs } from 'pinia';
+
+import { useNavStore } from '~/stores/NavStore';
+
+const store = useNavStore();
+
+const { navTo } = storeToRefs(store);
+
+const props = withDefaults(
+  defineProps<{
+    to: Object | string;
+    navTag: string;
+    depth?: number;
+    index?: number;
+  }>(),
+  {
+    depth: 0,
+    index: 0,
+  }
+);
+
+const beforeClick = (f: Function, r: RouteLocationNormalized) => {
+  store.$patch({
+    navFrom: { ...navTo.value },
+    navTo: {
+      tag: props.navTag,
+      depth: props.depth,
+      index: props.index,
+      path: r.path,
     },
-    navTag: {
-      type: String,
-      required: true,
-    },
-    depth: {
-      type: [Number, String],
-      default: 0,
-    },
-    index: {
-      type: [Number, String],
-      default: 0,
-    },
-  },
-  methods: {
-    beforeClick(f, r) {
-      // this.$store.commit('navTo', {
-      //   tag: this.navTag,
-      //   depth: this.depth,
-      //   index: this.index,
-      // })
-      f(r);
-    },
-  },
-});
+  });
+  f(r);
+};
 </script>

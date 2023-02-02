@@ -51,6 +51,7 @@
   </div>
 </template>
 <script setup lang="ts">
+// const navStore = useNavStore();
 const route = useRoute();
 const slug = route.params.slug;
 const id =
@@ -82,4 +83,14 @@ useHead({
   title: 'Some Artist',
   meta: [{ name: 'description', content: 'My amazing site.' }],
 });
+
+// console.log('artist loaded ' + slug)
+
+// onMounted(() => {
+//   navStore.pushTo({
+//     tag: "artist",
+//     depth: 2,
+//     index: id
+//   })
+// })
 </script>

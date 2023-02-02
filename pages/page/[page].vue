@@ -13,7 +13,9 @@
 </template>
 <script lang="ts" setup>
 const route = useRoute();
-const page = parseInt(route.params.page || '1', 10);
+const pageString =
+  typeof route.params.page === 'string' ? route.params.page : '1';
+const page = parseInt(pageString, 10);
 
 const { data: episodeIds } = await useAsyncData(() =>
   queryContent('episodes').only(['id']).find()

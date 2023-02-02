@@ -1,35 +1,34 @@
+import { NavInfo, useNavStore } from '@/stores/NavStore';
+
+const navsForPaths: Record<string, NavInfo> = {};
+
 export default defineNuxtRouteMiddleware((to, from) => {
-  // const store = useNavStore();
-  // const router = useRouter();
+  // we are caching the nav info for every path the user navigates to
+  // so we can show appropriate transitions when they navigate e.g. with the
+  // back button
+  //
+  const store = useNavStore();
+  const patch: Record<string, NavInfo> = {};
 
-  // let methods = ['push', 'replace', 'go', 'back', 'forward'];
-  // let programmatic = false;
+  // if the store already has the path we think we are navigating to
+  // then cache the nav info for that path locally
+  if (store.navTo.path === to.path) {
+    navsForPaths[to.path] = { ...store.navTo };
+    return;
+  }
 
-  // we can't patch router any more
-  // methods.forEach((methodName) => {
-  //   const method = router[methodName] as Function
-  //   router[methodName] = (...args) => {
-  //     programmatic = true
-  //     method.apply(router, args)
-  //   }
-  // })
+  // otherwise if we have a cached value for the path we are going to, patch it
+  if (to?.path && navsForPaths[to.path]) {
+    patch.navTo = { ...navsForPaths[to.path] };
+  }
 
-  // router.beforeEach((to, from, next) => {
-  //   // name is null for initial load or page reload
-  //   if (from.name === null || programmatic) {
-  //     // triggered bu router.push/go/... call
-  //     // route as usual
-  //     store.$patch({ historyNav:  false })
-  //     next()
-  //   } else {
-  //     // triggered by user back/forward
-  //     // do not route
-  //     store.$patch({ historyNav:  true })
-  //     next()
-  //   }
-  //   programmatic = false // clear flag
-  // })
-  // can we set route meta in nuxt? Only statically.
-  console.log('defineNuxtRouteMiddleware');
-  console.log([to, from, to.meta?.foo]);
+  // if we have a cached value for the path we are coming from, patch it
+  if (from?.path && navsForPaths[from.path]) {
+    patch.navFrom = { ...navsForPaths[from.path] };
+  }
+
+  // if we have any patches, apply them
+  if (patch.navTo || patch.navFrom) {
+    store.$patch(patch);
+  }
 });
