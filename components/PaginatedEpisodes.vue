@@ -73,6 +73,7 @@
         :last="totalPageNumber"
         :current="currentPageNumber"
         :span="13"
+        first-page-link="/"
         class="mt-6"
       >
         <template #previous="{ pageNumber }">
@@ -203,6 +204,7 @@ const props = withDefaults(
     totalPageNumber?: number;
     episodes?: any[];
     linkPrefix?: string;
+    firstPageLink?: string;
     navTag?: string;
     navDepth?: number;
   }>(),
@@ -217,12 +219,16 @@ const props = withDefaults(
     navDepth: 1,
   }
 );
+
 const searchTerms = '';
 
 const linkForPageNumber = (p: string | number) => {
   const l = {
-    path: props.linkPrefix + '/' + p,
-    query: { search: '' },
+    path:
+      p === 1 && props.firstPageLink
+        ? props.firstPageLink
+        : props.linkPrefix + '/' + p,
+    query: {},
   };
   if (searchTerms && searchTerms.length > 2) {
     l.query = {

@@ -57,27 +57,23 @@ const slug = route.params.slug;
 const id =
   typeof slug === 'string' ? parseInt(slug, 10) : parseInt(slug[0], 10);
 
-const { data: artist } = await useAsyncData(() =>
+const { data: artist } = await useAsyncData(`artist-${id}`, () =>
   queryContent(`artists/${slug}`).findOne()
 );
 
-const actorData = await useAsyncData(() =>
+const { data: actor } = await useAsyncData(`episodes-artist-${id}`, () =>
   queryContent('episodes')
     .where({ actorIds: { $contains: id } })
     .sort({ id: 1, $numeric: true })
     .find()
 );
 
-const actor = actorData.data ?? [];
-
-const writerData = await useAsyncData(() =>
+const { data: writer } = await useAsyncData(`episodes-writer-${id}`, () =>
   queryContent('episodes')
     .where({ writerIds: { $contains: id } })
     .sort({ id: 1, $numeric: true })
     .find()
 );
-
-const writer = writerData.data ?? [];
 
 useHead({
   title: 'Some Artist',
