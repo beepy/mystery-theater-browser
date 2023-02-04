@@ -2,7 +2,8 @@
   <div class="absolute-on-leave">
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
-      <!-- <pre class="bg-white">{{ terms }}</pre> -->
+      <!-- <NuxtLink to="/search">Link for test</NuxtLink> -->
+      <!-- <pre class="bg-white">IDs: {{ matchedIds }}</pre> -->
       <PaginatedEpisodes
         v-if="episodes && episodes.length > 0"
         :current-page-number="page"
@@ -33,16 +34,14 @@ const searchStore = useSearchStore();
 const { isSearching, terms, matchedIds } = storeToRefs(searchStore);
 
 const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
-  'episodes-page-1-10',
+  'episodes-index',
   () => {
     if (isSearching.value) {
-      episodeCount.value = matchedIds.value?.length ?? 0;
-      return queryContent('episodes')
-        .where({ id: { $in: matchedIds.value } })
-        .sort({ id: 1, $numeric: true })
-        .skip((page.value - 1) * 10)
-        .limit(10)
-        .find();
+      return searchStore.getMatchedEpisodes().then((d) => {
+        const i = (page.value - 1) * 10;
+        episodeCount.value = d.length;
+        return d.slice(i, i + 10);
+      });
     } else {
       episodeCount.value = episodeIds.value?.length ?? 0;
       return queryContent('episodes')
@@ -69,7 +68,7 @@ watch(route, (newRoute) => {
   refreshEpisodes();
 });
 
-watch([isSearching, terms, matchedIds], () => {
+watch([isSearching, terms], () => {
   refreshEpisodes();
 });
 // const search = "sci-fi";

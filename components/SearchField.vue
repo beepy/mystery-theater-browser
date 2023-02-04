@@ -46,19 +46,26 @@ const count = ref(0);
 const updateSearchTerms = debounce((s: string) => {
   if (searchTerms.value !== s) {
     searchTerms.value = s;
-    queryContent('episodes')
-      .where({ _searchable: { $regex: `/${s}/ig` } })
-      .only(['id'])
-      .find()
-      .then((d) => {
-        count.value = d.length;
-        searchedTerms.value = s;
-        searchStore.$patch({
-          terms: searchTerms.value,
-          matchedIds: d.map((e) => e.id),
-        });
-        router.push('/');
-      });
+    searchStore.$patch({
+      terms: searchTerms.value,
+      // matchedIds: d.map((e) => e.id),
+    });
+    router.push('/');
+    // queryContent('episodes')
+    //   .where({ _searchable: { $regex: `/${s}/ig` } })
+    //   // .where({ _searchable: { $regex: /blood/ig } })
+    //   // .where({ title: s })
+    //   .only(['id'])
+    //   .find()
+    //   .then((d) => {
+    //     count.value = d.length;
+    //     searchedTerms.value = s;
+    //     searchStore.$patch({
+    //       terms: searchTerms.value,
+    //       matchedIds: d.map((e) => e.id),
+    //     });
+    //     router.push('/');
+    //   });
   }
 }, 333);
 
