@@ -24,6 +24,15 @@ export const useSearchStore = defineStore('SearchStore', {
     getAllEpisodes() {
       if (this.episodes.length === 0) {
         return queryContent('episodes')
+          .without([
+            'urls',
+            'audioQuality',
+            'actorIds',
+            'writerIds',
+            'notes',
+            'descriptionSource',
+            'searchable',
+          ])
           .sort({ id: 1, $numeric: true })
           .find()
           .then((d) => {

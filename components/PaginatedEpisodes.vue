@@ -41,7 +41,7 @@
                   :key="actor.id"
                   class="text-xs"
                 >
-                  <span v-if="i > 0">,</span>
+                  <span v-if="i > 0">, </span>
                   <span class="whitespace-nowrap">{{ actor.name }}</span>
                 </span>
               </div>

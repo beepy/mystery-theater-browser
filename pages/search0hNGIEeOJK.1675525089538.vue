@@ -1,17 +1,23 @@
 <template>
   <div class="bg-white">
-    <h1>Search results</h1>
-    <button @click="test">Test</button>
+    <!-- not used, except to force desired resource to be generated -->
     <pre>{{ data }}</pre>
   </div>
 </template>
 
 <script setup lang="ts">
 const data = await useAsyncData('search-test', () => {
-  return queryContent('episodes').sort({ id: 1, $numeric: true }).find();
+  return queryContent('episodes')
+    .without([
+      'urls',
+      'audioQuality',
+      'actorIds',
+      'writerIds',
+      'notes',
+      'descriptionSource',
+      'searchable',
+    ])
+    .sort({ id: 1, $numeric: true })
+    .find();
 });
-
-const test = () => {
-  data.refresh();
-};
 </script>

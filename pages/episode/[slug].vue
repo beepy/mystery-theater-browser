@@ -116,14 +116,13 @@
             >
               This episode has not been reviewed for recording quality.
             </div>
-            <!--
             <download-options
               v-if="!showAllDownloads"
               :key="links[0].url"
               :url="links[0]"
               :episode="episode"
             />
-            <download-options
+            <DownloadOptions
               v-for="url in links"
               v-else
               :key="url.url"
@@ -146,7 +145,6 @@
                 Show additional downloads
               </button>
             </div>
-            -->
           </div>
         </div>
       </div>
@@ -156,6 +154,8 @@
 <script setup lang="ts">
 import { useNavStore } from '~/stores/NavStore';
 
+import allSources from '~/data/sources';
+
 import EpisodeNumber from '@/components/EpisodeNumber.vue';
 import NextIcon from '@/assets/svg/nextIcon.svg';
 import PreviousIcon from '@/assets/svg/previousIcon.svg';
@@ -164,17 +164,68 @@ const route = useRoute();
 const navStore = useNavStore();
 const slug = typeof route.params.slug === 'string' ? route.params.slug : '0';
 const slugIndex = parseInt(slug) || 0;
+const showAllDownloads = ref(false);
 
-const data = ref(
-  await useAsyncData(`episode-${route.params.slug}`, () => {
+const { data: episode } = await useAsyncData(
+  `episode-${route.params.slug}`,
+  () => {
     return queryContent(`episodes/${route.params.slug}`).findOne();
-  })
+  }
 );
 
-const episode = data.value.data;
+const links = computed(() => {
+  const quality = allSources.map((s) => s.slug);
+
+  // human readable version of sources
+  const source = allSources.map((s) => s.title);
+
+  // reference link for sources
+  const sourceLink = allSources.map((s) => s.url);
+
+  // first we map them
+  const urls = episode.value?.urls.map((u: any) => {
+    let i = quality.indexOf(u.source);
+    let q = i;
+    let cleanUrlFile = u.url.substring(u.url.lastIndexOf('/') + 1);
+
+    cleanUrlFile = decodeURIComponent(cleanUrlFile).replace('.mp3', '');
+
+    if (i < 0) {
+      i = 10;
+      q = 3;
+    }
+    if (u.quality && parseInt(u.quality, 10) > 0) {
+      q = 2;
+    }
+    return {
+      url: u.url,
+      quality: q,
+      sourceTag: u.source,
+      source: source[i],
+      sourceLink: sourceLink[i],
+      filename:
+        String(episode.value?.id).padStart(4, '0') +
+        ' ' +
+        episode.value?.title +
+        ' (' +
+        cleanUrlFile +
+        ').mp3',
+    };
+  });
+  // then we sort them
+  return urls.sort((a: any, b: any) => {
+    if (a.quality < b.quality) {
+      return -1;
+    } else if (a.quality > b.quality) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+});
 
 useHead({
-  title: episode?.title || 'Untitled',
+  title: episode.value?.title || 'Untitled',
   meta: [{ name: 'episode description', content: 'My amazing episodes.' }],
 });
 
@@ -197,4 +248,7 @@ onMounted(() => {
     navTo: { tag: 'episode', depth: 2, index: slugIndex, path: route.path },
   });
 });
+
+const toggleShowAllDownloads = (v: boolean | undefined) =>
+  (showAllDownloads.value = v === undefined ? !showAllDownloads.value : v);
 </script>
