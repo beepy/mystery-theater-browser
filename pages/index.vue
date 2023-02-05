@@ -2,22 +2,22 @@
   <div class="absolute-on-leave">
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
-      <!-- <NuxtLink to="/search">Link for test</NuxtLink> -->
-      <!-- <pre class="bg-white">IDs: {{ matchedIds }}</pre> -->
       <PaginatedEpisodes
         v-if="episodes && episodes.length > 0"
         :current-page-number="page"
         :episodes="episodes"
         first-page-link="/"
+        :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
       />
-      <!-- <NuxtPage /> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
+
+import { usePageStore } from '@/stores/PageStore';
 
 const route = useRoute();
 const page = ref(
@@ -31,7 +31,8 @@ const { data: episodeIds } = await useAsyncData('episode-ids', () =>
 );
 const episodeCount = ref(episodeIds.value?.length ?? 0);
 const searchStore = useSearchStore();
-const { isSearching, terms, matchedIds } = storeToRefs(searchStore);
+const { isSearching, terms } = storeToRefs(searchStore);
+const pageStore = usePageStore();
 
 const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
   'episodes-index',
@@ -53,6 +54,18 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
   }
 );
 
+onBeforeMount(() => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const terms = urlParams.get('search');
+  if (terms && terms.length > 2) {
+    // harmless if we are already seraching for these terms
+    searchStore.$patch({
+      terms,
+    });
+  }
+});
+
 onMounted(() => {
   // const queryString = window.location.search
   // const urlParams = new URLSearchParams(queryString)
@@ -65,6 +78,7 @@ watch(route, (newRoute) => {
       typeof newRoute.params.page === 'string' ? newRoute.params.page : '1',
       10
     ) ?? 1;
+  pageStore.savePage(page.value);
   refreshEpisodes();
 });
 

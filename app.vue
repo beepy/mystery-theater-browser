@@ -3,17 +3,16 @@
     <div class="bg-white mb-4 px-2">
       <div class="max-w-4xl mx-auto flex items-center">
         <TranLink
-          class="py-2 font-bold block flex-shrink"
-          to="/"
+          class="py-2 font-bold block flex-shrink site-title"
+          :to="indexRoute"
           :depth="1"
           nav-tag="episodes"
-          :index="1"
-          style="font-family: 'IM Fell Great Primer'"
+          :index="page"
         >
           MysteryTheater.org
         </TranLink>
         <div class="flex-grow px-4 justify-items-end grid">
-          <!-- <download-progress /> -->
+          <DownloadProgress />
         </div>
         <TranLink
           class="py-2 mr-4 block flex-shrink"
@@ -56,9 +55,18 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useNavStore } from '~/stores/NavStore';
+import { usePageStore } from '@/stores/PageStore';
+import { useSearchStore } from '@/stores/SearchStore';
+
+const route = useRoute();
+const router = useRouter();
 
 const { navFrom, navTo } = storeToRefs(useNavStore());
-const alwaysFalse = false;
+const pageStore = usePageStore();
+const { page, indexRoute } = storeToRefs(pageStore);
+const { isSearching } = storeToRefs(useSearchStore());
+
+const alwaysFalse = computed(() => false);
 
 const transitionName = computed(() => {
   if (navFrom.value.tag.length && navTo.value.tag.length) {
@@ -81,5 +89,23 @@ const transitionName = computed(() => {
     // unknown
   }
   return 'page';
+});
+
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk
+      ? `${titleChunk} | MysteryTheater.org`
+      : 'MysteryTheater.org';
+  },
+});
+
+onMounted(() => {
+  if (route.name === 'index' && !isSearching.value) {
+    const p = pageStore.restorePage();
+    if (p !== 1) {
+      // getter indexRoute.value doesn't work here (don't know why)
+      router.push('/page/' + p);
+    }
+  }
 });
 </script>

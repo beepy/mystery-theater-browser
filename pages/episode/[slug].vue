@@ -42,7 +42,7 @@
                 {{ episode.title }}
               </h1>
             </div>
-            <div class="pr-0 pr-4 text-right">
+            <div class="pr-4 text-right">
               <p class="text-xs mb-2">{{ episode.date }}</p>
               <EpisodeNumber :number="episode.id" />
             </div>
@@ -116,7 +116,7 @@
             >
               This episode has not been reviewed for recording quality.
             </div>
-            <download-options
+            <DownloadOptions
               v-if="!showAllDownloads"
               :key="links[0].url"
               :url="links[0]"
@@ -152,6 +152,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Episode } from '~/types/episode';
+
 import { useNavStore } from '~/stores/NavStore';
 
 import allSources from '~/data/sources';
@@ -159,6 +161,15 @@ import allSources from '~/data/sources';
 import EpisodeNumber from '@/components/EpisodeNumber.vue';
 import NextIcon from '@/assets/svg/nextIcon.svg';
 import PreviousIcon from '@/assets/svg/previousIcon.svg';
+
+type UrlInfo = {
+  url: string;
+  quality: number;
+  sourceTag: string;
+  source: string;
+  sourceLink: string;
+  filename: string;
+};
 
 const route = useRoute();
 const navStore = useNavStore();
@@ -169,11 +180,11 @@ const showAllDownloads = ref(false);
 const { data: episode } = await useAsyncData(
   `episode-${route.params.slug}`,
   () => {
-    return queryContent(`episodes/${route.params.slug}`).findOne();
+    return queryContent<Episode>(`episodes/${route.params.slug}`).findOne();
   }
 );
 
-const links = computed(() => {
+const links = computed((): UrlInfo[] => {
   const quality = allSources.map((s) => s.slug);
 
   // human readable version of sources
@@ -213,7 +224,7 @@ const links = computed(() => {
     };
   });
   // then we sort them
-  return urls.sort((a: any, b: any) => {
+  return urls.sort((a: UrlInfo, b: UrlInfo) => {
     if (a.quality < b.quality) {
       return -1;
     } else if (a.quality > b.quality) {
@@ -226,7 +237,7 @@ const links = computed(() => {
 
 useHead({
   title: episode.value?.title || 'Untitled',
-  meta: [{ name: 'episode description', content: 'My amazing episodes.' }],
+  meta: [{ name: 'description', content: episode.value?.description || '' }],
 });
 
 // definePageMeta({

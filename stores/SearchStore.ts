@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 
 interface State {
   terms: string;
-  matchedIds: number[];
   episodes: any[];
   matchedEpisodes: any[];
   matchedTerms: string;
@@ -11,14 +10,17 @@ interface State {
 export const useSearchStore = defineStore('SearchStore', {
   state: (): State => ({
     terms: '',
-    matchedIds: [],
     episodes: [],
     matchedEpisodes: [],
     matchedTerms: '',
   }),
   getters: {
     isSearching: (state): boolean => state.terms.length > 2,
-    hasMatches: (state): boolean => state.matchedIds.length > 0,
+    hasMatches: (state): boolean => state.matchedEpisodes.length > 0,
+    matchCount: (state): number | undefined =>
+      state.terms === state.matchedTerms
+        ? state.matchedEpisodes.length
+        : undefined,
   },
   actions: {
     getAllEpisodes() {

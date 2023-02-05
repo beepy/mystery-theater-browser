@@ -80,8 +80,7 @@ const { data: writer } = await useAsyncData(`episodes-writer-${id}`, () =>
 );
 
 useHead({
-  title: 'Some Artist',
-  meta: [{ name: 'description', content: 'My amazing site.' }],
+  title: artist.value?.name || 'Unknown',
 });
 
 // console.log('artist loaded ' + slug)

@@ -27,4 +27,22 @@ if (body.value) {
   body.value.percent = percent;
   body.value.complete = completedCount;
 }
+
+useHead({
+  title: 'About',
+});
 </script>
+
+<style lang="scss">
+section.footnotes {
+  padding-top: 4rem;
+}
+.nuxt-content {
+  h2,
+  h3 {
+    a {
+      text-decoration: none;
+    }
+  }
+}
+</style>

@@ -49,7 +49,7 @@
             <div
               class="order-3 md:order-2 col-span-12 md:col-span-6 xl:col-span-7 px-6 py-4"
             >
-              <ContentRenderer :value="episode" />
+              <ContentRenderer :value="episode" class="nuxt-content" />
               <EpisodeTags
                 v-if="episode.tags"
                 :episode-tags="episode.tags"
@@ -70,10 +70,10 @@
     </div>
     <div class="fixed bottom-4 left-0 w-full">
       <PaginationComponent
+        :key="totalPageNumber"
         :last="totalPageNumber"
         :current="currentPageNumber"
         :span="13"
-        first-page-link="/"
         class="mt-6"
       >
         <template #previous="{ pageNumber }">
@@ -207,6 +207,7 @@ const props = withDefaults(
     firstPageLink?: string;
     navTag?: string;
     navDepth?: number;
+    searchTerms?: string;
   }>(),
   {
     currentPageNumber: 1,
@@ -220,8 +221,6 @@ const props = withDefaults(
   }
 );
 
-const searchTerms = '';
-
 const linkForPageNumber = (p: string | number) => {
   const l = {
     path:
@@ -230,9 +229,9 @@ const linkForPageNumber = (p: string | number) => {
         : props.linkPrefix + '/' + p,
     query: {},
   };
-  if (searchTerms && searchTerms.length > 2) {
+  if (props.searchTerms && props.searchTerms.length > 2) {
     l.query = {
-      search: searchTerms,
+      search: props.searchTerms,
     };
   }
   return l;

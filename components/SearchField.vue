@@ -24,8 +24,9 @@
       class="p-4 mb-4 rounded-lg text-center text-white hide-on-leave"
     >
       Searching for ”<strong>{{ searchTerms }}</strong
-      >”<span v-if="searchTerms === searchedTerms"
-        >. Found <strong> {{ count }}</strong> episode<span v-if="count !== 1"
+      >”<span v-if="matchCount !== undefined"
+        >. Found <strong> {{ matchCount }}</strong> episode<span
+          v-if="matchCount !== 1"
           >s</span
         >.</span
       ><span v-else>…</span>
@@ -34,38 +35,38 @@
 </template>
 <script lang="ts" setup>
 import debounce from 'lodash.debounce';
+
+import { storeToRefs } from 'pinia';
+
 import { useSearchStore } from '@/stores/SearchStore';
+import { usePageStore } from '@/stores/PageStore';
 
 const router = useRouter();
 const searchStore = useSearchStore();
+
 const newTerms = ref('');
 const searchTerms = ref('');
-const searchedTerms = ref('');
-const count = ref(0);
+// const searchedTerms = ref('');
+// const count = ref(0);
+const { matchCount } = storeToRefs(searchStore);
+const { indexRoute } = storeToRefs(usePageStore());
 
 const updateSearchTerms = debounce((s: string) => {
   if (searchTerms.value !== s) {
     searchTerms.value = s;
     searchStore.$patch({
       terms: searchTerms.value,
-      // matchedIds: d.map((e) => e.id),
     });
-    router.push('/');
-    // queryContent('episodes')
-    //   .where({ _searchable: { $regex: `/${s}/ig` } })
-    //   // .where({ _searchable: { $regex: /blood/ig } })
-    //   // .where({ title: s })
-    //   .only(['id'])
-    //   .find()
-    //   .then((d) => {
-    //     count.value = d.length;
-    //     searchedTerms.value = s;
-    //     searchStore.$patch({
-    //       terms: searchTerms.value,
-    //       matchedIds: d.map((e) => e.id),
-    //     });
-    //     router.push('/');
-    //   });
+    if (s.trim().length > 2) {
+      router.push({
+        name: 'index',
+        query: {
+          search: s,
+        },
+      });
+    } else {
+      router.push(indexRoute.value);
+    }
   }
 }, 333);
 
@@ -80,10 +81,16 @@ const clear = () => {
   searchTerms.value = '';
   searchStore.$patch({
     terms: '',
-    matchedIds: [],
   });
-  router.push('/');
+  router.push(indexRoute.value);
 };
+
+onMounted(() => {
+  newTerms.value = searchTerms.value = searchStore.terms;
+  searchStore.$patch({
+    terms: searchTerms.value,
+  });
+});
 
 onBeforeUnmount(() => {
   updateSearchTerms.flush();

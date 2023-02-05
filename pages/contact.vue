@@ -50,7 +50,11 @@
 <script lang="ts" setup>
 const name = ref('');
 const email = ref('');
-const message = ref('wut');
+const message = ref('');
+
+useHead({
+  title: 'Contact',
+});
 </script>
 
 <style>
