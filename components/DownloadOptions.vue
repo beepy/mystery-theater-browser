@@ -27,21 +27,21 @@
             <p class="text-center text-xs py-2">Preview</p>
           </div>
           <div style="width: 15%; min-width: 12rem">
-            <client-download
+            <!-- <ClientDownload
               v-if="!directLinkOnly"
               :href="url.url"
               :download="url.filename"
               class="block px-4 py-2 rounded bg-green-600 text-center text-white font-bold"
             >
-              Download <download-icon />
-            </client-download>
+              Download 
+            </ClientDownload> -->
             <a
               :href="url.url"
               :download="episode.title + '.mp3'"
               target="_blank"
-              class="block py-2 text-center underline text-xs"
+              class="block py-2 text-center underline font-bold"
             >
-              Direct Link
+              MP3 Direct Link
             </a>
           </div>
         </div>
@@ -49,33 +49,21 @@
     </div>
   </div>
 </template>
-<script>
-import ClientDownload from '~/components/ClientDownload'
-import DownloadIcon from '~/components/DownloadIcon'
+<script lang="ts" setup>
+// import ClientDownload from '~/components/ClientDownload'
+import axios from 'axios';
+import DownloadIcon from '@/assets/svg/downloadIcon.svg';
 
-export default {
-  components: {
-    ClientDownload,
-    DownloadIcon,
-  },
-  props: {
-    url: {
-      type: Object,
-      required: true,
-    },
-    episode: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    directLinkOnly() {
-      if (this.url.url && this.url.url.startsWith('https://')) {
-        return false
-      } else {
-        return true
-      }
-    },
-  },
-}
+const props = defineProps<{
+  url: any;
+  episode: any;
+}>();
+
+const directLinkOnly = computed(() => {
+  if (props.url.url && props.url.url.startsWith('https://')) {
+    return false;
+  } else {
+    return true;
+  }
+});
 </script>

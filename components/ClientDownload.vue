@@ -23,10 +23,26 @@
     <span v-else-if="state === 3">Complete</span>
   </a>
 </template>
-<script>
-import { mapGetters } from 'vuex'
-import filesize from 'filesize'
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+// import filesize from 'filesize'
 
+import { DownloadQueueItem, useDownloadStore } from '@/stores/DownloadStore';
+
+const downloadStore = useDownloadStore();
+
+const props = defineProps<{
+  href: string;
+  download: string;
+}>();
+
+const { headOfDownloadQueue } = storeToRefs(downloadStore);
+
+const progress = ref(0.0);
+const inProgressId = ref(0);
+
+// 0 = no action, 1 = pending, 2 = downloading, 3 = done, -1 = error
+const state = ref(0);
 /*
 NRL NOTE: We need to begin in an indeterminate state, with a "starting download"
 message. For whatever reason, it can take a long time from the initial request
@@ -37,70 +53,41 @@ downloadprogress.
 
 Also, might as well use "longtrek" http error to test handling of errors.
  */
-export default {
-  props: {
-    href: {
-      type: String,
-      required: true,
-    },
-    download: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      progress: 0.0,
-      inProgressId: 0,
-      // 0 = no action, 1 = pending, 2 = downloading, 3 = done, -1 = error
-      state: 0,
+
+const downloadedSize = computed(() => {
+  if (state.value > 0 && headOfDownloadQueue.value.loaded) {
+    return headOfDownloadQueue.value.loaded;
+    // return filesize(headOfDownloadQueue.value.loaded)
+  } else {
+    return 0;
+    // return filesize(0)
+  }
+});
+
+watch(headOfDownloadQueue, (v: DownloadQueueItem) => {
+  if (v.id && v.url === props.href) {
+    if (v.id !== inProgressId.value) {
+      inProgressId.value = v.id;
+      progress.value = 0;
+      state.value = 2;
+    } else if (v.total) {
+      progress.value = (v.loaded || 0) / v.total;
     }
-  },
-  computed: {
-    ...mapGetters({
-      headOfDownloadQueue: 'headOfDownloadQueue',
-      noSleep: 'noSleep',
-    }),
-    downloadedSize() {
-      if (this.state > 0 && this.headOfDownloadQueue.loaded) {
-        return filesize(this.headOfDownloadQueue.loaded)
-      } else {
-        return filesize(0)
-      }
-    },
-  },
-  watch: {
-    headOfDownloadQueue(v) {
-      if (v.id && v.url === this.href) {
-        if (v.id !== this.inProgressId) {
-          this.inProgressId = v.id
-          this.progress = 0
-          this.state = 2
-        } else if (v.total) {
-          this.progress = v.loaded / v.total
-        }
-      } else {
-        if (this.state === 2) {
-          this.state = 3
-        }
-        this.inProgressId = 0
-      }
-    },
-  },
-  methods: {
-    beginDownload() {
-      if (this.state === 0) {
-        this.$store.commit('appendToDownloadQueue', {
-          url: this.href,
-          download: this.download,
-        })
-        this.state = 1
-        if (!this.noSleep) {
-          this.$noSleep.enable()
-          this.$store.commit('noSleep', true)
-        }
-      }
-    },
-  },
-}
+  } else {
+    if (state.value === 2) {
+      state.value = 3;
+    }
+    inProgressId.value = 0;
+  }
+});
+
+const beginDownload = () => {
+  if (state.value === 0) {
+    downloadStore.appendToDownloadQueue({
+      url: props.href,
+      download: props.download,
+    });
+    state.value = 1;
+  }
+};
 </script>

@@ -1,105 +1,104 @@
 <template>
   <div class="absolute-on-leave">
     <div class="md:container md:mx-auto">
-      <search :terms="searchTerms" :count="episodeCount" />
-      <paginated-episodes
+      <SearchField key="search-field" />
+      <PaginatedEpisodes
         v-if="episodes && episodes.length > 0"
-        :current-page-number="1"
+        :current-page-number="page"
         :episodes="episodes"
+        first-page-link="/"
+        :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
       />
     </div>
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { storeToRefs } from 'pinia';
 
-import PaginatedEpisodes from '~/components/PaginatedEpisodes'
-import Search from '~/components/Search'
+import { usePageStore } from '@/stores/PageStore';
 
-import RelativeTransitions from '~/mixins/relativeTransitions'
+const route = useRoute();
+const page = ref(
+  parseInt(
+    typeof route.params.page === 'string' ? route.params.page : '1',
+    10
+  ) ?? 1
+);
+const { data: episodeIds } = await useAsyncData('episode-ids', () =>
+  queryContent('episodes').only(['id']).find()
+);
+const episodeCount = ref(episodeIds.value?.length ?? 0);
+const searchStore = useSearchStore();
+const { isSearching, terms } = storeToRefs(searchStore);
+const pageStore = usePageStore();
 
-export default {
-  components: { PaginatedEpisodes, Search },
-  mixins: [RelativeTransitions],
-  asyncData({ $content, store }) {
-    let episodes = $content('episodes')
-    let episodeCount = $content('episodes').only([])
-    return episodeCount.fetch().then((ec) => {
-      episodeCount = ec.length
-      return episodes
-        .sortBy('id')
-        .limit(10)
-        .fetch()
-        .then((e) => {
-          episodes = e
-          return {
-            page: 1,
-            episodes,
-            skip: 0,
-            episodeCount,
-          }
-        })
-    })
-  },
-  computed: {
-    ...mapGetters({
-      searchTerms: 'searchTerms',
-      searchedTerms: 'searchedTerms',
-    }),
-  },
-  watch: {
-    searchTerms(v) {
-      this.performSearch(v)
-      this.$store.commit('searchedTerms', '')
-    },
-  },
-  head() {
-    return {
-      title: 'Mystery Theater Browser | MysteryTheater.org ',
-    }
-  },
-  beforeMount() {
-    this.$store.commit('navTo', { tag: 'episodes', depth: 1, index: 1 })
-  },
-  mounted() {
-    const queryString = window.location.search
-    const urlParams = new URLSearchParams(queryString)
-    const terms = urlParams.get('search')
-    if (terms) {
-      this.$store.commit('searchTerms', terms)
-      this.$store.commit('searchedTerms', '')
-      if (terms.length > 2) {
-        this.performSearch(terms)
-      }
+const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
+  'episodes-index',
+  () => {
+    if (isSearching.value) {
+      return searchStore.getMatchedEpisodes().then((d) => {
+        const i = (page.value - 1) * 10;
+        episodeCount.value = d.length;
+        return d.slice(i, i + 10);
+      });
     } else {
-      this.$store.commit('searchTerms', '')
+      episodeCount.value = episodeIds.value?.length ?? 0;
+      return queryContent('episodes')
+        .sort({ id: 1, $numeric: true })
+        .skip((page.value - 1) * 10)
+        .limit(10)
+        .find();
     }
-  },
-  methods: {
-    performSearch(v) {
-      let episodes = this.$content('episodes')
-      let episodeCount = this.$content('episodes').only([])
+  }
+);
 
-      if (v.length > 2) {
-        const terms = v.replace('/', ' ')
-        episodes = episodes.search(terms)
-        episodeCount = episodeCount.search(terms)
-      }
-      episodeCount.fetch().then((ec) => {
-        episodeCount = ec.length
-        episodes
-          .sortBy('id')
-          .limit(10)
-          .fetch()
-          .then((e) => {
-            this.episodes = e
-            this.episodeCount = episodeCount
-            this.$store.commit('searchedTerms', v)
-          })
-      })
-    },
-  },
-}
+onBeforeMount(() => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const terms = urlParams.get('search');
+  if (terms && terms.length > 2) {
+    // harmless if we are already seraching for these terms
+    searchStore.$patch({
+      terms,
+    });
+  }
+});
+
+onMounted(() => {
+  // const queryString = window.location.search
+  // const urlParams = new URLSearchParams(queryString)
+  // const terms = urlParams.get('search')
+});
+
+watch(route, (newRoute) => {
+  page.value =
+    parseInt(
+      typeof newRoute.params.page === 'string' ? newRoute.params.page : '1',
+      10
+    ) ?? 1;
+  pageStore.savePage(page.value);
+  refreshEpisodes();
+});
+
+watch([isSearching, terms], () => {
+  refreshEpisodes();
+});
+// const search = "sci-fi";
+
+// const { data: test } = await useAsyncData('test-search', () =>
+//   queryContent('episodes').where({
+//   $or: [
+//       { _searchable: { $regex: `/${search}/ig` }},
+//       // { description: { $regex: `/${search}/ig` }},
+//       // { name: { $regex: `/${search}/ig` }},
+//       // { searchable: { $regex: `/${search}/ig` }},
+//     ]
+//   }).only(['title']).find()
+// )
+
+// const performSearch = (v: string) => {
+//   if (v.length > 2)
+// }
 </script>

@@ -3,18 +3,12 @@
     {{ paddedNumber }}
   </span>
 </template>
-<script>
-export default {
-  props: {
-    number: {
-      type: Number,
-      default: 0,
-    },
-  },
-  computed: {
-    paddedNumber() {
-      return String(this.number).padStart(4, '0')
-    },
-  },
-}
+<script lang="ts" setup>
+const props = defineProps<{
+  number: number;
+}>();
+
+const paddedNumber = computed(() => {
+  return String(props.number).padStart(4, '0');
+});
 </script>

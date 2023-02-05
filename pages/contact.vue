@@ -11,7 +11,7 @@
       <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="alt" class="bot" />
       <p>
-        <input-with-top-aligned-label
+        <InputWithTopAlignedLabel
           v-model="name"
           type="text"
           name="name"
@@ -20,7 +20,7 @@
         />
       </p>
       <p>
-        <input-with-top-aligned-label
+        <InputWithTopAlignedLabel
           v-model="email"
           type="email"
           name="email"
@@ -29,9 +29,8 @@
         />
       </p>
       <p>
-        <textarea-with-top-aligned-label
+        <TextAreaWithTopAlignedLabel
           v-model="message"
-          type="text"
           name="message"
           label="Your Message"
           class="contact textarea"
@@ -48,20 +47,16 @@
     </form>
   </div>
 </template>
-<script>
-import InputWithTopAlignedLabel from '~/components/InputWithTopAlignedLabel'
-import TextareaWithTopAlignedLabel from '~/components/TextareaWithTopAlignedLabel'
-export default {
-  components: { InputWithTopAlignedLabel, TextareaWithTopAlignedLabel },
-  data() {
-    return {
-      name: '',
-      email: '',
-      message: '',
-    }
-  },
-}
+<script lang="ts" setup>
+const name = ref('');
+const email = ref('');
+const message = ref('');
+
+useHead({
+  title: 'Contact',
+});
 </script>
+
 <style>
 label.iftal {
   width: 100%;

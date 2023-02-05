@@ -22,14 +22,14 @@
               Episode
             </div>
           </div>
-          <n-link
+          <TranLink
             v-for="episode in episodes"
-            :key="episode.slug"
-            :to="'/episode/' + episode.slug"
+            :key="episode.id"
+            :to="'/episode/' + episode.id"
             class="grid grid-cols-12 hover:bg-gray-50 row"
             :depth="2"
             nav-tag="episode"
-            :index="episode.slug"
+            :index="episode.id"
           >
             <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
               <span class="block font-bold">
@@ -41,7 +41,7 @@
                   :key="actor.id"
                   class="text-xs"
                 >
-                  <span v-if="i > 0">,</span>
+                  <span v-if="i > 0">, </span>
                   <span class="whitespace-nowrap">{{ actor.name }}</span>
                 </span>
               </div>
@@ -49,8 +49,8 @@
             <div
               class="order-3 md:order-2 col-span-12 md:col-span-6 xl:col-span-7 px-6 py-4"
             >
-              <nuxt-content :document="episode" />
-              <episode-tags
+              <ContentRenderer :value="episode" class="nuxt-content" />
+              <EpisodeTags
                 v-if="episode.tags"
                 :episode-tags="episode.tags"
                 class="block text-right"
@@ -62,21 +62,22 @@
               <div class="text-xs text-center mb-2">
                 {{ episode.date }}
               </div>
-              <episode-number :number="episode.id" />
+              <EpisodeNumber :number="episode.id" />
             </div>
-          </n-link>
+          </TranLink>
         </div>
       </div>
     </div>
     <div class="fixed bottom-4 left-0 w-full">
-      <pagination
+      <PaginationComponent
+        :key="totalPageNumber"
         :last="totalPageNumber"
         :current="currentPageNumber"
         :span="13"
         class="mt-6"
       >
         <template #previous="{ pageNumber }">
-          <n-link
+          <TranLink
             v-if="pageNumber > 0"
             class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
             :to="linkForPageNumber(pageNumber)"
@@ -98,7 +99,7 @@
             >
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
-          </n-link>
+          </TranLink>
           <div
             v-else
             class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
@@ -120,7 +121,7 @@
           </div>
         </template>
         <template #page="{ pageNumber }">
-          <n-link
+          <TranLink
             v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
             :class="{
               'w-12 md:flex justify-center items-center hidden': true,
@@ -134,7 +135,7 @@
           >
             <template v-if="pageNumber === -1">… </template>
             <template v-else>{{ pageNumber }} </template>
-          </n-link>
+          </TranLink>
           <div
             v-else
             :class="{
@@ -148,7 +149,7 @@
           </div>
         </template>
         <template #next="{ pageNumber }">
-          <n-link
+          <TranLink
             v-if="pageNumber > 0"
             class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200"
             :to="linkForPageNumber(pageNumber)"
@@ -170,7 +171,7 @@
             >
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
-          </n-link>
+          </TranLink>
           <div
             v-else
             class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
@@ -191,65 +192,48 @@
             </svg>
           </div>
         </template>
-      </pagination>
+      </PaginationComponent>
     </div>
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    currentPageNumber?: number;
+    totalPageNumber?: number;
+    episodes?: any[];
+    linkPrefix?: string;
+    firstPageLink?: string;
+    navTag?: string;
+    navDepth?: number;
+    searchTerms?: string;
+  }>(),
+  {
+    currentPageNumber: 1,
+    totalPageNumber: 1,
+    episodes() {
+      return [];
+    },
+    linkPrefix: '/page',
+    navTag: '',
+    navDepth: 1,
+  }
+);
 
-import EpisodeNumber from '~/components/EpisodeNumber'
-import Pagination from '~/components/Pagination'
-import NLink from '~/components/NLink'
-import EpisodeTags from '~/components/EpisodeTags'
-export default {
-  components: { EpisodeNumber, EpisodeTags, Pagination, NLink },
-  props: {
-    currentPageNumber: {
-      type: Number,
-      default: 1,
-    },
-    totalPageNumber: {
-      type: Number,
-      default: 1,
-    },
-    episodes: {
-      type: Array,
-      default() {
-        return []
-      },
-    },
-    linkPrefix: {
-      type: String,
-      default: '/page',
-    },
-    navTag: {
-      type: String,
-      default: 'episodes',
-    },
-    navDepth: {
-      type: Number,
-      default: 1,
-    },
-  },
-  computed: {
-    ...mapGetters({
-      searchTerms: 'searchTerms',
-    }),
-  },
-  methods: {
-    linkForPageNumber(p) {
-      const l = {
-        path: this.linkPrefix + '/' + p,
-      }
-      if (this.searchTerms && this.searchTerms.length > 2) {
-        l.query = {
-          search: this.searchTerms,
-        }
-      }
-      return l
-    },
-  },
-}
+const linkForPageNumber = (p: string | number) => {
+  const l = {
+    path:
+      p === 1 && props.firstPageLink
+        ? props.firstPageLink
+        : props.linkPrefix + '/' + p,
+    query: {},
+  };
+  if (props.searchTerms && props.searchTerms.length > 2) {
+    l.query = {
+      search: props.searchTerms,
+    };
+  }
+  return l;
+};
 </script>
