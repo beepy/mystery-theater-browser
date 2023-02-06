@@ -1,6 +1,6 @@
 # Changelog | MysteryTheater.org
 
-## [2.1.0]
+## [2.1.0] - 2023-02-06 11:41AM
 
 ### Fixed
 
