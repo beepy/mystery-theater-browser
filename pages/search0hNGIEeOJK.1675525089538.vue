@@ -15,7 +15,7 @@ const data = await useAsyncData('search-test', () => {
       'writerIds',
       'notes',
       'descriptionSource',
-      'searchable',
+      // 'searchable',
     ])
     .sort({ id: 1, $numeric: true })
     .find();

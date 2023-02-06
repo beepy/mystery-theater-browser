@@ -62,34 +62,10 @@ const { data: artist } = await useAsyncData(`artist-${id}`, () =>
   queryContent(`artists/${slug}`).findOne()
 );
 
-const { data: actor } = await useAsyncData(`episodes-artist-${id}`, () =>
-  queryContent('episodes')
-    .where({ actorIds: { $contains: id } })
-    // .without(['description', 'body', 'urls', 'tags', 'searchable', 'notes', 'descriptionSource', '_searchable'])
-    .only(episodeProperties)
-    .sort({ id: 1, $numeric: true })
-    .find()
-);
-
-const { data: writer } = await useAsyncData(`episodes-writer-${id}`, () =>
-  queryContent('episodes')
-    .where({ writerIds: { $contains: id } })
-    .only(episodeProperties)
-    .sort({ id: 1, $numeric: true })
-    .find()
-);
+const actor = computed(() => artist.value?.actor ?? []);
+const writer = computed(() => artist.value?.writer ?? []);
 
 useHead({
   title: artist.value?.name || 'Unknown',
 });
-
-// console.log('artist loaded ' + slug)
-
-// onMounted(() => {
-//   navStore.pushTo({
-//     tag: "artist",
-//     depth: 2,
-//     index: id
-//   })
-// })
 </script>

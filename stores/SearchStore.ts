@@ -33,7 +33,7 @@ export const useSearchStore = defineStore('SearchStore', {
             'writerIds',
             'notes',
             'descriptionSource',
-            'searchable',
+            // 'searchable',
           ])
           .sort({ id: 1, $numeric: true })
           .find()

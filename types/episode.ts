@@ -12,7 +12,7 @@ export interface Episode extends MarkdownParsedContent {
   actorIds?: number[];
   writers?: { id?: number; name?: string }[];
   writerIds?: number[];
-  searchable?: string;
+  // searchable?: string;
   _searchable?: string;
   descriptionSource?: string;
 }
