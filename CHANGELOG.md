@@ -1,5 +1,7 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
 ## [2.1.0] - 2023-02-06 11:41AM
 
 ### Fixed
@@ -10,7 +12,7 @@
     * on netlify, nuxt 3 takes 11 minutes, nuxt 2 took about 4 minutes
   * leading contributing cause was fetching of episodes on artists' pages
   * changed data to output episode id and title into artist content so it does not need to be separately fetched for each artist
-  * local generate time reduced to 1:44. Still not as good as nuxt 2
+  * local generate time reduced to 1:44; build on netfliy reduced to 6:41. Cut time in half, but still not as good as nuxt 2
 
 ## [2.0] - 2023-02-05 05:11PM
 

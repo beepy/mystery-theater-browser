@@ -26,10 +26,16 @@ const page = ref(
     10
   ) ?? 1
 );
-const { data: episodeIds } = await useAsyncData('episode-ids', () =>
-  queryContent('episodes').only(['id']).find()
-);
-const episodeCount = ref(episodeIds.value?.length ?? 0);
+
+// we are hard-coding this because of the effect the original dynamic solution
+// had on build time (this is 40% faster)
+const baseEpisodeCount = 1399;
+// originally we fetched all IDs and get their length
+// const { data: episodeIds } = await useAsyncData('episode-ids', () =>
+//   queryContent('episodes').only(['id']).find()
+// );
+
+const episodeCount = ref(baseEpisodeCount);
 const searchStore = useSearchStore();
 const { isSearching, terms } = storeToRefs(searchStore);
 const pageStore = usePageStore();
@@ -44,7 +50,7 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
         return d.slice(i, i + 10);
       });
     } else {
-      episodeCount.value = episodeIds.value?.length ?? 0;
+      episodeCount.value = baseEpisodeCount;
       return queryContent('episodes')
         .sort({ id: 1, $numeric: true })
         .skip((page.value - 1) * 10)
