@@ -22,7 +22,7 @@ export const useTagStore = defineStore('TagStore', {
       },
       drama: {
         title: 'Drama',
-        color: 'yellow-600',
+        color: 'yellow-700',
       },
       'good-audio': {
         title: 'Good Audio',

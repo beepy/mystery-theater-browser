@@ -4,7 +4,9 @@
 
 ### Added
 
-* Jump to page control in pagination bar
+* Paginated episodes changes:
+  * Jump to page control in pagination bar
+  * Changing pages scrolls back to the top of the page
 
 ### Changed
 

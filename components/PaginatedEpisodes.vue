@@ -5,7 +5,7 @@
         class="shadow overflow-hidden border-b border-gray-200 md:rounded-lg bg-white transitionable"
       >
         <div class="min-w-full divide-y divide-gray-200">
-          <div class="hidden md:grid grid-cols-12 bg-gray-50">
+          <div ref="header" class="hidden md:grid grid-cols-12 bg-gray-50">
             <div
               class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-4"
             >
@@ -89,6 +89,7 @@
                 :depth="navDepth"
                 :nav-tag="navTag"
                 :index="pageNumber"
+                aria-label="Previous page"
               >
                 <ChevronLeft class="w-6 h-6" />
               </TranLink>
@@ -138,6 +139,7 @@
                 :depth="navDepth"
                 :nav-tag="navTag"
                 :index="pageNumber"
+                aria-label="Next page"
               >
                 <ChevronRight class="w-6 h-6" />
               </TranLink>
@@ -242,6 +244,7 @@ const showingModal = ref(false);
 const jumpToPageNumberString = ref(props.currentPageNumber + '');
 const pageInput = ref(null);
 const jumpToInput = ref(null as null | HTMLInputElement);
+const header = ref(null as null | HTMLElement);
 
 function linkForPageNumber(p: string | number) {
   const l = {
@@ -275,6 +278,9 @@ watch(
   () => props.currentPageNumber,
   (v) => {
     jumpToPageNumberString.value = v + '';
+    if (header.value) {
+      header.value.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 );
 

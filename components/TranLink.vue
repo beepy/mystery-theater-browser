@@ -45,3 +45,9 @@ const beforeClick = (f: Function, r: RouteLocationNormalized) => {
   f(r);
 };
 </script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
