@@ -2,6 +2,14 @@
 
 ## [unreleased]
 
+### Added
+
+* Jump to page control in pagination bar
+
+### Changed
+
+* Inline SVGs moved to separate SVG files
+
 ## [2.1.0] - 2023-02-06 11:41AM
 
 ### Fixed

@@ -5,6 +5,17 @@ import svgLoader from 'vite-svg-loader';
 export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+      ],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    },
   },
   modules: ['@nuxt/content', '@pinia/nuxt', '@nuxtjs/tailwindcss'],
   css: ['~/assets/scss/app.scss'],

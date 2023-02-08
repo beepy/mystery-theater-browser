@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="paginated-episodes" @keyup.esc="showingModal = false">
     <div class="pb-20 align-middle inline-block min-w-full">
       <div
         class="shadow overflow-hidden border-b border-gray-200 md:rounded-lg bg-white transitionable"
@@ -69,135 +69,152 @@
       </div>
     </div>
     <div class="fixed bottom-4 left-0 w-full">
-      <PaginationComponent
-        :key="totalPageNumber"
-        :last="totalPageNumber"
-        :current="currentPageNumber"
-        :span="13"
-        class="mt-6"
-      >
-        <template #previous="{ pageNumber }">
-          <TranLink
-            v-if="pageNumber > 0"
-            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
-            :to="linkForPageNumber(pageNumber)"
-            :depth="navDepth"
-            :nav-tag="navTag"
-            :index="pageNumber"
+      <div class="flex flex-col items-center">
+        <div
+          ref="pill"
+          class="flex h-12 items-center justify-center rounded-full bg-gray-200 pill"
+        >
+          <PaginationComponent
+            v-if="!showingModal"
+            :key="totalPageNumber"
+            :last="totalPageNumber"
+            :current="currentPageNumber"
+            :span="13"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left w-6 h-6"
+            <template #previous="{ pageNumber }">
+              <TranLink
+                v-if="pageNumber > 0"
+                class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
+                :to="linkForPageNumber(pageNumber)"
+                :depth="navDepth"
+                :nav-tag="navTag"
+                :index="pageNumber"
+              >
+                <ChevronLeft class="w-6 h-6" />
+              </TranLink>
+              <div
+                v-else
+                class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
+              >
+                <ChevronLeft class="w-6 h-6" />
+              </div>
+              <button class="md:hidden" @click="showModal">
+                {{ currentPageNumber }}/{{ totalPageNumber }}
+              </button>
+            </template>
+            <template #page="{ pageNumber }">
+              <TranLink
+                v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
+                :class="{
+                  'w-12 md:flex justify-center items-center hidden': true,
+                  'cursor-pointer': true,
+                  'leading-5 transition duration-150 ease-in': true,
+                }"
+                :to="linkForPageNumber(pageNumber)"
+                :depth="navDepth"
+                :nav-tag="navTag"
+                :index="pageNumber"
+              >
+                <button v-if="pageNumber === -1" @click="showModal">…</button>
+                <template v-else>{{ pageNumber }}</template>
+              </TranLink>
+              <div
+                v-else
+                :class="{
+                  'w-12 md:flex justify-center items-center hidden': true,
+                  'text-red-500': pageNumber === currentPageNumber,
+                  'leading-5 transition duration-150 ease-in': true,
+                }"
+              >
+                <button v-if="pageNumber === -1" @click="showModal">…</button>
+                <template v-else>{{ pageNumber }}</template>
+              </div>
+            </template>
+            <template #next="{ pageNumber }">
+              <TranLink
+                v-if="pageNumber > 0"
+                class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200"
+                :to="linkForPageNumber(pageNumber)"
+                :depth="navDepth"
+                :nav-tag="navTag"
+                :index="pageNumber"
+              >
+                <ChevronRight class="w-6 h-6" />
+              </TranLink>
+              <div
+                v-else
+                class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
+              >
+                <ChevronRight class="w-6 h-6" />
+              </div>
+            </template>
+          </PaginationComponent>
+          <div v-else>
+            <form
+              class="h-12 flex"
+              style="align-items: center"
+              @submit.prevent="showingModal = false"
             >
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </TranLink>
-          <div
-            v-else
-            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left w-6 h-6"
-            >
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
+              <button
+                type="button"
+                class="px-4 mr-4 text-gray-600"
+                style="height: 100%"
+                @click="showingModal = false"
+              >
+                <CloseIcon class="w-6" />
+              </button>
+              <p class="pr-2">Jump to page:</p>
+              <input
+                ref="jumpToInput"
+                v-model="jumpToPageNumberString"
+                type="number"
+                :max="totalPageNumber"
+                min="1"
+                inputmode="numeric"
+                class="w-12"
+                style="
+                  background-color: transparent;
+                  border-bottom: 1px solid black;
+                "
+              />
+              <button
+                type="submit"
+                class="px-4 text-blue-800 bg-blue-200 h-8 rounded-full mr-2 ml-4 disabled:opacity-25 transition-opacity"
+                :disabled="!canJumpToPageNumber"
+              >
+                <ArrowRightIcon class="w-6" />
+              </button>
+            </form>
           </div>
-        </template>
-        <template #page="{ pageNumber }">
-          <TranLink
-            v-if="pageNumber !== -1 && pageNumber !== currentPageNumber"
-            :class="{
-              'w-12 md:flex justify-center items-center hidden': true,
-              'cursor-pointer': true,
-              'leading-5 transition duration-150 ease-in': true,
-            }"
-            :to="linkForPageNumber(pageNumber)"
-            :depth="navDepth"
-            :nav-tag="navTag"
-            :index="pageNumber"
-          >
-            <template v-if="pageNumber === -1">… </template>
-            <template v-else>{{ pageNumber }} </template>
-          </TranLink>
-          <div
-            v-else
-            :class="{
-              'w-12 md:flex justify-center items-center hidden': true,
-              'text-red-500': pageNumber === currentPageNumber,
-              'leading-5 transition duration-150 ease-in': true,
-            }"
-          >
-            <template v-if="pageNumber === -1">… </template>
-            <template v-else>{{ pageNumber }} </template>
-          </div>
-        </template>
-        <template #next="{ pageNumber }">
-          <TranLink
-            v-if="pageNumber > 0"
-            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200"
-            :to="linkForPageNumber(pageNumber)"
-            :depth="navDepth"
-            :nav-tag="navTag"
-            :index="pageNumber"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left w-6 h-6"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </TranLink>
-          <div
-            v-else
-            class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 opacity-25"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left w-6 h-6"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </template>
-      </PaginationComponent>
+        </div>
+      </div>
     </div>
+    <!-- <BeepyModal :show="showingModal && false" class="jump-to-page" @cancel="showingModal = false; jumpToPageNumberString = currentPageNumber + ''">
+      <form @submit.prevent="doJumpToPageNumber">
+        <InputWithTopAlignedLabel
+          ref="pageInput"
+          v-model="jumpToPageNumberString"
+          type="number"
+          name="jumpToPageNumber"
+          :label="`Page Number (1—${totalPageNumber})`"
+          focus-on-mount
+        />
+        <button type="submit" :disabled="!canJumpToPageNumber">Jump to Page</button>
+      </form>
+    </BeepyModal> -->
   </div>
 </template>
 
 <script setup lang="ts">
+import debounce from 'lodash.debounce';
+
+import ArrowRightIcon from '@/assets/svg/arrowRight.svg';
+import CloseIcon from '@/assets/svg/closeIcon.svg';
+import ChevronRight from '@/assets/svg/chevronRight.svg';
+import ChevronLeft from '@/assets/svg/chevronLeft.svg';
+
+const router = useRouter();
+
 const props = withDefaults(
   defineProps<{
     currentPageNumber?: number;
@@ -221,7 +238,12 @@ const props = withDefaults(
   }
 );
 
-const linkForPageNumber = (p: string | number) => {
+const showingModal = ref(false);
+const jumpToPageNumberString = ref(props.currentPageNumber + '');
+const pageInput = ref(null);
+const jumpToInput = ref(null as null | HTMLInputElement);
+
+function linkForPageNumber(p: string | number) {
   const l = {
     path:
       p === 1 && props.firstPageLink
@@ -235,5 +257,155 @@ const linkForPageNumber = (p: string | number) => {
     };
   }
   return l;
+}
+
+watch(showingModal, () => {
+  updatePill();
+});
+
+const showModal = () => {
+  showingModal.value = true;
+  nextTick(() => {
+    //   pageInput.value?.input?.focus()
+    jumpToInput.value?.select();
+  });
 };
+
+watch(
+  () => props.currentPageNumber,
+  (v) => {
+    jumpToPageNumberString.value = v + '';
+  }
+);
+
+const jumpToPageNumber = computed((): number => {
+  const p = parseInt(jumpToPageNumberString.value);
+
+  if (typeof p === 'number') {
+    return Math.floor(p);
+  } else {
+    return -1;
+  }
+});
+
+const canJumpToPageNumber = computed(() => {
+  return (
+    jumpToPageNumber.value >= 1 &&
+    jumpToPageNumber.value <= props.totalPageNumber
+  );
+});
+
+watch(
+  jumpToPageNumber,
+  debounce((v) => {
+    doJumpToPageNumber();
+  }, 333)
+);
+
+const doJumpToPageNumber = () => {
+  // showingModal.value = false;
+  if (canJumpToPageNumber.value) {
+    router.push(linkForPageNumber(jumpToPageNumber.value));
+  }
+};
+
+// Animation of Pill Container
+
+const pill = ref(null as null | HTMLElement);
+let haveAddedPillEventListener = false;
+
+function setPillWidthFromContentWidth() {
+  if (pill.value === null) {
+    return;
+  }
+  const p = pill.value as HTMLElement;
+
+  const el = p.querySelector(':scope > *'); // get first child
+
+  if (!el) {
+    return;
+  }
+
+  const size = el.getBoundingClientRect();
+
+  p.style.width = size.width + 'px';
+  if (!haveAddedPillEventListener) {
+    haveAddedPillEventListener = true;
+    p.addEventListener('transitionend', removeWidthFromPill);
+  }
+}
+
+function updatePill() {
+  setPillWidthFromContentWidth();
+  nextTick(() => {
+    setPillWidthFromContentWidth();
+  });
+}
+
+function removeWidthFromPill(e: TransitionEvent) {
+  if (e.propertyName === 'width' && e.target) {
+    if (pill.value) {
+      pill.value.style.width = '';
+    }
+  }
+}
+
+onUnmounted(() => {
+  if (haveAddedPillEventListener && pill.value) {
+    pill.value.removeEventListener('transitionend', removeWidthFromPill);
+  }
+});
 </script>
+
+<style lang="scss">
+// .modal.jump-to-page {
+//   display: flex;
+//   align-items: flex-end;
+//   background-color: rgb(31 41 55 / 0.95);
+//   > * {
+//     flex-basis: 100%;
+//   }
+//   > * > * {
+//     width: 25rem;
+//     margin: 0 auto;
+//     background-color: white;
+//     form {
+//       display: grid;
+//       grid-template-columns: 13rem auto;
+//       align-items: center;
+//     }
+//     label.iftal {
+//       max-height: 10rem;
+//       --label-font-size: 0.9;
+//       & > span {
+//         font-weight: bold;
+//       }
+//       & > input {
+//         @apply bg-gray-100;
+//       }
+//     }
+//     button {
+//       background-color: green;
+//       height: 100%;
+//       padding: {
+//         left: 2em;
+//         right: 2rem;
+//       }
+//       &:disabled {
+//         opacity: 0.5;
+//       }
+//     }
+//   }
+// }
+.paginated-episodes {
+  .pill {
+    transition: width 0.5s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+    overflow: hidden;
+    > * {
+      flex-grow: 0;
+      flex-shrink: 1;
+      white-space: nowrap;
+    }
+  }
+}
+</style>

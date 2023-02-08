@@ -2,6 +2,8 @@
   <label class="iftal"
     ><span>{{ label }}</span>
     <input
+      v-bind="$attrs"
+      ref="input"
       :placeholder="placeholder"
       :type="type"
       :maxlength="256"
@@ -15,23 +17,42 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
+    modelValue: string | number;
     type?: string;
     label: string;
     name?: string;
     placeholder?: string;
     maxlength?: number;
+    focusOnMount?: boolean;
   }>(),
   {
     type: 'text',
     name: '',
     placeholder: '',
     maxlength: 255,
+    focusOnMount: false,
   }
 );
 
+const input = ref(null as HTMLInputElement | null);
+
 defineEmits(['update:modelValue']);
+defineExpose({ input });
+
+onMounted(() => {
+  if (input.value) {
+    input.value.focus();
+    input.value.select();
+  }
+});
 </script>
+
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
+
 <style>
 label.iftal {
   position: relative;

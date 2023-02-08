@@ -1,62 +1,61 @@
 <template>
-  <div class="flex flex-col items-center">
-    <div class="flex h-12 font-medium rounded-full bg-gray-200">
-      <slot name="previous" :page-number="current > 1 ? current - 1 : -1">
-        <div
-          class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
+  <div class="flex h-12 font-medium">
+    <slot name="previous" :page-number="current > 1 ? current - 1 : -1">
+      <div
+        class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          height="100%"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-chevron-left w-6 h-6"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="100%"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-chevron-left w-6 h-6"
-          >
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </div>
+    </slot>
+    <template v-for="(p, i) in pageArray">
+      <slot name="page" :page-number="p">
+        <div
+          :key="i"
+          :class="{
+            'w-12 md:flex justify-center items-center hidden': true,
+            'cursor-pointer': p !== current && p !== -1,
+            'leading-5 transition duration-150 ease-in': true,
+          }"
+        >
+          <template v-if="p === -1">… </template>
+          <template v-else>{{ p }} </template>
         </div>
       </slot>
-      <template v-for="(p, i) in pageArray">
-        <slot name="page" :page-number="p">
-          <div
-            :key="i"
-            :class="{
-              'w-12 md:flex justify-center items-center hidden': true,
-              'cursor-pointer': p !== current && p !== -1,
-              'leading-5 transition duration-150 ease-in': true,
-            }"
-          >
-            <template v-if="p === -1">… </template>
-            <template v-else>{{ p }} </template>
-          </div>
-        </slot>
-      </template>
-      <slot name="next" :page-number="current < last ? current + 1 : -1">
-        <div
-          class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
+    </template>
+    <slot name="jump" />
+    <slot name="next" :page-number="current < last ? current + 1 : -1">
+      <div
+        class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="100%"
+          height="100%"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-chevron-left w-6 h-6"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="100%"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-chevron-left w-6 h-6"
-          >
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </slot>
-    </div>
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </div>
+    </slot>
   </div>
 </template>
 
