@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
+import { Episode } from '@/types/episode';
 
 interface State {
   terms: string;
-  episodes: any[];
-  matchedEpisodes: any[];
+  episodes: Episode[];
+  matchedEpisodes: Episode[];
   matchedTerms: string;
 }
 
@@ -25,7 +26,7 @@ export const useSearchStore = defineStore('SearchStore', {
   actions: {
     getAllEpisodes() {
       if (this.episodes.length === 0) {
-        return queryContent('episodes')
+        return queryContent<Episode>('episodes')
           .without([
             'urls',
             'audioQuality',

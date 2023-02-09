@@ -1,73 +1,12 @@
 <template>
   <div class="paginated-episodes" @keyup.esc="showingModal = false">
-    <div class="pb-20 align-middle inline-block min-w-full">
-      <div
-        class="shadow overflow-hidden border-b border-gray-200 md:rounded-lg bg-white transitionable"
-      >
-        <div class="min-w-full divide-y divide-gray-200">
-          <div ref="header" class="hidden md:grid grid-cols-12 bg-gray-50">
-            <div
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-4"
-            >
-              Title/Cast
-            </div>
-            <div
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-6 xl:col-span-7"
-            >
-              Description
-            </div>
-            <div
-              class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider col-span-2 xl:col-span-1"
-            >
-              Episode
-            </div>
-          </div>
-          <TranLink
-            v-for="episode in episodes"
-            :key="episode.id"
-            :to="'/episode/' + episode.id"
-            class="grid grid-cols-12 hover:bg-gray-50 row"
-            :depth="2"
-            nav-tag="episode"
-            :index="episode.id"
-          >
-            <div class="order-1 col-span-8 md:col-span-4 px-6 py-4">
-              <span class="block font-bold">
-                {{ episode.title }}
-              </span>
-              <div class="leading-tight mt-2">
-                <span
-                  v-for="(actor, i) in episode.actors"
-                  :key="actor.id"
-                  class="text-xs"
-                >
-                  <span v-if="i > 0">, </span>
-                  <span class="whitespace-nowrap">{{ actor.name }}</span>
-                </span>
-              </div>
-            </div>
-            <div
-              class="order-3 md:order-2 col-span-12 md:col-span-6 xl:col-span-7 px-6 py-4"
-            >
-              <ContentRenderer :value="episode" class="nuxt-content" />
-              <EpisodeTags
-                v-if="episode.tags"
-                :episode-tags="episode.tags"
-                class="block text-right"
-              />
-            </div>
-            <div
-              class="order-2 md:order-3 col-span-4 md:col-span-2 xl:col-span-1 px-6 py-4 text-center"
-            >
-              <div class="text-xs text-center mb-2">
-                {{ episode.date }}
-              </div>
-              <EpisodeNumber :number="episode.id" />
-            </div>
-          </TranLink>
-        </div>
-      </div>
-    </div>
+    <Transition :name="tableTransition">
+      <EpisodesTable
+        v-if="episodes && episodes.length > 0"
+        :key="tableKey"
+        :episodes="episodes"
+      />
+    </Transition>
     <div class="fixed bottom-4 left-0 w-full">
       <div class="flex flex-col items-center">
         <div
@@ -209,6 +148,7 @@
 
 <script setup lang="ts">
 import debounce from 'lodash.debounce';
+import { Episode } from '@/types/episode';
 
 import ArrowRightIcon from '@/assets/svg/arrowRight.svg';
 import CloseIcon from '@/assets/svg/closeIcon.svg';
@@ -221,7 +161,7 @@ const props = withDefaults(
   defineProps<{
     currentPageNumber?: number;
     totalPageNumber?: number;
-    episodes?: any[];
+    episodes?: Episode[];
     linkPrefix?: string;
     firstPageLink?: string;
     navTag?: string;
@@ -245,6 +185,14 @@ const jumpToPageNumberString = ref(props.currentPageNumber + '');
 const pageInput = ref(null);
 const jumpToInput = ref(null as null | HTMLInputElement);
 const header = ref(null as null | HTMLElement);
+const tableKey = ref(1);
+const tableTransition = ref('slide-left');
+// nrl you are here
+// maybe when we know we are changing page we can pass empty episodes to
+// cause leave transition to start process before new episodes load (more
+// responsive feeling)
+// nrl yeah but causes scroll bar to disappear when old episodes go and new ones
+// are not yet replaced. Should display some kind of loading version immediatly?
 
 function linkForPageNumber(p: string | number) {
   const l = {
@@ -276,11 +224,23 @@ const showModal = () => {
 
 watch(
   () => props.currentPageNumber,
-  (v) => {
+  (v, p) => {
     jumpToPageNumberString.value = v + '';
     if (header.value) {
       header.value.scrollIntoView({ behavior: 'smooth' });
     }
+    if (v < p) {
+      tableTransition.value = 'slide-left';
+    } else {
+      tableTransition.value = 'slide-right';
+    }
+  }
+);
+
+watch(
+  () => props.episodes,
+  () => {
+    tableKey.value = tableKey.value + 1;
   }
 );
 

@@ -12,6 +12,7 @@
             nav-tag="episode"
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
+            aria-label="Previous episode"
           >
             <PreviousIcon class="text-black w-8" />
           </TranLink>
@@ -23,6 +24,7 @@
             nav-tag="episode"
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
+            aria-label="Next episode"
           >
             <NextIcon class="text-black w-8" />
           </TranLink>

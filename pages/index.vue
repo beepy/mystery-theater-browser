@@ -3,9 +3,8 @@
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
       <PaginatedEpisodes
-        v-if="episodes && episodes.length > 0"
         :current-page-number="page"
-        :episodes="episodes"
+        :episodes="!fetching ? episodes : []"
         first-page-link="/"
         :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
@@ -18,6 +17,8 @@
 import { storeToRefs } from 'pinia';
 
 import { usePageStore } from '@/stores/PageStore';
+
+import { Episode } from '@/types/episode';
 
 const route = useRoute();
 const page = ref(
@@ -39,6 +40,7 @@ const episodeCount = ref(baseEpisodeCount);
 const searchStore = useSearchStore();
 const { isSearching, terms } = storeToRefs(searchStore);
 const pageStore = usePageStore();
+const fetching = ref(false);
 
 const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
   'episodes-index',
@@ -51,11 +53,14 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
       });
     } else {
       episodeCount.value = baseEpisodeCount;
-      return queryContent('episodes')
+      return queryContent<Episode>('episodes')
         .sort({ id: 1, $numeric: true })
         .skip((page.value - 1) * 10)
         .limit(10)
-        .find();
+        .find()
+        .then((d) => {
+          return d;
+        });
     }
   }
 );
@@ -85,11 +90,17 @@ watch(route, (newRoute) => {
       10
     ) ?? 1;
   pageStore.savePage(page.value);
+  fetching.value = true;
   refreshEpisodes();
 });
 
 watch([isSearching, terms], () => {
+  fetching.value = true;
   refreshEpisodes();
+});
+
+watch(episodes, () => {
+  fetching.value = false;
 });
 // const search = "sci-fi";
 
