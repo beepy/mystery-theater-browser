@@ -1,7 +1,8 @@
 <template>
-  <label class="iftal textarea"
+  <label class="iftal textarea bg-white"
     ><span>{{ label }}</span>
     <textarea
+      v-bind="$attrs"
       :placeholder="placeholder"
       :name="name"
       :aria-label="label"
@@ -26,6 +27,11 @@ const props = withDefaults(
 );
 
 defineEmits(['update:modelValue']);
+</script>
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
 </script>
 <style>
 label.iftal {

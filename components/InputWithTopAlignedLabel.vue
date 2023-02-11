@@ -1,5 +1,5 @@
 <template>
-  <label class="iftal"
+  <label class="iftal bg-white"
     ><span>{{ label }}</span>
     <input
       v-bind="$attrs"
@@ -9,7 +9,6 @@
       :maxlength="256"
       :name="name"
       :aria-label="label"
-      class=""
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
   /></label>
