@@ -7,8 +7,8 @@
         <div class="flex max-w-5xl mx-auto">
           <TranLink
             v-if="episode.id !== 1"
-            :to="'/episode/' + (parseInt(episode.id) - 1)"
-            :index="parseInt(episode.id) - 1"
+            :to="'/episode/' + (slugIndex - 1)"
+            :index="slugIndex - 1"
             nav-tag="episode"
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
@@ -19,8 +19,8 @@
           <div class="flex-grow" />
           <TranLink
             v-if="episode.id !== 1399"
-            :to="'/episode/' + (parseInt(episode.id) + 1)"
-            :index="parseInt(episode.id) + 1"
+            :to="'/episode/' + (slugIndex + 1)"
+            :index="slugIndex + 1"
             nav-tag="episode"
             :depth="2"
             class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
@@ -46,7 +46,7 @@
             </div>
             <div class="pr-4 text-right">
               <p class="text-xs mb-2">{{ episode.date }}</p>
-              <EpisodeNumber :number="episode.id" />
+              <EpisodeNumber :n="episode.id" />
             </div>
           </div>
           <div class="grid grid-cols-4 gap-6 my-6">
@@ -176,7 +176,7 @@ type UrlInfo = {
 const route = useRoute();
 const navStore = useNavStore();
 const slug = typeof route.params.slug === 'string' ? route.params.slug : '0';
-const slugIndex = parseInt(slug) || 0;
+const slugIndex = ref(parseInt(slug, 10) || 0);
 const showAllDownloads = ref(false);
 
 const { data: episode } = await useAsyncData(
@@ -258,7 +258,12 @@ onMounted(() => {
   // this is really for first load, or history navigation?
   // navStore.$patch({ navTo: { tag: 'episode', depth: 2, index: slugIndex }})
   useNavStore().$patch({
-    navTo: { tag: 'episode', depth: 2, index: slugIndex, path: route.path },
+    navTo: {
+      tag: 'episode',
+      depth: 2,
+      index: slugIndex.value,
+      path: route.path,
+    },
   });
 });
 

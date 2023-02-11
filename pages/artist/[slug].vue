@@ -1,7 +1,7 @@
 <template>
   <div class="absolute-on-leave">
     <div class="max-w-4xl mx-auto px-4 py-8 bg-white md:rounded-lg">
-      <h1 class="text-3xl text-center font-bold mb-6">{{ artist.name }}</h1>
+      <h1 class="text-3xl text-center font-bold mb-6">{{ artist?.name }}</h1>
       <div
         :class="{
           'mb-6': true,
@@ -10,7 +10,11 @@
         }"
       >
         <div v-if="actor.length">
-          <h2 class="font-bold">Featured In</h2>
+          <h2 class="font-bold mb-2">
+            Featured in {{ actor.length }} Episode{{
+              actor.length > 1 ? 's' : ''
+            }}
+          </h2>
           <ul :class="{ 'md:columns-2': writer.length < 1 }">
             <li v-for="episode in actor" :key="episode.id">
               <TranLink
@@ -20,7 +24,7 @@
                 :depth="2"
                 class="mb-1 block"
               >
-                <episode-number :number="episode.id" class="mr-1" />
+                <EpisodeNumber :n="episode.id" class="mr-1" />
                 {{ episode.title }}
               </TranLink>
             </li>
@@ -30,7 +34,11 @@
           v-if="writer.length"
           :class="{ 'mt-4 md:mt-0': actor.length >= 1 }"
         >
-          <h2 class="font-bold">Writer On</h2>
+          <h2 class="font-bold mb-2">
+            Writer on {{ writer.length }} Episode{{
+              writer.length > 1 ? 's' : ''
+            }}
+          </h2>
           <ul :class="{ 'md:columns-2': actor.length < 1 }">
             <li v-for="episode in writer" :key="episode.id">
               <TranLink
@@ -40,7 +48,7 @@
                 :depth="2"
                 class="mb-1 block"
               >
-                <episode-number :number="episode.id" class="mr-1" />
+                <EpisodeNumber :n="episode.id" class="mr-1" />
                 {{ episode.title }}
               </TranLink>
             </li>

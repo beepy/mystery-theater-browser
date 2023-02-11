@@ -1,10 +1,16 @@
 <template>
-  <div class="paginated-episodes" @keyup.esc="showingModal = false">
-    <Transition :name="tableTransition">
+  <div
+    ref="paginatedEpisodesContainer"
+    class="paginated-episodes"
+    @keyup.esc="showingModal = false"
+  >
+    <Transition :name="tableTransition" mode="out-in">
       <EpisodesTable
-        v-if="episodes && episodes.length > 0"
         :key="tableKey"
+        ref="episodesTable"
         :episodes="episodes"
+        :empty-height="height"
+        @update-height="updateHeight"
       />
     </Transition>
     <div class="fixed bottom-4 left-0 w-full">
@@ -130,19 +136,6 @@
         </div>
       </div>
     </div>
-    <!-- <BeepyModal :show="showingModal && false" class="jump-to-page" @cancel="showingModal = false; jumpToPageNumberString = currentPageNumber + ''">
-      <form @submit.prevent="doJumpToPageNumber">
-        <InputWithTopAlignedLabel
-          ref="pageInput"
-          v-model="jumpToPageNumberString"
-          type="number"
-          name="jumpToPageNumber"
-          :label="`Page Number (1—${totalPageNumber})`"
-          focus-on-mount
-        />
-        <button type="submit" :disabled="!canJumpToPageNumber">Jump to Page</button>
-      </form>
-    </BeepyModal> -->
   </div>
 </template>
 
@@ -154,6 +147,7 @@ import ArrowRightIcon from '@/assets/svg/arrowRight.svg';
 import CloseIcon from '@/assets/svg/closeIcon.svg';
 import ChevronRight from '@/assets/svg/chevronRight.svg';
 import ChevronLeft from '@/assets/svg/chevronLeft.svg';
+import EpisodesTable from '@/components/EpisodesTable.vue';
 
 const router = useRouter();
 
@@ -171,9 +165,6 @@ const props = withDefaults(
   {
     currentPageNumber: 1,
     totalPageNumber: 1,
-    episodes() {
-      return [];
-    },
     linkPrefix: '/page',
     navTag: '',
     navDepth: 1,
@@ -187,12 +178,9 @@ const jumpToInput = ref(null as null | HTMLInputElement);
 const header = ref(null as null | HTMLElement);
 const tableKey = ref(1);
 const tableTransition = ref('slide-left');
-// nrl you are here
-// maybe when we know we are changing page we can pass empty episodes to
-// cause leave transition to start process before new episodes load (more
-// responsive feeling)
-// nrl yeah but causes scroll bar to disappear when old episodes go and new ones
-// are not yet replaced. Should display some kind of loading version immediatly?
+const paginatedEpisodesContainer = ref(null as null | HTMLElement);
+const episodesTable = ref(null as null | typeof EpisodesTable);
+const height = ref(0);
 
 function linkForPageNumber(p: string | number) {
   const l = {
@@ -237,10 +225,28 @@ watch(
   }
 );
 
+function updateHeight(h: number) {
+  height.value = h;
+}
+
+function setMinHeightFromTable() {
+  // if (props.episodes && props.episodes.length > 0 && episodesTable.value && episodesTable.value.container && paginatedEpisodesContainer.value) {
+  //   const s = episodesTable.value.container.getBoundingClientRect();
+  //   paginatedEpisodesContainer.value.style.minHeight = s.height + 'px'
+  //   console.log('> ' + s.height)
+  //   console.log('-')
+  //   episodesTable.value.test()
+  // } else console.log("not setting height - no episodes")
+}
+
 watch(
   () => props.episodes,
-  () => {
-    tableKey.value = tableKey.value + 1;
+  (v, o) => {
+    if (o) {
+      tableKey.value = tableKey.value + 1;
+    } else {
+      console.log('did not have old episodes so not changking key');
+    }
   }
 );
 

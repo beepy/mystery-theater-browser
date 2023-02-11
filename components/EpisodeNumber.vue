@@ -5,10 +5,10 @@
 </template>
 <script lang="ts" setup>
 const props = defineProps<{
-  number: number;
+  n: number | string;
 }>();
 
 const paddedNumber = computed(() => {
-  return String(props.number).padStart(4, '0');
+  return String(props.n).padStart(4, '0');
 });
 </script>

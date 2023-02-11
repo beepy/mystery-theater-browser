@@ -40,6 +40,8 @@
         mode: 'out-in',
       }"
     />
+    <!-- <NuxtPage
+    /> -->
     <div v-if="alwaysFalse">
       <div class="text-blue-700" />
       <div class="text-yellow-700" />

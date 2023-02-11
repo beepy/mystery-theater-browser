@@ -4,7 +4,7 @@
       <SearchField key="search-field" />
       <PaginatedEpisodes
         :current-page-number="page"
-        :episodes="!fetching ? episodes : []"
+        :episodes="!fetching ? episodes : undefined"
         first-page-link="/"
         :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"

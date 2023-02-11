@@ -39,7 +39,7 @@ export const useSearchStore = defineStore('SearchStore', {
           .sort({ id: 1, $numeric: true })
           .find()
           .then((d) => {
-            this.episodes = d;
+            this.episodes = d ?? [];
             return Promise.resolve(d);
           });
       } else {
