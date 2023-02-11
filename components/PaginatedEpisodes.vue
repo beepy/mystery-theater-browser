@@ -229,23 +229,11 @@ function updateHeight(h: number) {
   height.value = h;
 }
 
-function setMinHeightFromTable() {
-  // if (props.episodes && props.episodes.length > 0 && episodesTable.value && episodesTable.value.container && paginatedEpisodesContainer.value) {
-  //   const s = episodesTable.value.container.getBoundingClientRect();
-  //   paginatedEpisodesContainer.value.style.minHeight = s.height + 'px'
-  //   console.log('> ' + s.height)
-  //   console.log('-')
-  //   episodesTable.value.test()
-  // } else console.log("not setting height - no episodes")
-}
-
 watch(
   () => props.episodes,
   (v, o) => {
     if (o) {
       tableKey.value = tableKey.value + 1;
-    } else {
-      console.log('did not have old episodes so not changking key');
     }
   }
 );

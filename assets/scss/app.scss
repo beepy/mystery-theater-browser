@@ -81,6 +81,12 @@ body {
   opacity: 0;
 }
 
+.page-leave-active {
+  &.absolute-on-leave, .absolute-on-leave {
+    width: 100%;
+    position: absolute;
+  }
+}
 .layout-enter-active,
 .layout-leave-active {
   transition: opacity 0.5s;

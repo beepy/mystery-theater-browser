@@ -7,6 +7,7 @@
 * Paginated episodes changes:
   * Jump to page control in pagination bar
   * Changing pages scrolls back to the top of the page
+  * Transition forward or backward in pages uses appropriate animation
 
 ### Changed
 
