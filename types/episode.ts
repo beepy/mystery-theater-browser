@@ -15,4 +15,5 @@ export interface Episode extends MarkdownParsedContent {
   // searchable?: string;
   _searchable?: string;
   descriptionSource?: string;
+  notes?: string;
 }

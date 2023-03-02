@@ -24,7 +24,7 @@ const props = withDefaults(
     to: Object | string;
     navTag: string;
     depth?: number;
-    index?: number;
+    index?: number | string;
   }>(),
   {
     depth: 0,
@@ -32,13 +32,26 @@ const props = withDefaults(
   }
 );
 
+const indexValue = computed((): number | undefined => {
+  const t = typeof props.index;
+  if (t === 'number') {
+    return props.index as number;
+  } else if (t === 'string') {
+    const n = parseInt(props.index as string);
+    if (!isNaN(n)) {
+      return n;
+    }
+  }
+  return undefined;
+});
+
 const beforeClick = (f: Function, r: RouteLocationNormalized) => {
   store.$patch({
     navFrom: { ...navTo.value },
     navTo: {
       tag: props.navTag,
       depth: props.depth,
-      index: props.index,
+      index: indexValue.value,
       path: r.path,
     },
   });

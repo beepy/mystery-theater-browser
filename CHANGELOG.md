@@ -1,5 +1,16 @@
 # Changelog | MysteryTheater.org
 
+## [unereleased]
+
+### Added
+
+* Keyboard shortcut for search
+
+### Fixed
+
+* Initial request with search would still restore non-search page, giving you blank results
+* Cleanup
+
 ## [2.2.1] - 2023-02-25 01:09PM
 
 ### Added

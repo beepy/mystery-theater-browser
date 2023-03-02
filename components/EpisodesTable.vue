@@ -83,16 +83,24 @@
 import { Episode } from '@/types/episode';
 
 const props = defineProps<{
-  episodes?: Episode[];
+  episodes: Episode[] | null;
   emptyHeight: number;
 }>();
 
+/**
+ * Concern about setting, getting, and emitting the height is for visual
+ * consistency when paging through table. The table may be shown before it is
+ * filled, replacing the table before it. We start with the last known height to
+ * e.g. prevent the scroll bar for disappearing (as with an empty table)
+ * @param {[type]} null as null | HTMLElement [description]
+ */
 const container = ref(null as null | HTMLElement);
 const height = ref(0);
 const emit = defineEmits(['updateHeight']);
 
 function setHeight() {
   if (props.episodes) {
+    // 40 is the header height
     height.value = (container.value?.getBoundingClientRect().height || 40) - 40;
     // height - the header height
     emit('updateHeight', height.value);

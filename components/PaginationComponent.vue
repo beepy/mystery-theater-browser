@@ -60,14 +60,6 @@
 </template>
 
 <script lang="ts" setup>
-// nrl you have mixed "type-based declaration" with "runtime declaration"
-// https://vuejs.org/guide/typescript/composition-api.html#props-default-values
-/*
-const props = withDefaults(defineProps<Props>(), {
-  msg: 'hello',
-  labels: () => ['one', 'two']
-})
- */
 const props = withDefaults(
   defineProps<{
     first?: number;

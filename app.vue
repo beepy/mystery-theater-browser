@@ -102,7 +102,11 @@ useHead({
 });
 
 onMounted(() => {
-  if (route.name === 'index' && !isSearching.value) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const terms = urlParams.get('search');
+
+  if (route.name === 'index' && (!terms || terms.length < 3)) {
     const p = pageStore.restorePage();
     if (p !== 1) {
       // getter indexRoute.value doesn't work here (don't know why)

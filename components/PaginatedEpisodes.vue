@@ -2,10 +2,11 @@
   <div
     ref="paginatedEpisodesContainer"
     class="paginated-episodes"
-    @keyup.esc="showingModal = false"
+    @keyup.esc="showingPageInput = false"
   >
     <Transition :name="tableTransition" mode="out-in">
       <EpisodesTable
+        v-if="!episodes || episodes.length > 0"
         :key="tableKey"
         ref="episodesTable"
         :episodes="episodes"
@@ -20,7 +21,7 @@
           class="flex h-12 items-center justify-center rounded-full bg-gray-200 pill"
         >
           <PaginationComponent
-            v-if="!showingModal"
+            v-if="!showingPageInput"
             :key="totalPageNumber"
             :last="totalPageNumber"
             :current="currentPageNumber"
@@ -44,7 +45,7 @@
               >
                 <ChevronLeft class="w-6 h-6" />
               </div>
-              <button class="md:hidden" @click="showModal">
+              <button class="md:hidden" @click="showPageInput">
                 {{ currentPageNumber }}/{{ totalPageNumber }}
               </button>
             </template>
@@ -61,7 +62,9 @@
                 :nav-tag="navTag"
                 :index="pageNumber"
               >
-                <button v-if="pageNumber === -1" @click="showModal">…</button>
+                <button v-if="pageNumber === -1" @click="showPageInput">
+                  …
+                </button>
                 <template v-else>{{ pageNumber }}</template>
               </TranLink>
               <div
@@ -72,7 +75,9 @@
                   'leading-5 transition duration-150 ease-in': true,
                 }"
               >
-                <button v-if="pageNumber === -1" @click="showModal">…</button>
+                <button v-if="pageNumber === -1" @click="showPageInput">
+                  …
+                </button>
                 <template v-else>{{ pageNumber }}</template>
               </div>
             </template>
@@ -100,13 +105,13 @@
             <form
               class="h-12 flex"
               style="align-items: center"
-              @submit.prevent="showingModal = false"
+              @submit.prevent="showingPageInput = false"
             >
               <button
                 type="button"
                 class="px-4 mr-4 text-gray-600"
                 style="height: 100%"
-                @click="showingModal = false"
+                @click="showingPageInput = false"
               >
                 <CloseIcon class="w-6" />
               </button>
@@ -118,11 +123,7 @@
                 :max="totalPageNumber"
                 min="1"
                 inputmode="numeric"
-                class="w-12"
-                style="
-                  background-color: transparent;
-                  border-bottom: 1px solid black;
-                "
+                class="w-12 bg-transparent border-b border-black"
               />
               <button
                 type="submit"
@@ -155,7 +156,7 @@ const props = withDefaults(
   defineProps<{
     currentPageNumber?: number;
     totalPageNumber?: number;
-    episodes?: Episode[];
+    episodes: Episode[] | null;
     linkPrefix?: string;
     firstPageLink?: string;
     navTag?: string;
@@ -171,7 +172,7 @@ const props = withDefaults(
   }
 );
 
-const showingModal = ref(false);
+const showingPageInput = ref(false);
 const jumpToPageNumberString = ref(props.currentPageNumber + '');
 const pageInput = ref(null);
 const jumpToInput = ref(null as null | HTMLInputElement);
@@ -181,6 +182,7 @@ const tableTransition = ref('slide-left');
 const paginatedEpisodesContainer = ref(null as null | HTMLElement);
 const episodesTable = ref(null as null | typeof EpisodesTable);
 const height = ref(0);
+let lastSearchTerms: string | undefined = '';
 
 function linkForPageNumber(p: string | number) {
   const l = {
@@ -198,14 +200,13 @@ function linkForPageNumber(p: string | number) {
   return l;
 }
 
-watch(showingModal, () => {
+watch(showingPageInput, () => {
   updatePill();
 });
 
-const showModal = () => {
-  showingModal.value = true;
+const showPageInput = () => {
+  showingPageInput.value = true;
   nextTick(() => {
-    //   pageInput.value?.input?.focus()
     jumpToInput.value?.select();
   });
 };
@@ -217,7 +218,10 @@ watch(
     if (header.value) {
       header.value.scrollIntoView({ behavior: 'smooth' });
     }
-    if (v < p) {
+    if (props.searchTerms !== lastSearchTerms) {
+      lastSearchTerms = props.searchTerms;
+      tableTransition.value = 'page';
+    } else if (v < p) {
       tableTransition.value = 'slide-left';
     } else {
       tableTransition.value = 'slide-right';
@@ -225,6 +229,13 @@ watch(
   }
 );
 
+watch(
+  () => props.searchTerms,
+  () => {
+    lastSearchTerms = props.searchTerms;
+    tableTransition.value = 'page';
+  }
+);
 function updateHeight(h: number) {
   height.value = h;
 }
@@ -263,7 +274,6 @@ watch(
 );
 
 const doJumpToPageNumber = () => {
-  // showingModal.value = false;
   if (canJumpToPageNumber.value) {
     router.push(linkForPageNumber(jumpToPageNumber.value));
   }
@@ -318,45 +328,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-// .modal.jump-to-page {
-//   display: flex;
-//   align-items: flex-end;
-//   background-color: rgb(31 41 55 / 0.95);
-//   > * {
-//     flex-basis: 100%;
-//   }
-//   > * > * {
-//     width: 25rem;
-//     margin: 0 auto;
-//     background-color: white;
-//     form {
-//       display: grid;
-//       grid-template-columns: 13rem auto;
-//       align-items: center;
-//     }
-//     label.iftal {
-//       max-height: 10rem;
-//       --label-font-size: 0.9;
-//       & > span {
-//         font-weight: bold;
-//       }
-//       & > input {
-//         @apply bg-gray-100;
-//       }
-//     }
-//     button {
-//       background-color: green;
-//       height: 100%;
-//       padding: {
-//         left: 2em;
-//         right: 2rem;
-//       }
-//       &:disabled {
-//         opacity: 0.5;
-//       }
-//     }
-//   }
-// }
 .paginated-episodes {
   .pill {
     transition: width 0.5s cubic-bezier(0.47, 1.64, 0.41, 0.8);

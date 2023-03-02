@@ -34,13 +34,16 @@ export const useSearchStore = defineStore('SearchStore', {
             'writerIds',
             'notes',
             'descriptionSource',
-            // 'searchable',
           ])
           .sort({ id: 1, $numeric: true })
           .find()
           .then((d) => {
-            this.episodes = d ?? [];
-            return Promise.resolve(d);
+            // Episode type extends ParsedContentMeta type which includes
+            //   [key: string]: any
+            // TypeScript's Omit utility, as used by `.without`, does not work
+            // well with index keys, so we cast result
+            this.episodes = (d ?? []) as Episode[];
+            return Promise.resolve(this.episodes);
           });
       } else {
         return Promise.resolve(this.episodes);
@@ -57,7 +60,9 @@ export const useSearchStore = defineStore('SearchStore', {
         return this.getAllEpisodes().then((d) => {
           const r = RegExp(this.terms, 'ig');
           this.matchedTerms = this.terms;
-          this.matchedEpisodes = d.filter((e) => e._searchable.search(r) >= 0);
+          this.matchedEpisodes = d.filter(
+            (e) => e._searchable && e._searchable.search(r) >= 0
+          );
           return Promise.resolve(this.matchedEpisodes);
         });
       }

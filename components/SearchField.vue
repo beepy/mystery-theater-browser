@@ -1,24 +1,25 @@
 <template>
   <div class="relative px-2 md:px-0">
     <input
+      ref="searchField"
       :value="newTerms"
       placeholder="Search"
       class="px-3 py-3 mb-4 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded-lg text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
       @input="search(($event.target as HTMLInputElement).value || '')"
+      @focus="hasFocus = true"
+      @blur="hasFocus = false"
     />
-    <svg
+    <CloseIcon
       v-if="searchTerms.length > 2"
-      xmlns="http://www.w3.org/2000/svg"
-      width="28"
-      height="28"
-      viewBox="0 0 18 18"
-      class="absolute right-2 top-2 cursor-pointer"
-      @click="clear"
+      class="absolute right-4 md:right-2 top-2 cursor-pointer w-7 h-7"
+      @click="clickClear"
+    />
+    <div
+      v-else-if="!hasFocus"
+      class="absolute right-4 md:right-2 top-2 keyboard-keys"
     >
-      <path
-        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
-      />
-    </svg>
+      <KeyboardKeys :keys="shortcutKeysText" />
+    </div>
     <p
       v-if="searchTerms.length > 2"
       class="p-4 mb-4 rounded-lg text-center text-white hide-on-leave"
@@ -41,15 +42,22 @@ import { storeToRefs } from 'pinia';
 import { useSearchStore } from '@/stores/SearchStore';
 import { usePageStore } from '@/stores/PageStore';
 
-const router = useRouter();
-const searchStore = useSearchStore();
+import { useCaptureKey } from '@/composables/captureKey';
+import { useIsMac } from '@/composables/isMac';
 
+import CloseIcon from '@/assets/svg/closeIcon.svg';
+
+// search
+
+const router = useRouter();
+const route = useRoute();
+const searchStore = useSearchStore();
 const newTerms = ref('');
 const searchTerms = ref('');
-// const searchedTerms = ref('');
-// const count = ref(0);
 const { matchCount } = storeToRefs(searchStore);
 const { indexRoute } = storeToRefs(usePageStore());
+const searchField = ref(null as HTMLInputElement | null);
+const hasFocus = ref(false);
 
 const updateSearchTerms = debounce((s: string) => {
   if (searchTerms.value !== s) {
@@ -75,14 +83,20 @@ const search = (t: string) => {
   updateSearchTerms(t.trim());
 };
 
-const clear = () => {
+const clear = (updateRoute = true) => {
   updateSearchTerms.cancel();
   newTerms.value = '';
   searchTerms.value = '';
   searchStore.$patch({
     terms: '',
   });
-  router.push(indexRoute.value);
+  if (updateRoute) {
+    router.push(indexRoute.value);
+  }
+};
+
+const clickClear = (_e: InputEvent) => {
+  clear();
 };
 
 onMounted(() => {
@@ -95,4 +109,56 @@ onMounted(() => {
 onBeforeUnmount(() => {
   updateSearchTerms.flush();
 });
+
+watch(
+  () => route.query.search,
+  (s) => {
+    if (typeof s === 'string') {
+      search(s);
+    }
+  }
+);
+
+// keyboard shortcut
+
+const { isMac } = useIsMac();
+
+useCaptureKey(
+  (e: KeyboardEvent) => {
+    if (
+      e.altKey === false &&
+      ((e.metaKey === true && isMac.value) ||
+        (e.ctrlKey === true && !isMac.value)) &&
+      e.shiftKey === false &&
+      e.key === 'k'
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.type === 'keydown') {
+        if (searchField.value) {
+          searchField.value.focus();
+        }
+      }
+    }
+  },
+  true,
+  true
+);
+
+const shortcutKeysText = computed(() => {
+  if (isMac.value === undefined) {
+    return '';
+  } else {
+    return isMac.value ? '⌘ K' : 'CTRL K';
+  }
+});
 </script>
+
+<style lang="scss">
+.keyboard-keys {
+  @apply text-gray-400;
+  .keyboard-key {
+    @apply bg-gray-100;
+  }
+}
+</style>

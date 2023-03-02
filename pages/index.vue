@@ -4,7 +4,7 @@
       <SearchField key="search-field" />
       <PaginatedEpisodes
         :current-page-number="page"
-        :episodes="!fetching ? episodes : undefined"
+        :episodes="!fetching ? episodes : null"
         first-page-link="/"
         :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
@@ -77,12 +77,6 @@ onBeforeMount(() => {
   }
 });
 
-onMounted(() => {
-  // const queryString = window.location.search
-  // const urlParams = new URLSearchParams(queryString)
-  // const terms = urlParams.get('search')
-});
-
 watch(route, (newRoute) => {
   page.value =
     parseInt(
@@ -91,6 +85,7 @@ watch(route, (newRoute) => {
     ) ?? 1;
   pageStore.savePage(page.value);
   fetching.value = true;
+
   refreshEpisodes();
 });
 
@@ -102,20 +97,4 @@ watch([isSearching, terms], () => {
 watch(episodes, () => {
   fetching.value = false;
 });
-// const search = "sci-fi";
-
-// const { data: test } = await useAsyncData('test-search', () =>
-//   queryContent('episodes').where({
-//   $or: [
-//       { _searchable: { $regex: `/${search}/ig` }},
-//       // { description: { $regex: `/${search}/ig` }},
-//       // { name: { $regex: `/${search}/ig` }},
-//       // { searchable: { $regex: `/${search}/ig` }},
-//     ]
-//   }).only(['title']).find()
-// )
-
-// const performSearch = (v: string) => {
-//   if (v.length > 2)
-// }
 </script>

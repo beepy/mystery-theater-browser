@@ -50,7 +50,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-// import ClientDownload from '~/components/ClientDownload'
 import axios from 'axios';
 import DownloadIcon from '@/assets/svg/downloadIcon.svg';
 

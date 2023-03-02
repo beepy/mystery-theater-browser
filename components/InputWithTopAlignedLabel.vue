@@ -10,7 +10,9 @@
       :name="name"
       :aria-label="label"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="
+        $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+      "
   /></label>
 </template>
 <script setup lang="ts">
