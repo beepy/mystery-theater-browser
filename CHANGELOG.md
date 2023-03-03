@@ -5,6 +5,7 @@
 ### Fixed
 
 * About page could fail to show (race condition with calculating percent complete)
+* Navigating to index via back button while searching could fail to reflect the correct number of pages
 
 ## [2.2.2] - 2023-03-02 12:48PM
 
