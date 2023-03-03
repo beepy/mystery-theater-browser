@@ -1,5 +1,11 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+### Fixed
+
+* About page could fail to show (race condition with calculating percent complete)
+
 ## [2.2.2] - 2023-03-02 12:48PM
 
 ### Added

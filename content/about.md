@@ -17,7 +17,7 @@ Interest in Mystery Theater has resurfaced here and there, with rebroadcasts by 
 
 ## Why This Site?
 
-There are currently two complete collections of Mystery Theater available on the wonderful Internet Archive, but the archive does not provide a wonderful way to discover content. This site seeks to privde an ad-free, mobile-friendly way to browse the episodes, with accurate, spoiler-free descriptions and links directly to the audio.
+There are currently two complete collections of Mystery Theater available on the wonderful Internet Archive, but the archive does not provide a wonderful way to discover content. This site seeks to provide an ad-free, mobile-friendly way to browse the episodes, with accurate, spoiler-free descriptions and links directly to the audio.
 
 The two complete collections are:
 
