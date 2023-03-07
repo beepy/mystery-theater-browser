@@ -5,7 +5,7 @@
       class="shadow overflow-hidden border-b border-gray-200 md:rounded-lg transitionable"
     >
       <div class="min-w-full divide-y divide-gray-200 relative">
-        <div ref="header" class="hidden md:grid grid-cols-12 bg-gray-50">
+        <div class="hidden md:grid grid-cols-12 bg-gray-50">
           <div
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider col-span-4"
           >
@@ -97,6 +97,7 @@ const props = defineProps<{
 const container = ref(null as null | HTMLElement);
 const height = ref(0);
 const emit = defineEmits(['updateHeight']);
+const header = ref(null as null | HTMLElement);
 
 function setHeight() {
   if (props.episodes) {

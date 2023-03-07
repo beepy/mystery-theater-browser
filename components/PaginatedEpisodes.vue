@@ -174,13 +174,11 @@ const props = withDefaults(
 
 const showingPageInput = ref(false);
 const jumpToPageNumberString = ref(props.currentPageNumber + '');
-const pageInput = ref(null);
-const jumpToInput = ref(null as null | HTMLInputElement);
-const header = ref(null as null | HTMLElement);
+const jumpToInput = ref<null | HTMLInputElement>(null);
 const tableKey = ref(1);
 const tableTransition = ref('slide-left');
-const paginatedEpisodesContainer = ref(null as null | HTMLElement);
-const episodesTable = ref(null as null | typeof EpisodesTable);
+const paginatedEpisodesContainer = ref<null | HTMLElement>(null);
+const episodesTable = ref<null | typeof EpisodesTable>(null);
 const height = ref(0);
 let lastSearchTerms: string | undefined = '';
 
@@ -206,6 +204,7 @@ watch(showingPageInput, () => {
 
 const showPageInput = () => {
   showingPageInput.value = true;
+  jumpToPageNumberString.value = props.currentPageNumber + '';
   nextTick(() => {
     jumpToInput.value?.select();
   });
@@ -214,10 +213,6 @@ const showPageInput = () => {
 watch(
   () => props.currentPageNumber,
   (v, p) => {
-    jumpToPageNumberString.value = v + '';
-    if (header.value) {
-      header.value.scrollIntoView({ behavior: 'smooth' });
-    }
     if (props.searchTerms !== lastSearchTerms) {
       lastSearchTerms = props.searchTerms;
       tableTransition.value = 'page';
@@ -325,6 +320,14 @@ onUnmounted(() => {
     pill.value.removeEventListener('transitionend', removeWidthFromPill);
   }
 });
+
+function scrollToTop() {
+  if (paginatedEpisodesContainer.value) {
+    paginatedEpisodesContainer.value.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+defineExpose({ scrollToTop });
 </script>
 
 <style lang="scss">

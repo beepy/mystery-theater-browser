@@ -3,6 +3,7 @@
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
       <PaginatedEpisodes
+        ref="table"
         :current-page-number="page"
         :episodes="!fetching ? episodes : null"
         first-page-link="/"
@@ -19,6 +20,8 @@ import { storeToRefs } from 'pinia';
 import { usePageStore } from '@/stores/PageStore';
 
 import { Episode } from '@/types/episode';
+
+import PaginatedEpisodes from '~~/components/PaginatedEpisodes.vue';
 
 const route = useRoute();
 const page = ref(
@@ -102,4 +105,16 @@ watch([isSearching, terms], () => {
 watch(episodes, () => {
   fetching.value = false;
 });
+
+const table = ref<null | typeof PaginatedEpisodes>(null);
+
+function scrollToTop() {
+  if (isSearching.value) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (table.value) {
+    table.value.scrollToTop();
+  }
+}
+
+watch(page, () => setTimeout(scrollToTop, 333));
 </script>
