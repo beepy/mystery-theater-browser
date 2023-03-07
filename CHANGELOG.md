@@ -5,6 +5,8 @@
 ### Fixed
 
 * About page could fail to show (race condition with calculating percent complete)
+* Navigating to index via back button while searching could fail to reflect the correct number of pages
+* Jump-to-page input could get overwritten while being used after pending page change initiated
 
 ## [2.2.2] - 2023-03-02 12:48PM
 

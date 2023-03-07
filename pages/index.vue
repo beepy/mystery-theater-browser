@@ -3,6 +3,7 @@
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
       <PaginatedEpisodes
+        ref="table"
         :current-page-number="page"
         :episodes="!fetching ? episodes : null"
         first-page-link="/"
@@ -20,6 +21,8 @@ import { usePageStore } from '@/stores/PageStore';
 
 import { Episode } from '@/types/episode';
 
+import PaginatedEpisodes from '~~/components/PaginatedEpisodes.vue';
+
 const route = useRoute();
 const page = ref(
   parseInt(
@@ -36,9 +39,8 @@ const baseEpisodeCount = 1399;
 //   queryContent('episodes').only(['id']).find()
 // );
 
-const episodeCount = ref(baseEpisodeCount);
 const searchStore = useSearchStore();
-const { isSearching, terms } = storeToRefs(searchStore);
+const { isSearching, terms, matchCount } = storeToRefs(searchStore);
 const pageStore = usePageStore();
 const fetching = ref(false);
 
@@ -48,11 +50,9 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
     if (isSearching.value) {
       return searchStore.getMatchedEpisodes().then((d) => {
         const i = (page.value - 1) * 10;
-        episodeCount.value = d.length;
         return d.slice(i, i + 10);
       });
     } else {
-      episodeCount.value = baseEpisodeCount;
       return queryContent<Episode>('episodes')
         .sort({ id: 1, $numeric: true })
         .skip((page.value - 1) * 10)
@@ -64,6 +64,14 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
     }
   }
 );
+
+const episodeCount = computed(() => {
+  if (isSearching.value && matchCount.value !== undefined) {
+    return matchCount.value;
+  } else {
+    return baseEpisodeCount;
+  }
+});
 
 onBeforeMount(() => {
   const queryString = window.location.search;
@@ -97,4 +105,16 @@ watch([isSearching, terms], () => {
 watch(episodes, () => {
   fetching.value = false;
 });
+
+const table = ref<null | typeof PaginatedEpisodes>(null);
+
+function scrollToTop() {
+  if (isSearching.value) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (table.value) {
+    table.value.scrollToTop();
+  }
+}
+
+watch(page, () => setTimeout(scrollToTop, 333));
 </script>
