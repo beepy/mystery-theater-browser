@@ -9,6 +9,7 @@
         first-page-link="/"
         :search-terms="isSearching ? terms : undefined"
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
+        @transitioned-in="scrollToTop"
       />
     </div>
   </div>
@@ -115,6 +116,4 @@ function scrollToTop() {
     table.value.scrollToTop();
   }
 }
-
-watch(page, () => setTimeout(scrollToTop, 333));
 </script>

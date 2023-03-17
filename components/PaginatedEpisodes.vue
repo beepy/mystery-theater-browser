@@ -4,7 +4,11 @@
     class="paginated-episodes"
     @keyup.esc="showingPageInput = false"
   >
-    <Transition :name="tableTransition" mode="out-in">
+    <Transition
+      :name="tableTransition"
+      mode="out-in"
+      @after-enter="$emit('transitionedIn')"
+    >
       <EpisodesTable
         v-if="!episodes || episodes.length > 0"
         :key="tableKey"
@@ -151,6 +155,7 @@ import ChevronLeft from '@/assets/svg/chevronLeft.svg';
 import EpisodesTable from '@/components/EpisodesTable.vue';
 
 const router = useRouter();
+const _emits = defineEmits(['transitionedIn']);
 
 const props = withDefaults(
   defineProps<{
