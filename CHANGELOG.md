@@ -1,5 +1,9 @@
 # Changelog | MysteryTheater.org
 
+## [2.2.4] - 2023-03-17 04:08PM
+
+* Possible improvement to scroll-top-table-top after page change (behavior not evident in dev; had hacky timed scroll-to-top, now relying on enter transition end event)
+
 ## [2.2.3] - 2023-03-02 08:42PM
 
 ### Fixed
