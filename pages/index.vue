@@ -110,10 +110,12 @@ watch(episodes, () => {
 const table = ref<null | typeof PaginatedEpisodes>(null);
 
 function scrollToTop() {
+  // disabled; in production only is always jumping to top of page on page
+  // change
   if (isSearching.value) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (table.value) {
-    table.value.scrollToTop();
+    // table.value.scrollToTop();
   }
 }
 </script>

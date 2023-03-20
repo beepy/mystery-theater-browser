@@ -4,11 +4,7 @@
     class="paginated-episodes"
     @keyup.esc="showingPageInput = false"
   >
-    <Transition
-      :name="tableTransition"
-      mode="out-in"
-      @after-enter="$emit('transitionedIn')"
-    >
+    <Transition :name="tableTransition" mode="out-in">
       <EpisodesTable
         v-if="!episodes || episodes.length > 0"
         :key="tableKey"
@@ -328,7 +324,7 @@ onUnmounted(() => {
 
 function scrollToTop() {
   if (paginatedEpisodesContainer.value) {
-    paginatedEpisodesContainer.value.scrollIntoView({ behavior: 'smooth' });
+    // paginatedEpisodesContainer.value.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
