@@ -1,46 +1,65 @@
 <template>
-  <div v-if="episode" class="absolute-on-leave">
+  <div
+    v-if="episode"
+    v-relative-slide="{ type: 'episode', value: episode.id }"
+    class="xabsolute-on-leave"
+  >
     <div class="align-middle inline-block min-w-full pointer-events-none">
-      <div
-        class="fixed bottom-4 lg:bottom-auto lg:top-28 left-0 w-full px-2 z-10"
-      >
-        <div class="flex max-w-5xl mx-auto">
-          <TranLink
-            v-if="episode.id !== 1"
-            :to="'/episode/' + (slugIndex - 1)"
-            :index="slugIndex - 1"
-            nav-tag="episode"
-            :depth="2"
-            class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
-            aria-label="Previous episode"
-          >
-            <PreviousIcon class="text-black w-8" />
-          </TranLink>
-          <div class="flex-grow" />
-          <TranLink
-            v-if="episode.id !== 1399"
-            :to="'/episode/' + (slugIndex + 1)"
-            :index="slugIndex + 1"
-            nav-tag="episode"
-            :depth="2"
-            class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
-            aria-label="Next episode"
-          >
-            <NextIcon class="text-black w-8" />
-          </TranLink>
-        </div>
-      </div>
-    </div>
-    <div class="md:container lg:max-w-4xl mx-auto transitionable">
-      <div>
+      <Teleport to="body">
         <div
-          class="bg-white px-4 md:rounded-lg shadow overflow-hidden transitionable pb-8 md:pb-0"
+          class="fixed bottom-4 lg:bottom-auto lg:top-28 left-0 w-full px-2 z-10"
+        >
+          <div class="flex max-w-5xl mx-auto">
+            <NuxtLink
+              v-if="episode.id !== 1"
+              :to="'/episode/' + (slugIndex - 1)"
+              :index="slugIndex - 1"
+              nav-tag="episode"
+              :depth="2"
+              class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
+              aria-label="Previous episode"
+            >
+              <PreviousIcon class="text-black w-8" />
+            </NuxtLink>
+            <div class="flex-grow" />
+            <NuxtLink
+              v-if="episode.id !== 1399"
+              :to="'/episode/' + (slugIndex + 1)"
+              :index="slugIndex + 1"
+              nav-tag="episode"
+              :depth="2"
+              class="flex-shrink p-1 bg-gray-200 rounded-full shadow pointer-events-auto"
+              aria-label="Next episode"
+            >
+              <NextIcon class="text-black w-8" />
+            </NuxtLink>
+          </div>
+        </div>
+      </Teleport>
+    </div>
+    <div class="md:container lg:max-w-4xl mx-auto xtransitionable">
+      <div
+        v-shared-element="{
+          id: episode.id,
+          role: 'container',
+          type: 'episode',
+        }"
+      >
+        <div
+          class="bg-white px-4 md:rounded-lg shadow overflow-hidden xtransitionable pb-8 md:pb-0"
         >
           <div
             class="grid grid-cols-4 px-0 py-6 -mx-4 items-center gradient-gray"
           >
             <div class="col-span-3 pl-4 pr-6">
-              <h1 class="text-2xl md:text-3xl font-bold font-fancy">
+              <h1
+                v-shared-element="{
+                  id: episode.id,
+                  role: 'title',
+                  type: 'episode',
+                }"
+                class="text-2xl md:text-3xl font-bold font-fancy"
+              >
                 {{ episode.title }}
               </h1>
             </div>
@@ -61,7 +80,15 @@
             <div class="col-span-2 md:col-span-1">
               <h2 class="font-bold">Featured Cast</h2>
               <ul>
-                <li v-for="artist in episode.actors" :key="artist.id">
+                <li
+                  v-for="artist in episode.actors"
+                  :key="artist.id"
+                  v-shared-element="{
+                    id: artist.id,
+                    role: 'name',
+                    type: 'artist',
+                  }"
+                >
                   <TranLink
                     :to="'/artist/' + artist.id"
                     nav-tag="artist"
@@ -75,7 +102,15 @@
             <div class="col-span-2 md:col-span-1">
               <h2 class="font-bold">Written by</h2>
               <ul>
-                <li v-for="artist in episode.writers" :key="artist.id">
+                <li
+                  v-for="artist in episode.writers"
+                  :key="artist.id"
+                  v-shared-element="{
+                    id: artist.id,
+                    role: 'name',
+                    type: 'artist',
+                  }"
+                >
                   <TranLink
                     :to="'/artist/' + artist.id"
                     nav-tag="artist"

@@ -7,10 +7,12 @@
 html {
   @apply bg-gray-800;
   overflow-x: hidden;
+  height: 100%;
 }
 
 body {
   overflow-x: hidden;
+  min-height: 100%;
 }
 
 .nuxt-content {

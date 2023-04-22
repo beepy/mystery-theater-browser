@@ -1,7 +1,16 @@
 <template>
-  <div class="absolute-on-leave">
+  <div class="xabsolute-on-leave">
     <div class="max-w-4xl mx-auto px-4 py-8 bg-white md:rounded-lg">
-      <h1 class="text-3xl text-center font-bold mb-6">{{ artist?.name }}</h1>
+      <h1
+        v-shared-element="{
+          id: artist?.id,
+          role: 'name',
+          type: 'artist',
+        }"
+        class="text-3xl text-center font-bold mb-6"
+      >
+        {{ artist?.name }}
+      </h1>
       <div
         :class="{
           'mb-6': true,
@@ -25,7 +34,15 @@
                 class="mb-1 block"
               >
                 <EpisodeNumber :n="episode.id" class="mr-1" />
-                {{ episode.title }}
+                <span
+                  v-shared-element="{
+                    id: episode.id,
+                    role: 'title',
+                    type: 'episode',
+                  }"
+                  class="inline-block"
+                  >{{ episode.title }}</span
+                >
               </TranLink>
             </li>
           </ul>
@@ -49,7 +66,15 @@
                 class="mb-1 block"
               >
                 <EpisodeNumber :n="episode.id" class="mr-1" />
-                {{ episode.title }}
+                <span
+                  v-shared-element="{
+                    id: episode.id,
+                    role: 'title',
+                    type: 'episode',
+                  }"
+                  class="inline-block"
+                  >{{ episode.title }}</span
+                >
               </TranLink>
             </li>
           </ul>

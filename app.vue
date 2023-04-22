@@ -34,12 +34,17 @@
         </TranLink>
       </div>
     </div>
+    <div class="contextual-transition-container">
+      <NuxtPage :transition="transitionProps" />
+    </div>
+    <!-- 
     <NuxtPage
       :transition="{
         name: transitionName,
         mode: 'out-in',
       }"
     />
+ -->
     <!-- <NuxtPage
     /> -->
     <div v-if="alwaysFalse">
@@ -92,6 +97,8 @@ const transitionName = computed(() => {
   }
   return 'page';
 });
+
+const transitionProps = useContextualTransition({ duration: 1000 });
 
 useHead({
   titleTemplate: (titleChunk) => {

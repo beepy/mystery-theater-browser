@@ -24,9 +24,14 @@
         </div>
         <Transition name="page">
           <Suspense v-if="episodes && episodes.length > 0" @resolve="setHeight">
-            <TranLink
+            <NuxtLink
               v-for="episode in episodes"
               :key="episode.id"
+              v-shared-element="{
+                id: episode.id,
+                role: 'container',
+                type: 'episode',
+              }"
               :to="'/episode/' + episode.id"
               class="grid grid-cols-12 bg-white hover:bg-gray-50 row"
               :depth="2"
@@ -66,7 +71,7 @@
                 </div>
                 <EpisodeNumber :n="episode.id || 0" />
               </div>
-            </TranLink>
+            </NuxtLink>
           </Suspense>
           <div
             v-else
