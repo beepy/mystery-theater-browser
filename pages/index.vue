@@ -1,7 +1,8 @@
 <template>
-  <div class="absolute-on-leave">
+  <div class="xabsolute-on-leave">
     <div class="md:container md:mx-auto">
       <SearchField key="search-field" />
+      <!-- 
       <PaginatedEpisodes
         ref="table"
         :current-page-number="page"
@@ -11,7 +12,39 @@
         :total-page-number="Math.floor((episodeCount + 9) / 10)"
         @transitioned-in="scrollToTop"
       />
+ -->
+      <!-- 
+      <div class="contextual-transition-container">
+        <Transition name="contextual-transition">
+          <div v-if="route.name === 'index' || route.name=== 'index-page-page'">
+            <p class="bg-white">THINK I HAVE NUXTPAGE</p>
+            <NuxtPage :transition="transitionProps" keep-alive />
+          </div>
+          <div v-else class="bg-black" style="height: 400px" />
+        </Transition>
+      </div>
+-->
+      <ContextualTransition group="episodesTable" :duration="333">
+        <EpisodesTable
+          :key="tableKey"
+          v-relative-slide="{ value: page, type: 'episodes' }"
+          :page="page"
+          :is-searching="isSearching"
+          :data-table-key="tableKey"
+          :empty-height="height"
+          @update-height="updateHeight"
+        />
+      </ContextualTransition>
     </div>
+    <Teleport to="body">
+      <EpisodePagination
+        :current-page-number="page"
+        first-page-link="/"
+        :search-terms="isSearching ? terms : undefined"
+        :total-page-number="Math.floor((episodeCount + 9) / 10)"
+        style="z-index: 1000"
+      />
+    </Teleport>
   </div>
 </template>
 
@@ -45,26 +78,26 @@ const { isSearching, terms, matchCount } = storeToRefs(searchStore);
 const pageStore = usePageStore();
 const fetching = ref(false);
 
-const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
-  'episodes-index',
-  () => {
-    if (isSearching.value) {
-      return searchStore.getMatchedEpisodes().then((d) => {
-        const i = (page.value - 1) * 10;
-        return d.slice(i, i + 10);
-      });
-    } else {
-      return queryContent<Episode>('episodes')
-        .sort({ id: 1, $numeric: true })
-        .skip((page.value - 1) * 10)
-        .limit(10)
-        .find()
-        .then((d) => {
-          return d;
-        });
-    }
-  }
-);
+// const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
+//   'episodes-index',
+//   () => {
+//     if (isSearching.value) {
+//       return searchStore.getMatchedEpisodes().then((d) => {
+//         const i = (page.value - 1) * 10;
+//         return d.slice(i, i + 10);
+//       });
+//     } else {
+//       return queryContent<Episode>('episodes')
+//         .sort({ id: 1, $numeric: true })
+//         .skip((page.value - 1) * 10)
+//         .limit(10)
+//         .find()
+//         .then((d) => {
+//           return d;
+//         });
+//     }
+//   }
+// );
 
 const episodeCount = computed(() => {
   if (isSearching.value && matchCount.value !== undefined) {
@@ -95,17 +128,17 @@ watch(route, (newRoute) => {
   pageStore.savePage(page.value);
   fetching.value = true;
 
-  refreshEpisodes();
+  // refreshEpisodes();
 });
 
 watch([isSearching, terms], () => {
   fetching.value = true;
-  refreshEpisodes();
+  // refreshEpisodes();
 });
 
-watch(episodes, () => {
-  fetching.value = false;
-});
+// watch(episodes, () => {
+//   fetching.value = false;
+// });
 
 const table = ref<null | typeof PaginatedEpisodes>(null);
 
@@ -117,5 +150,19 @@ function scrollToTop() {
   } else if (table.value) {
     // table.value.scrollToTop();
   }
+}
+
+const transitionProps = useContextualTransition({
+  duration: 333,
+  group: 'episodes',
+});
+
+/* new attempt */
+const tableKey = computed(() => `episodes-${page.value}-${terms.value}`);
+
+const height = ref(0);
+
+function updateHeight(h: number) {
+  height.value = h;
 }
 </script>

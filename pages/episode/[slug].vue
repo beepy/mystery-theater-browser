@@ -231,63 +231,57 @@ const links = computed((): UrlInfo[] => {
   const sourceLink = allSources.map((s) => s.url);
 
   // first we map them
-  const urls = episode.value?.urls.map((u: any) => {
-    let i = quality.indexOf(u.source);
-    let q = i;
-    let cleanUrlFile = u.url.substring(u.url.lastIndexOf('/') + 1);
+  if (episode.value?.urls) {
+    const urls = episode.value.urls.map((u: any) => {
+      let i = quality.indexOf(u.source);
+      let q = i;
+      let cleanUrlFile = u.url.substring(u.url.lastIndexOf('/') + 1);
 
-    cleanUrlFile = decodeURIComponent(cleanUrlFile).replace('.mp3', '');
+      cleanUrlFile = decodeURIComponent(cleanUrlFile).replace('.mp3', '');
 
-    if (i < 0) {
-      i = 10;
-      q = 3;
-    }
-    if (u.quality && parseInt(u.quality, 10) > 0) {
-      q = 2;
-    }
-    return {
-      url: u.url,
-      quality: q,
-      sourceTag: u.source,
-      source: source[i],
-      sourceLink: sourceLink[i],
-      filename:
-        String(episode.value?.id).padStart(4, '0') +
-        ' ' +
-        episode.value?.title +
-        ' (' +
-        cleanUrlFile +
-        ').mp3',
-    };
-  });
-  // then we sort them
-  return urls.sort((a: UrlInfo, b: UrlInfo) => {
-    if (a.quality < b.quality) {
-      return -1;
-    } else if (a.quality > b.quality) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+      if (i < 0) {
+        i = 10;
+        q = 3;
+      }
+      if (u.quality && parseInt(u.quality, 10) > 0) {
+        q = 2;
+      }
+      const urlInfo: UrlInfo = {
+        url: u.url,
+        quality: q,
+        sourceTag: u.source,
+        source: source[i],
+        sourceLink: sourceLink[i] ?? 'missing source',
+        filename:
+          String(episode.value?.id).padStart(4, '0') +
+          ' ' +
+          episode.value?.title +
+          ' (' +
+          cleanUrlFile +
+          ').mp3',
+      };
+      return urlInfo;
+    });
+
+    // then we sort them
+    return urls.sort((a: UrlInfo, b: UrlInfo) => {
+      if (a.quality < b.quality) {
+        return -1;
+      } else if (a.quality > b.quality) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  } else {
+    return [];
+  }
 });
 
 useHead({
   title: episode.value?.title || 'Untitled',
   meta: [{ name: 'description', content: episode.value?.description || '' }],
 });
-
-// definePageMeta({
-//   middleware (to, from) {
-//     console.log("to mw")
-//     console.log(to)
-//   }
-// })
-// this is a macro, so we can't set anything dynamically
-// definePageMeta({
-//   title: 'Some Page',
-//   foo: route.params.slug
-// })
 
 onMounted(() => {
   // this is really for first load, or history navigation?

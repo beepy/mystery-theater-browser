@@ -1,12 +1,5 @@
 <template>
-  <span
-    v-shared-element="{
-      id: n,
-      role: 'number',
-      type: 'episode',
-    }"
-    class="bg-yellow-400 px-2 py-1 rounded font-mono inline-block"
-  >
+  <span class="bg-yellow-400 px-2 py-1 rounded font-mono inline-block">
     {{ paddedNumber }}
   </span>
 </template>

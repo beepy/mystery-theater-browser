@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-relative-slide="{ type: 'page', value: 1 }"
-    class="max-w-xs mx-auto nuxt-content"
-  >
+  <div class="max-w-xs mx-auto nuxt-content">
     <h2 class="text-center text-gray-100">Contact</h2>
     <form
       name="contact"

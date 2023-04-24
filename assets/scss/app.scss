@@ -6,12 +6,12 @@
 
 html {
   @apply bg-gray-800;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   height: 100%;
 }
 
 body {
-  overflow-x: hidden;
+  // overflow-x: hidden;
   min-height: 100%;
 }
 
@@ -74,6 +74,7 @@ body {
   // transform: translate3d(0, 0, 0);
 }
 
+/*
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.17s;
@@ -220,6 +221,7 @@ $lrw: 10vw;
     transform: translate3d(-$lrw, 0, 0);
   }
 }
+
 .bounce-enter-active {
   transform-origin: top;
   animation: bounce-in 0.8s;
@@ -250,7 +252,7 @@ $lrw: 10vw;
     transform: scale(0);
   }
 }
-
+*/
 input {
   @apply focus:outline-none focus:ring-yellow-400 focus:ring-2 focus:border-transparent;;
 }

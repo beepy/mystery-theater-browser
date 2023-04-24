@@ -98,7 +98,7 @@ const transitionName = computed(() => {
   return 'page';
 });
 
-const transitionProps = useContextualTransition({ duration: 1000 });
+const transitionProps = useContextualTransition({ duration: 333 });
 
 useHead({
   titleTemplate: (titleChunk) => {

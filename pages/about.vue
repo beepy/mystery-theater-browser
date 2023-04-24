@@ -1,6 +1,5 @@
 <template>
   <div
-    v-relative-slide="{ type: 'page', value: 2 }"
     class="max-w-4xl mx-auto bg-white md:mt-10 p-8 md:rounded-lg shadow overflow-hidden foo"
   >
     <ContentRendererMarkdown
