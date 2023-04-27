@@ -94,15 +94,6 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
 const emit = defineEmits(['updateHeight']);
 
 onMounted(() => {
-  console.log('onMounted');
   requestAnimationFrame(() => emit('updateHeight'));
-});
-
-// this should never get called but I currently suspect having the
-// refreshEpisodes used magically signals something about how the content
-// is stored at build time
-watch(props, () => {
-  console.log('watch');
-  refreshEpisodes();
 });
 </script>
