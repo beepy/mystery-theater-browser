@@ -1,10 +1,10 @@
 # Changelog | MysteryTheater.org
 
-## [unreleased]
+## [2.3.0] - 2023-04-27 03:38PM
 
 ### Changed
 
-* Use `nuxt-contextual-transition` instead of ad-hoc solution
+* Use `nuxt-contextual-transition` instead of ad-hoc solution; shared element transitions
 
 ### TODO
 
