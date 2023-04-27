@@ -58,6 +58,7 @@ const props = withDefaults(
   defineProps<{
     page?: number;
     isSearching?: boolean;
+    terms?: string;
   }>(),
   {
     page: 1,
@@ -67,25 +68,33 @@ const props = withDefaults(
 
 const searchStore = useSearchStore();
 
-const { data: episodes } = await useAsyncData('episodes-index', () => {
-  if (props.isSearching) {
-    return searchStore.getMatchedEpisodes().then((d) => {
-      const i = (props.page - 1) * 10;
-      return d.slice(i, i + 10);
-    });
-  } else {
-    return queryContent<Episode>('episodes')
-      .sort({ id: 1, $numeric: true })
-      .skip((props.page - 1) * 10)
-      .limit(10)
-      .find()
-      .then((d) => {
-        return d;
+const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
+  'episodes-index',
+  () => {
+    if (props.isSearching) {
+      return searchStore.getMatchedEpisodes().then((d) => {
+        const i = (props.page - 1) * 10;
+        return d.slice(i, i + 10);
       });
+    } else {
+      return queryContent<Episode>('episodes')
+        .sort({ id: 1, $numeric: true })
+        .skip((props.page - 1) * 10)
+        .limit(10)
+        .find()
+        .then((d) => {
+          return d;
+        });
+    }
   }
-});
+);
 
 const emit = defineEmits(['updateHeight']);
 
 onMounted(() => requestAnimationFrame(() => emit('updateHeight')));
+
+watch([props.page, props.isSearching, props.terms], () => {
+  console.log('refreshEpisodes');
+  refreshEpisodes();
+});
 </script>
