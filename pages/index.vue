@@ -67,7 +67,7 @@ const page = ref(
 
 // we are hard-coding this because of the effect the original dynamic solution
 // had on build time (this is 40% faster)
-const baseEpisodeCount = 1399;
+const baseEpisodeCount = 20; // 1399;
 // originally we fetched all IDs and get their length
 // const { data: episodeIds } = await useAsyncData('episode-ids', () =>
 //   queryContent('episodes').only(['id']).find()

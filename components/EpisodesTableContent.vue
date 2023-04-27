@@ -83,6 +83,8 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
         .limit(10)
         .find()
         .then((d) => {
+          console.log('page fetched');
+          console.log(d);
           return d;
         });
     }
@@ -91,12 +93,16 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
 
 const emit = defineEmits(['updateHeight']);
 
-onMounted(() => requestAnimationFrame(() => emit('updateHeight')));
+onMounted(() => {
+  console.log('onMounted');
+  requestAnimationFrame(() => emit('updateHeight'));
+});
 
 // this should never get called but I currently suspect having the
 // refreshEpisodes used magically signals something about how the content
 // is stored at build time
-watch([props.page, props.isSearching, props.terms], () => {
+watch(props, () => {
+  console.log('watch');
   refreshEpisodes();
 });
 </script>
