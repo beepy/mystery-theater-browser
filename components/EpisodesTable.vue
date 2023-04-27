@@ -27,7 +27,7 @@
           :style="`min-height: ${emptyHeight}px;`"
         >
           <Transition name="contextual-transition-">
-            <div ref="tableContent">
+            <div ref="tableContent" :key="page">
               <EpisodesTableContent
                 :page="page"
                 :is-searching="isSearching"
