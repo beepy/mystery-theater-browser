@@ -69,7 +69,7 @@ const props = withDefaults(
 const searchStore = useSearchStore();
 
 const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
-  `episodes-index-${props.page}`,
+  `episodes-index-${props.page}-${props.terms}`,
   () => {
     if (props.isSearching) {
       return searchStore.getMatchedEpisodes().then((d) => {

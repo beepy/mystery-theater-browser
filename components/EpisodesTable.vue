@@ -31,6 +31,7 @@
               <EpisodesTableContent
                 :page="page"
                 :is-searching="isSearching"
+                :terms="terms"
                 @updateHeight="setHeight"
               />
             </div>
@@ -46,6 +47,7 @@ const props = defineProps<{
   page: number;
   isSearching: boolean;
   emptyHeight: number;
+  terms?: string;
 }>();
 
 /**

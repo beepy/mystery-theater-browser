@@ -30,6 +30,7 @@
           v-relative-slide="{ value: page, type: 'episodes' }"
           :page="page"
           :is-searching="isSearching"
+          :terms="isSearching ? terms : undefined"
           :data-table-key="tableKey"
           :empty-height="height"
           @update-height="updateHeight"
