@@ -93,8 +93,10 @@ const emit = defineEmits(['updateHeight']);
 
 onMounted(() => requestAnimationFrame(() => emit('updateHeight')));
 
+// this should never get called but I currently suspect having the
+// refreshEpisodes used magically signals something about how the content
+// is stored at build time
 watch([props.page, props.isSearching, props.terms], () => {
-  console.log('refreshEpisodes');
   refreshEpisodes();
 });
 </script>
