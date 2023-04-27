@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import NuxtContextualTransition from 'nuxt-contextual-transition';
+// import NuxtContextualTransition from 'nuxt-contextual-transition';
 // import { useContextualTransition } from "./.nuxt/imports";
 // import { useContextualTransition } from "vue-contextual-transition";
 
@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
-    NuxtContextualTransition,
+    'nuxt-contextual-transition',
   ],
   css: ['~/assets/scss/app.scss'],
   imports: {

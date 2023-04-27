@@ -87,5 +87,5 @@ const { data: episodes } = await useAsyncData('episodes-index', () => {
 
 const emit = defineEmits(['updateHeight']);
 
-onMounted(() => emit('updateHeight'));
+onMounted(() => requestAnimationFrame(() => emit('updateHeight')));
 </script>

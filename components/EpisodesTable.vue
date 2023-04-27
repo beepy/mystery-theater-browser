@@ -22,20 +22,18 @@
             Episode
           </div>
         </div>
-        <div class="contextual-transition-container">
+        <div
+          class="contextual-transition-container bg-white"
+          :style="`min-height: ${emptyHeight}px;`"
+        >
           <Transition name="contextual-transition-">
-            <Suspense>
-              <div ref="tableContent">
-                <EpisodesTableContent
-                  :page="page"
-                  :is-searching="isSearching"
-                  @updateHeight="setHeight"
-                />
-              </div>
-              <template #fallback>
-                <div :style="`height: ${emptyHeight}px;`" class="bg-white" />
-              </template>
-            </Suspense>
+            <div ref="tableContent">
+              <EpisodesTableContent
+                :page="page"
+                :is-searching="isSearching"
+                @updateHeight="setHeight"
+              />
+            </div>
           </Transition>
         </div>
       </div>
@@ -62,6 +60,7 @@ const height = ref(0);
 const emit = defineEmits(['updateHeight']);
 const header = ref(null as null | HTMLElement);
 const tableContent = ref<null | HTMLElement>(null);
+
 function setHeight() {
   if (tableContent.value) {
     height.value =
@@ -77,4 +76,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', setHeight);
 });
+
+function resolveTest() {
+  updateContextualTransitionResolve();
+}
 </script>

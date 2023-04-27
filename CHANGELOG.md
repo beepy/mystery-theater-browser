@@ -1,5 +1,15 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+### Changed
+
+* Use `nuxt-contextual-transition` instead of ad-hoc solution
+
+### TODO
+
+* Remove use of `<TranLink>`
+
 ## [2.2.5] - 2023-03-20 11:36AM
 
 ### Changed

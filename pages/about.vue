@@ -1,12 +1,14 @@
 <template>
-  <div
-    class="max-w-4xl mx-auto bg-white md:mt-10 p-8 md:rounded-lg shadow overflow-hidden foo"
-  >
-    <ContentRendererMarkdown
-      v-if="pageWithValues"
-      class="nuxt-content"
-      :value="pageWithValues"
-    />
+  <div class="md:pt-10">
+    <div
+      class="max-w-4xl mx-auto bg-white p-8 md:rounded-lg shadow overflow-hidden"
+    >
+      <ContentRendererMarkdown
+        v-if="pageWithValues"
+        class="nuxt-content"
+        :value="pageWithValues"
+      />
+    </div>
   </div>
 </template>
 
