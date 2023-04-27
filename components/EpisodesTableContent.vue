@@ -83,8 +83,6 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
         .limit(10)
         .find()
         .then((d) => {
-          console.log('page fetched');
-          console.log(d);
           return d;
         });
     }
