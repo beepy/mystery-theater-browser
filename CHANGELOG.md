@@ -1,5 +1,11 @@
 # Changelog | MysteryTheater.org
 
+## [2.3.1] - 2023-05-10 08:11AM
+
+### Added
+
+* Through episode 367
+
 ## [2.3.0] - 2023-04-27 03:38PM
 
 ### Changed
