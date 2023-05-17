@@ -1,11 +1,5 @@
 # Changelog | MysteryTheater.org
 
-## [2.3.2] - 2023-05-17 12:39PM
-
-### Changed
-
-* Updated to Vue 3.3
-
 ## [2.3.1] - 2023-05-10 08:11AM
 
 ### Added
