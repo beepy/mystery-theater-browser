@@ -1,5 +1,11 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+### Changed
+
+* Nuxt 3.5 / Vue 3.3
+
 ## [2.3.1] - 2023-05-10 08:11AM
 
 ### Added
