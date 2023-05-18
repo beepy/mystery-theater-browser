@@ -1,6 +1,6 @@
 # Changelog | MysteryTheater.org
 
-## [unreleased]
+## [2.3.2] - 2023-05-17 08:40PM
 
 ### Changed
 
