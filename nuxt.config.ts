@@ -1,9 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-// import NuxtContextualTransition from 'nuxt-contextual-transition';
-// import { useContextualTransition } from "./.nuxt/imports";
-// import { useContextualTransition } from "vue-contextual-transition";
-
 import svgLoader from 'vite-svg-loader';
 
 export default defineNuxtConfig({

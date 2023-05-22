@@ -1,5 +1,12 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+### Fixed
+
+* Scroll to top on page change on index. TODO: don't scroll to top while jump-to-page interface is exposed (mobile keyboard covers text input)
+* Width of jump-to-page widget on Safari
+
 ## [2.3.2] - 2023-05-17 08:40PM
 
 ### Changed

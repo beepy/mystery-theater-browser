@@ -1,31 +1,10 @@
 <template>
   <div class="xabsolute-on-leave">
     <div class="md:container md:mx-auto">
-      <SearchField key="search-field" />
-      <!-- 
-      <PaginatedEpisodes
-        ref="table"
-        :current-page-number="page"
-        :episodes="!fetching ? episodes : null"
-        first-page-link="/"
-        :search-terms="isSearching ? terms : undefined"
-        :total-page-number="Math.floor((episodeCount + 9) / 10)"
-        @transitioned-in="scrollToTop"
-      />
- -->
-      <!-- 
-      <div class="contextual-transition-container">
-        <Transition name="contextual-transition">
-          <div v-if="route.name === 'index' || route.name=== 'index-page-page'">
-            <p class="bg-white">THINK I HAVE NUXTPAGE</p>
-            <NuxtPage :transition="transitionProps" keep-alive />
-          </div>
-          <div v-else class="bg-black" style="height: 400px" />
-        </Transition>
-      </div>
--->
+      <SearchField key="search-field" ref="searchField" />
       <ContextualTransition group="episodesTable" :duration="333">
         <EpisodesTable
+          ref="table"
           :key="tableKey"
           v-relative-slide="{ value: page, type: 'episodes' }"
           :page="page"
@@ -79,27 +58,6 @@ const { isSearching, terms, matchCount } = storeToRefs(searchStore);
 const pageStore = usePageStore();
 const fetching = ref(false);
 
-// const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
-//   'episodes-index',
-//   () => {
-//     if (isSearching.value) {
-//       return searchStore.getMatchedEpisodes().then((d) => {
-//         const i = (page.value - 1) * 10;
-//         return d.slice(i, i + 10);
-//       });
-//     } else {
-//       return queryContent<Episode>('episodes')
-//         .sort({ id: 1, $numeric: true })
-//         .skip((page.value - 1) * 10)
-//         .limit(10)
-//         .find()
-//         .then((d) => {
-//           return d;
-//         });
-//     }
-//   }
-// );
-
 const episodeCount = computed(() => {
   if (isSearching.value && matchCount.value !== undefined) {
     return matchCount.value;
@@ -128,29 +86,35 @@ watch(route, (newRoute) => {
     ) ?? 1;
   pageStore.savePage(page.value);
   fetching.value = true;
-
-  // refreshEpisodes();
+  delayedScrollToTop();
 });
 
 watch([isSearching, terms], () => {
   fetching.value = true;
-  // refreshEpisodes();
 });
 
-// watch(episodes, () => {
-//   fetching.value = false;
-// });
-
-const table = ref<null | typeof PaginatedEpisodes>(null);
+const table = ref<null | typeof EpisodesTable>(null);
+const searchField = ref<null | typeof SearchField>(null);
 
 function scrollToTop() {
-  // disabled; in production only is always jumping to top of page on page
-  // change
-  if (isSearching.value) {
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (isSearching.value && searchField.value) {
+    searchField.value.$el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   } else if (table.value) {
-    // table.value.scrollToTop();
+    table.value.$el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+}
+
+function delayedScrollToTop() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      scrollToTop();
+    });
+  });
 }
 
 const transitionProps = useContextualTransition({

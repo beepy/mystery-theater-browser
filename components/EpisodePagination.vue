@@ -87,7 +87,7 @@
             >
               <CloseIcon class="w-6" />
             </button>
-            <p class="pr-2">Jump to page:</p>
+            <p class="pr-2 leading-4 whitespace-nowrap">Jump to page:</p>
             <input
               ref="jumpToInput"
               v-model="jumpToPageNumberString"
