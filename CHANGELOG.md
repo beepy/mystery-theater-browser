@@ -19,7 +19,7 @@
 
 ### Fixed
 
-* Maragaret Hamilton spelling
+* Margaret Hamilton spelling
 
 ## [2.3.1] - 2023-05-10 08:11AM
 
