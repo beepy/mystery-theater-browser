@@ -1,5 +1,12 @@
 # Changelog | MysteryTheater.org
 
+## [2.3.4] - 2023-07-25 12:57PM
+
+### Added
+
+* Through episode 399
+* `humorous` tag
+
 ## [2.3.3] - 2023-05-22 02:28PM
 
 ### Fixed

@@ -68,6 +68,10 @@ export const useTagStore = defineStore('TagStore', {
         title: 'Whodunnit',
         color: 'indigo-700',
       },
+      humorous: {
+        title: 'Humorous',
+        color: 'cyan-700',
+      },
     } as Record<string, TagType>,
   }),
   getters: {

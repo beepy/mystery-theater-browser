@@ -56,6 +56,7 @@
       <div class="text-purple-700" />
       <div class="text-pink-700" />
       <div class="text-indigo-700" />
+      <div class="text-cyan-700" />
     </div>
   </div>
 </template>
