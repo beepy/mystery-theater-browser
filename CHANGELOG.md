@@ -1,5 +1,19 @@
 # Changelog | MysteryTheater.org
 
+## [2.3.5] - 2024-04-19 02:23PM
+
+### Added
+
+* Through episode 454
+
+### Changed
+
+* Usining new ffmpeg arguments for less-likely-to-be-broken mp3s.
+
+### Fixed
+
+* Episode 407 listed Joan Lorring (ID 30). Should be Joan Arless (220)
+
 ## [2.3.4] - 2023-07-25 12:57PM
 
 ### Added
