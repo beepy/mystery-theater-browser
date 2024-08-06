@@ -33,7 +33,7 @@ import { storeToRefs } from 'pinia';
 
 import { usePageStore } from '@/stores/PageStore';
 
-import { Episode } from '@/types/episode';
+import { type Episode } from '@/types/episode';
 
 import PaginatedEpisodes from '~~/components/PaginatedEpisodes.vue';
 import EpisodesTable from '~~/components/EpisodesTable.vue';
@@ -80,16 +80,15 @@ onBeforeMount(() => {
   }
 });
 
-watch(route, (newRoute) => {
-  page.value =
-    parseInt(
-      typeof newRoute.params.page === 'string' ? newRoute.params.page : '1',
-      10
-    ) ?? 1;
-  pageStore.savePage(page.value);
-  fetching.value = true;
-  delayedScrollToTop();
-});
+watch(
+  () => route.params.page,
+  (newPage) => {
+    page.value = parseInt(typeof newPage === 'string' ? newPage : '1', 10) ?? 1;
+    pageStore.savePage(page.value);
+    fetching.value = true;
+    delayedScrollToTop();
+  }
+);
 
 watch([isSearching, terms], () => {
   fetching.value = true;

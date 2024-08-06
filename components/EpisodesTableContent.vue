@@ -52,7 +52,26 @@
 </template>
 
 <script setup lang="ts">
-import { Episode } from '@/types/episode';
+import { type Episode } from '@/types/episode';
+// import { type Episode } from '@/types/foo';
+// import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
+// interface Episode extends MarkdownParsedContent {
+//   title?: string;
+//   date?: string;
+//   id?: string | number;
+//   urls?: { url?: string; source?: string; quality?: number }[];
+//   audioQuality?: number;
+//   tags?: string[];
+//   multipart?: number;
+//   actors?: { id?: number; name?: string }[];
+//   actorIds?: number[];
+//   writers?: { id?: number; name?: string }[];
+//   writerIds?: number[];
+//   // searchable?: string;
+//   _searchable?: string;
+//   descriptionSource?: string;
+//   notes?: string;
+// }
 
 const props = withDefaults(
   defineProps<{

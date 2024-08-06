@@ -23,7 +23,10 @@
 import axios from 'axios';
 import { storeToRefs } from 'pinia';
 
-import { DownloadQueueItem, useDownloadStore } from '@/stores/DownloadStore';
+import {
+  type DownloadQueueItem,
+  useDownloadStore,
+} from '@/stores/DownloadStore';
 
 const downloadStore = useDownloadStore();
 

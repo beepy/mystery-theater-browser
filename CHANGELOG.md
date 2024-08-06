@@ -1,5 +1,12 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+### Changed
+
+* Updated to node 20
+* Updated nuxt and several dependencies
+
 ## [2.3.5] - 2024-04-19 02:23PM
 
 ### Added

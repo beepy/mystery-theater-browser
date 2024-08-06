@@ -142,7 +142,7 @@
 
 <script setup lang="ts">
 import debounce from 'lodash.debounce';
-import { Episode } from '@/types/episode';
+import { type Episode } from '@/types/episode';
 
 import ArrowRightIcon from '@/assets/svg/arrowRight.svg';
 import CloseIcon from '@/assets/svg/closeIcon.svg';

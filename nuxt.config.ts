@@ -18,16 +18,20 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     },
   },
+
   modules: [
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     'nuxt-contextual-transition',
   ],
+
   css: ['~/assets/scss/app.scss'],
+
   imports: {
     dirs: ['stores'],
   },
+
   vite: {
     plugins: [svgLoader({})],
     server: {
@@ -36,4 +40,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-08-05',
 });

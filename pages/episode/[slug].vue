@@ -189,7 +189,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Episode } from '~/types/episode';
+import { type Episode } from '~/types/episode';
 
 import { useNavStore } from '~/stores/NavStore';
 

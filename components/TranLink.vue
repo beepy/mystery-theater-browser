@@ -10,7 +10,7 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import { RouteLocationNormalized } from 'vue-router';
+import type { RouteLocationNormalized } from 'vue-router';
 import { storeToRefs } from 'pinia';
 
 import { useNavStore } from '~/stores/NavStore';
