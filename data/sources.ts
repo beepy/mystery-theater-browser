@@ -47,6 +47,11 @@ export default [
     url: 'https://www.cbsrmt.com',
   },
   {
+    slug: 'archive-org-nrl',
+    title: 'MP3 provided by archive.org (ads removed)',
+    url: 'https://archive.org/details/cbs_radio_mystery_theater',
+  },
+  {
     slug: 'kl-vinyl',
     title: 'Vinyl transfer provided by Ken Long',
     url: 'http://cbsrmt.thelongtrek.com/vinyl/index.htm',
@@ -66,7 +71,11 @@ export default [
     title: 'Ken Long Collection: KF',
     url: 'http://cbsrmt.thelongtrek.com/kf/kf.html',
   }, // keith flowers ken long
-  { slug: 'archive-org', title: 'MP3 provided by archive.org', url: null },
+  {
+    slug: 'archive-org',
+    title: 'MP3 provided by archive.org',
+    url: 'https://archive.org/details/cbs_radio_mystery_theater',
+  },
   {
     slug: 'kl-extra',
     title: 'Ken Long collection',
