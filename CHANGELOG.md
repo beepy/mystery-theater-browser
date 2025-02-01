@@ -1,5 +1,16 @@
 # Changelog | MysteryTheater.org
 
+## [2.4.0] - 2025-02-01 10:27AM
+
+### Changed
+
+* Update yarn
+* Estimated date of completion on about page is now dynamically calculated
+
+### Added
+
+* Through episode 509
+
 ## [2.3.6] - 2024-08-05 10:28PM
 
 ### Changed
