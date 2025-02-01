@@ -28,6 +28,21 @@ const { data: page } = await useAsyncData('about', () =>
   queryContent('about').findOne()
 );
 
+const timeToComplete = computed(() => {
+  const episodesPerWeek = 5;
+  const episodesComplete = percent.value * 0.01 * complete.value;
+  const episodesToGo = 1399 - episodesComplete;
+  const weeksToGo = episodesToGo / episodesPerWeek;
+  return Math.ceil(weeksToGo) * 7 * 24 * 60 * 60 * 1000;
+});
+
+const completeDate = computed(() => {
+  const now = new Date();
+  const then = new Date(now.getTime() + timeToComplete.value);
+  const month = then.toLocaleString('default', { month: 'long' });
+  return `${month}, ${then.getFullYear()}`;
+});
+
 const pageWithValues = computed(() => {
   if (!page.value) {
     return page.value;
@@ -36,6 +51,8 @@ const pageWithValues = computed(() => {
       ...page.value,
       complete: complete.value,
       percent: percent.value,
+      timeToComplete: timeToComplete.value,
+      completeDate: completeDate.value,
     };
   }
 });

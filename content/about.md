@@ -30,7 +30,7 @@ Each episode is being manually reviewed to ensure the best recording is offered.
 
 When the best available recording contains unrelated radio segments or commercial breaks, I am creating a new audio file with those segments removed. While the audio format, MP3, is lossy, meaning the encoding processes dregrades the quality from the original, the segments are created without decoding and re-encoding, so there should be no additional loss in quality. However, this method means that the accuracy of the edits is limited by the "frame size" of the source MP3s, which varies but can be around a quarter of a second. Therefore, you may hear a "blip" — a fraction of a second of commercial audio — at the beginning or end of these edits.
 
-Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is January 2025.
+Currently {{complete}} episodes have been processed ({{percent}}%). Estimated completion date is {{completeDate}}.
 
 ## Sources
 
