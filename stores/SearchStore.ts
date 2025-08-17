@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Episode } from '@/types/episode';
+import { type Episode } from '@/types/episode';
 
 interface State {
   terms: string;

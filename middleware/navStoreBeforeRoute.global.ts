@@ -1,4 +1,4 @@
-import { NavInfo, useNavStore } from '@/stores/NavStore';
+import { type NavInfo, useNavStore } from '@/stores/NavStore';
 
 const navsForPaths: Record<string, NavInfo> = {};
 
