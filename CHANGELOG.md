@@ -1,5 +1,16 @@
 # Changelog | MysteryTheater.org
 
+## [unreleased]
+
+## Changed
+
+* Updated to node 22
+
+## Added
+
+* Through episode 524
+  * unauditioned ad-free episodes added through 535
+  
 ## [2.4.0] - 2025-02-01 10:27AM
 
 ### Changed
