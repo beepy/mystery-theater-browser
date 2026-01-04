@@ -1,6 +1,6 @@
 # Changelog | MysteryTheater.org
 
-## [unreleased]
+## [2.4.1] - 2026-01-04 02:05PM
 
 ## Changed
 
