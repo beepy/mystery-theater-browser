@@ -1,5 +1,10 @@
 # Changelog | MysteryTheater.org
 
+## [2.4.2] - 2026-02-21 01:09PM
+
+* Through episode 536
+  * unauditioned ad-free episodes added through 540
+
 ## [2.4.1] - 2026-01-04 02:05PM
 
 ## Changed
