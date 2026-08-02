@@ -20,7 +20,7 @@ export const useDownloadStore = defineStore('DownloadStore', {
   }),
   getters: {
     headOfDownloadQueue(state): DownloadQueueItem {
-      return state.downloadQueue.length > 0 ? state.downloadQueue[0] : {};
+      return state.downloadQueue[0] !== undefined ? state.downloadQueue[0] : {};
     },
   },
   actions: {

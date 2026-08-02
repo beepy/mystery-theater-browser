@@ -10,6 +10,11 @@
     "lint:fix": "vp lint . --fix",
     "prepare": "vp config"
   },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.2",
+    "pinia": "^2.0.35",
+    "vue-contextual-transition": "^0.2.0"
+  },
   "devDependencies": {
     "@nuxt/content": "^2.13.2",
     "@nuxt/image": "^1.7.0",
@@ -26,10 +31,8 @@
     "vite-plus": "0.2.7",
     "vite-svg-loader": "^4.0.0"
   },
-  "dependencies": {
-    "@pinia/nuxt": "^0.5.2",
-    "pinia": "^2.0.35",
-    "vue-contextual-transition": "^0.2.0"
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.7"
   },
   "devEngines": {
     "packageManager": {
@@ -37,8 +40,5 @@
       "version": "12.0.2",
       "onFail": "download"
     }
-  },
-  "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.7"
   }
 }

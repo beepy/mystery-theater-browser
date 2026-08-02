@@ -19,12 +19,12 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   // otherwise if we have a cached value for the path we are going to, patch it
   if (to?.path && navsForPaths[to.path]) {
-    patch.navTo = { ...navsForPaths[to.path] };
+    patch.navTo = { ...navsForPaths[to.path]! };
   }
 
   // if we have a cached value for the path we are coming from, patch it
   if (from?.path && navsForPaths[from.path]) {
-    patch.navFrom = { ...navsForPaths[from.path] };
+    patch.navFrom = { ...navsForPaths[from.path]! };
   }
 
   // if we have any patches, apply them

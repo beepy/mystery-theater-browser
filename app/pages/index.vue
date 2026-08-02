@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-// test 2
 import { storeToRefs } from 'pinia';
 
 import { usePageStore } from '@/stores/PageStore';
