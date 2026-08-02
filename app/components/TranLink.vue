@@ -34,8 +34,7 @@ const props = withDefaults(
 
 const indexValue = computed((): number | undefined => {
   const t = typeof props.index;
-  // test
-  if (t === "number") {
+  if (t === 'number') {
     return props.index as number;
   } else if (t === 'string') {
     const n = parseInt(props.index as string);
