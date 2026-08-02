@@ -6,6 +6,11 @@
 
 - Through episode 583
 
+### Changed
+
+- Updated to Nuxt 4
+- Changed to vite+ for tooling
+
 ## [2.4.2] - 2026-02-21 01:09PM
 
 ### Added
