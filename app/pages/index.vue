@@ -35,9 +35,9 @@ import { usePageStore } from '@/stores/PageStore';
 
 import { type Episode } from '@/types/episode';
 
-import PaginatedEpisodes from '~~/components/PaginatedEpisodes.vue';
-import EpisodesTable from '~~/components/EpisodesTable.vue';
-import SearchField from '~~/components/SearchField.vue';
+import PaginatedEpisodes from '@/components/PaginatedEpisodes.vue';
+import EpisodesTable from '@/components/EpisodesTable.vue';
+import SearchField from '@/components/SearchField.vue';
 
 const route = useRoute();
 const page = ref(

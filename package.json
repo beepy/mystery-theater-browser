@@ -7,7 +7,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && husky install",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@nuxt/content": "^2.13.2",
@@ -20,10 +21,10 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "filesize": "^10.0.7",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "lodash.debounce": "^4.0.8",
-    "nuxt": "^3.12.4",
+    "nuxt": "^4.5.1",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",
     "sass-loader": "^13.2.2",
@@ -35,8 +36,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.2",
-    "nuxt-contextual-transition": "^0.1.0",
-    "pinia": "^2.0.35"
+    "pinia": "^2.0.35",
+    "vue-contextual-transition": "^0.2.0"
   },
   "packageManager": "yarn@4.6.0"
 }

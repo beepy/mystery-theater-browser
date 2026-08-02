@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
-    'nuxt-contextual-transition',
+    'vue-contextual-transition/nuxt',
   ],
 
   css: ['~/assets/scss/app.scss'],
