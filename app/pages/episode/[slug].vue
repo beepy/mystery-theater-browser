@@ -218,7 +218,7 @@ const { data: episode } = await useAsyncData(
   `episode-${route.params.slug}`,
   () => {
     return queryContent<Episode>(`episodes/${route.params.slug}`).findOne();
-  }
+  },
 );
 
 const links = computed((): UrlInfo[] => {

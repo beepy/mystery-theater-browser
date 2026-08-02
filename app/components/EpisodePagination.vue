@@ -131,7 +131,7 @@ const props = withDefaults(
     currentPageNumber: 1,
     totalPageNumber: 1,
     linkPrefix: '/page',
-  }
+  },
 );
 
 const router = useRouter();
@@ -189,7 +189,7 @@ watch(
   jumpToPageNumber,
   debounce((v) => {
     doJumpToPageNumber();
-  }, 333)
+  }, 333),
 );
 
 const doJumpToPageNumber = () => {

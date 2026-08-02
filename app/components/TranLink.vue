@@ -21,7 +21,7 @@ const { navTo } = storeToRefs(store);
 
 const props = withDefaults(
   defineProps<{
-    to: Object | string;
+    to: RouteLocationNormalized | string;
     navTag: string;
     depth?: number;
     index?: number | string;
@@ -29,12 +29,13 @@ const props = withDefaults(
   {
     depth: 0,
     index: 0,
-  }
+  },
 );
 
 const indexValue = computed((): number | undefined => {
   const t = typeof props.index;
-  if (t === 'number') {
+  // test
+  if (t === "number") {
     return props.index as number;
   } else if (t === 'string') {
     const n = parseInt(props.index as string);

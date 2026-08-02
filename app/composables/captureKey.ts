@@ -3,7 +3,7 @@ import { onMounted, onUnmounted } from 'vue';
 export function useCaptureKey(
   handler: (e: KeyboardEvent) => void,
   down = true,
-  up = true
+  up = true,
 ) {
   onMounted(() => {
     if (up) {

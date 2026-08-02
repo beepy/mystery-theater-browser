@@ -92,7 +92,7 @@ const id =
 const episodeProperties = ['id', 'title'];
 
 const { data: artist } = await useAsyncData(`artist-${id}`, () =>
-  queryContent(`artists/${slug}`).findOne()
+  queryContent(`artists/${slug}`).findOne(),
 );
 
 const actor = computed(() => artist.value?.actor ?? []);

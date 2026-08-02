@@ -61,7 +61,7 @@ export const useSearchStore = defineStore('SearchStore', {
           const r = RegExp(this.terms, 'ig');
           this.matchedTerms = this.terms;
           this.matchedEpisodes = d.filter(
-            (e) => e._searchable && e._searchable.search(r) >= 0
+            (e) => e._searchable && e._searchable.search(r) >= 0,
           );
           return Promise.resolve(this.matchedEpisodes);
         });

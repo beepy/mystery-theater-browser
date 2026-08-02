@@ -36,10 +36,10 @@ Currently {{complete}} episodes have been processed ({{percent}}%). Estimated co
 
 I have no connection with these individuals; they have generously provided these resources for this public domain work on the web which I have used to compile the data for this site:
 
-* Keith Flowers: [his website](http://www.nettally.com/keith.flowers/main.htm) and [his digitized high-fidelity reel-to-reel recordings](https://archive.org/details/CBSRMTKf)
-* Ken Long: [his website](http://cbsrmt.thelongtrek.com/) and his many invaluable collections
-* https://www.cbsrmt.com/
-* https://www.radioechoes.com/?page=series&genre=OTR-Mystery&series=CBS%20Radio%20Mystery%20Theater
+- Keith Flowers: [his website](http://www.nettally.com/keith.flowers/main.htm) and [his digitized high-fidelity reel-to-reel recordings](https://archive.org/details/CBSRMTKf)
+- Ken Long: [his website](http://cbsrmt.thelongtrek.com/) and his many invaluable collections
+- https://www.cbsrmt.com/
+- https://www.radioechoes.com/?page=series&genre=OTR-Mystery&series=CBS%20Radio%20Mystery%20Theater
 
 ## Technology
 
@@ -59,5 +59,6 @@ If for any reason you have trouble downloading, you can use the **Direct Link** 
 
 This site uses [nuxt 3](https://nuxt.org/) and is hosted on [netlify](https://www.netlify.com/).
 
-[^1]: Actually, episodes in the [complete collection (of varying quality)](https://archive.org/download/cbs_radio_mystery_theater/) — *are* served correctly, possibly because they are part of large single zip file. Other MP3s are not — they do not have the correct headers returned by the server, specifically `Content-Disposition: attachment`
+[^1]: Actually, episodes in the [complete collection (of varying quality)](https://archive.org/download/cbs_radio_mystery_theater/) — _are_ served correctly, possibly because they are part of large single zip file. Other MP3s are not — they do not have the correct headers returned by the server, specifically `Content-Disposition: attachment`
+
 [^2]: The browser will fetch the file’s contents (in memory) then represent these contents as a ”blob” of data, which then gets ”downloaded” by the browser like a normal file.

@@ -26,7 +26,7 @@ export const useDownloadStore = defineStore('DownloadStore', {
   actions: {
     appendToDownloadQueue(v: DownloadQueueItem) {
       this.downloadQueue.push(
-        Object.assign({ id: this.downloadQueueItemId }, v)
+        Object.assign({ id: this.downloadQueueItemId }, v),
       );
       this.downloadQueueItemId = this.downloadQueueItemId + 1;
     },

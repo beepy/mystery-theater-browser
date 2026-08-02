@@ -170,7 +170,7 @@ const props = withDefaults(
     linkPrefix: '/page',
     navTag: '',
     navDepth: 1,
-  }
+  },
 );
 
 const showingPageInput = ref(false);
@@ -222,7 +222,7 @@ watch(
     } else {
       tableTransition.value = 'slide-right';
     }
-  }
+  },
 );
 
 watch(
@@ -230,7 +230,7 @@ watch(
   () => {
     lastSearchTerms = props.searchTerms;
     tableTransition.value = 'page';
-  }
+  },
 );
 function updateHeight(h: number) {
   height.value = h;
@@ -242,7 +242,7 @@ watch(
     if (o) {
       tableKey.value = tableKey.value + 1;
     }
-  }
+  },
 );
 
 const jumpToPageNumber = computed((): number => {
@@ -266,7 +266,7 @@ watch(
   jumpToPageNumber,
   debounce((v) => {
     doJumpToPageNumber();
-  }, 333)
+  }, 333),
 );
 
 const doJumpToPageNumber = () => {

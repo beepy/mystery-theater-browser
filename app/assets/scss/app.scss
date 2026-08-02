@@ -1,4 +1,4 @@
-@use "fonts";
+@use 'fonts';
 
 @tailwind base;
 @tailwind components;
@@ -35,9 +35,11 @@ body {
   }
   h3 {
     @apply text-sm md:text-base tracking-wide uppercase font-semibold mt-4;
-
   }
-  p, ul, ol, blockquote {
+  p,
+  ul,
+  ol,
+  blockquote {
     @apply mb-2;
   }
   ul {
@@ -254,11 +256,11 @@ $lrw: 10vw;
 }
 */
 input {
-  @apply focus:outline-none focus:ring-yellow-400 focus:ring-2 focus:border-transparent;;
+  @apply focus:outline-none focus:ring-yellow-400 focus:ring-2 focus:border-transparent;
 }
 a {
   // @apply focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent;
-  @apply focus:outline-none focus-visible:ring-yellow-400 focus-visible:ring-2 focus:border-transparent;;
+  @apply focus:outline-none focus-visible:ring-yellow-400 focus-visible:ring-2 focus:border-transparent;
   &.row {
     @apply focus-visible:bg-yellow-600 focus-visible:text-white focus:ring-0;
   }
@@ -266,10 +268,10 @@ a {
 
 .indeterminate-progress {
   // &:before {
-    // background-color: #3f51b5;
-    content: '';
-    // -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  // background-color: #3f51b5;
+  content: '';
+  // -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   // }
 }
 // @-webkit-keyframes running-progress {
@@ -278,9 +280,18 @@ a {
 //   100% { margin-left: 100%; margin-right: 0; }
 // }
 @keyframes running-progress {
-  0% { margin-left: 0px; margin-right: 100%; }
-  50% { margin-left: 25%; margin-right: 0%; }
-  100% { margin-left: 100%; margin-right: 0; }
+  0% {
+    margin-left: 0px;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0%;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
+  }
 }
 
 .gradient-gray {
@@ -318,4 +329,6 @@ label.iftal.contact.textarea {
   }
 }
 
-.site-title { @apply font-fancy; }
+.site-title {
+  @apply font-fancy;
+}

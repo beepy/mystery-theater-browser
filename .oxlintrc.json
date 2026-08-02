@@ -10,9 +10,7 @@
     "promise",
     "vue"
   ],
-  "jsPlugins": [
-    "eslint-plugin-prettier"
-  ],
+  "jsPlugins": ["eslint-plugin-prettier"],
   "categories": {
     "correctness": "warn"
   },
@@ -813,10 +811,7 @@
   ],
   "rules": {
     "no-var": "warn",
-    "object-shorthand": [
-      "warn",
-      "properties"
-    ],
+    "object-shorthand": ["warn", "properties"],
     "accessor-pairs": [
       "error",
       {
@@ -832,10 +827,7 @@
       }
     ],
     "constructor-super": "error",
-    "curly": [
-      "error",
-      "multi-line"
-    ],
+    "curly": ["error", "multi-line"],
     "default-case-last": "error",
     "eqeqeq": [
       "error",
@@ -919,10 +911,7 @@
       }
     ],
     "no-regex-spaces": "error",
-    "no-return-assign": [
-      "error",
-      "except-parens"
-    ],
+    "no-return-assign": ["error", "except-parens"],
     "no-self-assign": [
       "error",
       {
@@ -988,10 +977,7 @@
       }
     ],
     "symbol-description": "error",
-    "unicode-bom": [
-      "error",
-      "never"
-    ],
+    "unicode-bom": ["error", "never"],
     "use-isnan": [
       "error",
       {
@@ -1005,10 +991,7 @@
         "requireStringLiterals": true
       }
     ],
-    "yoda": [
-      "error",
-      "never"
-    ],
+    "yoda": ["error", "never"],
     "import/export": "error",
     "import/first": "error",
     "import/no-absolute-path": [
@@ -1072,10 +1055,7 @@
     "unicorn/prefer-type-error": "error",
     "unicorn/throw-new-error": "error",
     "prettier/prettier": "error",
-    "node/handle-callback-err": [
-      "error",
-      "^(err|error)$"
-    ],
+    "node/handle-callback-err": ["error", "^(err|error)$"],
     "node/no-exports-assign": "error",
     "node/no-new-require": "error",
     "node/no-path-concat": "error",
@@ -1102,12 +1082,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.mts",
-        "**/*.cts"
-      ],
+      "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "rules": {
         "constructor-super": "off",
         "getter-return": "off",

@@ -105,7 +105,7 @@ const beginDownload = (url: string) => {
         link.href = url;
         link.setAttribute(
           'download',
-          headOfDownloadQueue.value.download || 'download.mp3'
+          headOfDownloadQueue.value.download || 'download.mp3',
         );
         document.body.appendChild(link);
         link.click();

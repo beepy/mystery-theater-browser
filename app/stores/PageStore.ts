@@ -1,4 +1,4 @@
-import { storeToRefs, defineStore } from 'pinia';
+import { defineStore } from 'pinia';
 import { type RouteLocationRaw } from 'vue-router';
 
 import { useSearchStore } from '@/stores/SearchStore';

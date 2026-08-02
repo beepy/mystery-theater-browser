@@ -29,8 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-// test
-import { storeToRefs } from "pinia";
+import { storeToRefs } from 'pinia';
 
 import { usePageStore } from '@/stores/PageStore';
 
@@ -44,8 +43,8 @@ const route = useRoute();
 const page = ref(
   parseInt(
     typeof route.params.page === 'string' ? route.params.page : '1',
-    10
-  ) ?? 1
+    10,
+  ) ?? 1,
 );
 
 // we are hard-coding this because of the effect the original dynamic solution
@@ -88,7 +87,7 @@ watch(
     pageStore.savePage(page.value);
     fetching.value = true;
     delayedScrollToTop();
-  }
+  },
 );
 
 watch([isSearching, terms], () => {

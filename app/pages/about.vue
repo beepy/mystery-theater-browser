@@ -17,15 +17,15 @@ const { data: completedPages } = await useAsyncData('about-completed', () =>
   queryContent('episodes')
     .where({ descriptionSource: 'nrl' })
     .only(['id'])
-    .find()
+    .find(),
 );
 const complete = computed(() => completedPages.value?.length || 0);
 const percent = computed(
-  () => Math.floor((complete.value / 1399.0) * 1000) / 10
+  () => Math.floor((complete.value / 1399.0) * 1000) / 10,
 );
 
 const { data: page } = await useAsyncData('about', () =>
-  queryContent('about').findOne()
+  queryContent('about').findOne(),
 );
 
 const timeToComplete = computed(() => {

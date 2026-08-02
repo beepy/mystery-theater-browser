@@ -116,7 +116,7 @@ watch(
     if (typeof s === 'string') {
       search(s);
     }
-  }
+  },
 );
 
 // keyboard shortcut
@@ -142,7 +142,7 @@ useCaptureKey(
     }
   },
   true,
-  true
+  true,
 );
 
 const shortcutKeysText = computed(() => {

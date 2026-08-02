@@ -12,7 +12,7 @@ const route = useRoute();
 const page = ref(
   parseInt(
     typeof route.params.page === 'string' ? route.params.page : '1',
-    10
-  ) ?? 1
+    10,
+  ) ?? 1,
 );
 </script>

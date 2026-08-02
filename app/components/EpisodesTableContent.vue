@@ -82,7 +82,7 @@ const props = withDefaults(
   {
     page: 1,
     isSearching: false,
-  }
+  },
 );
 
 const searchStore = useSearchStore();
@@ -105,7 +105,7 @@ const { data: episodes, refresh: refreshEpisodes } = await useAsyncData(
           return d;
         });
     }
-  }
+  },
 );
 
 const emit = defineEmits(['updateHeight']);

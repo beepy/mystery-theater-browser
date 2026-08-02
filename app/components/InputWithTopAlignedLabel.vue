@@ -32,7 +32,7 @@ const props = withDefaults(
     placeholder: '',
     maxlength: 255,
     focusOnMount: false,
-  }
+  },
 );
 
 const input = ref(null as HTMLInputElement | null);

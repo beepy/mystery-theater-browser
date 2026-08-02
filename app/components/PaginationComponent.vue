@@ -70,7 +70,7 @@ const props = withDefaults(
   {
     first: 1,
     span: 7,
-  }
+  },
 );
 
 const boundSpan = computed(() => {
