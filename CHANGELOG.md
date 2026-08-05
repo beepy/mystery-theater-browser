@@ -1,5 +1,11 @@
 # Changelog | MysteryTheater.org
 
+## [2.4.4] - 2026-08-05 08:55AM
+
+### Added
+
+- Through episode 584
+
 ## [2.4.3] - 2026-08-01 05:10PM
 
 ### Added
